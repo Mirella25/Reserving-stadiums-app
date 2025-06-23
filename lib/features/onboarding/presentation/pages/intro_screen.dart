@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../../core/localization/cubit_localization.dart';
 import 'intro_page.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -17,37 +20,29 @@ class _IntroScreenState extends State<IntroScreen> {
   final PageController _controller = PageController();
   int currentPage = 0;
 
-
-
   @override
   Widget build(BuildContext context) {
     final pages = [
       IntroPage(
-        title: 'احجز ملعبك بسهولة',
-        subtitle: 'اختر التاريخ والوقت وابدأ اللعب فورًا!',
-        image: SvgPicture.asset(
-          'assets/images/first_image_intro.svg',
-        ),
+        title: AppLocalizations.of(context)!.introTitle1,
+        subtitle: AppLocalizations.of(context)!.introSubtitle1,
+        image: SvgPicture.asset('assets/images/first_image_intro.svg'),
         backgroundcolor: Colors.white,
       ),
       IntroPage(
-        title: 'كوّن فريقك ودعُ أصدقاءك',
-        subtitle: 'رتب المباريات وتابع التقييمات',
-        image: SvgPicture.asset(
-          'assets/images/undraw_junior-soccer_0lib (1).svg',
-        ),
+        title: AppLocalizations.of(context)!.introTitle2,
+        subtitle: AppLocalizations.of(context)!.introSubtitle2,
+        image: SvgPicture.asset('assets/images/undraw_junior-soccer_0lib (1).svg'),
         backgroundcolor: Colors.white,
       ),
       IntroPage(
-        title: 'استكشف الملاعب حولك',
-        subtitle: 'شاهد مواقع الملاعب واختر الأنسب',
-        image: SvgPicture.asset(
-          'assets/images/undraw_destination_fkst.svg',
-
-        ),
+        title: AppLocalizations.of(context)!.introTitle3,
+        subtitle: AppLocalizations.of(context)!.introSubtitle3,
+        image: SvgPicture.asset('assets/images/undraw_destination_fkst.svg'),
         backgroundcolor: Colors.white,
       ),
     ];
+
     return Scaffold(
       body: Stack(
         children: [
@@ -61,7 +56,6 @@ class _IntroScreenState extends State<IntroScreen> {
             },
             itemBuilder: (_, index) => pages[index],
           ),
-
 
           Positioned(
             bottom: 110.h,
@@ -80,13 +74,26 @@ class _IntroScreenState extends State<IntroScreen> {
             ),
           ),
 
+          Positioned(
+            top: 40.h,
+            right: 20.w,
+            child: ElevatedButton(
+              onPressed: () {
+                final cubit = context.read<LanguageCubit>();
+                final current = Localizations.localeOf(context).languageCode;
+                cubit.changeLanguage(current == 'ar' ? 'en' : 'ar');
+              },
+              child: Text(AppLocalizations.of(context)!.switchLang),
+            ),
+          ),
 
           Positioned(
             bottom: 40.h,
-            right: 20.w,
+            left: Directionality.of(context) == TextDirection.rtl ? null : 20.w,
+            right: Directionality.of(context) == TextDirection.rtl ? 20.w : null,
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+                backgroundColor: Colors.green.shade600,
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.r),
@@ -104,12 +111,15 @@ class _IntroScreenState extends State<IntroScreen> {
                   Navigator.pushReplacementNamed(context, '/login');
                 }
               },
-
-              icon: Icon(currentPage < pages.length - 1 ? Icons.arrow_forward : Icons.check,
-                color: Colors.white,),
+              icon: Icon(
+                currentPage < pages.length - 1 ? Icons.arrow_forward : Icons.check,
+                color: Colors.white,
+              ),
               label: Text(
-                currentPage < pages.length - 1 ? 'التالي' : 'ابدأ الآن',
-                style: TextStyle(fontSize: 16.sp,color: Colors.white),
+                currentPage < pages.length - 1
+                    ? AppLocalizations.of(context)!.next
+                    : AppLocalizations.of(context)!.startNow,
+                style: TextStyle(fontSize: 16.sp, color: Colors.white),
               ),
             ),
           ),
