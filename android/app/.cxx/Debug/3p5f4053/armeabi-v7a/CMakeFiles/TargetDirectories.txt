@@ -1,0 +1,2 @@
+C:/Users/Sharbel/StudioProjects/Reserving-stadiums-app/android/app/.cxx/Debug/3p5f4053/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Sharbel/StudioProjects/Reserving-stadiums-app/android/app/.cxx/Debug/3p5f4053/armeabi-v7a/CMakeFiles/rebuild_cache.dir
