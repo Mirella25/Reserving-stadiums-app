@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,19 +27,19 @@ class _IntroScreenState extends State<IntroScreen> {
       IntroPage(
         title: AppLocalizations.of(context)!.introTitle1,
         subtitle: AppLocalizations.of(context)!.introSubtitle1,
-        image: SvgPicture.asset('assets/images/first_image_intro.svg'),
+        image: SvgPicture.asset('assets/images/first_intro.svg'),
         backgroundcolor: Colors.white,
       ),
       IntroPage(
         title: AppLocalizations.of(context)!.introTitle2,
         subtitle: AppLocalizations.of(context)!.introSubtitle2,
-        image: SvgPicture.asset('assets/images/undraw_junior-soccer_0lib (1).svg'),
+        image: SvgPicture.asset('assets/images/second_intro.svg'),
         backgroundcolor: Colors.white,
       ),
       IntroPage(
         title: AppLocalizations.of(context)!.introTitle3,
         subtitle: AppLocalizations.of(context)!.introSubtitle3,
-        image: SvgPicture.asset('assets/images/undraw_destination_fkst.svg'),
+        image: SvgPicture.asset('assets/images/third_intro.svg'),
         backgroundcolor: Colors.white,
       ),
     ];
@@ -93,7 +94,7 @@ class _IntroScreenState extends State<IntroScreen> {
             right: Directionality.of(context) == TextDirection.rtl ? 20.w : null,
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green.shade600,
+                backgroundColor: AppColors.primaryColor,
                 padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.r),
@@ -119,7 +120,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 currentPage < pages.length - 1
                     ? AppLocalizations.of(context)!.next
                     : AppLocalizations.of(context)!.startNow,
-                style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                style: TextStyle(fontSize: 16.sp, color: Colors.white,fontFamily: 'Montserrat'),
               ),
             ),
           ),

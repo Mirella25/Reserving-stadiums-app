@@ -50,6 +50,7 @@ class IntroPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Poppins',
                 color: Colors.black87,
               ),
             ),
@@ -62,6 +63,7 @@ class IntroPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Colors.black54,
+                fontFamily: 'Lora',
               ),
             ),
           ),

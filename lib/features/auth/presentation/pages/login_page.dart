@@ -10,7 +10,7 @@ class LoginScreen extends StatelessWidget {
       body: const Center(
         child: Text(
           'هنا شاشة تسجيل الدخول',
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20,fontFamily: 'Poppins'),
         ),
       ),
     );

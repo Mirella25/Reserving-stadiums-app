@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -49,18 +49,19 @@ class _SplashScreenState extends State<SplashScreen> {
               child: SizedBox(
                 width: 150.w,
                 height: 150.h,
-                child: Image.asset('assets/images/icons8-sport-100.png'),
+                child: Image.asset('assets/images/logo.png'),
               ),
             ),
             SizedBox(height: 20.h),
             FadeIn(
               duration: const Duration(milliseconds: 1000),
               child: Text(
-                'مرحبًا بك في تطبيق الملاعب',
+                AppLocalizations.of(context)!.splash_screen,
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.blueGrey,
+                  fontFamily: 'Poppins'
                 ),
               ),
             ),
