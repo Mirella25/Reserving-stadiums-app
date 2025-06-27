@@ -1,33 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/bloc/login/bloc/login_bloc.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/forget_password_page.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/register_page.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/bloc/register/bloc/register_bloc.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_button.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_text_field.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 
-class LogInPage extends StatelessWidget {
-  const LogInPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return BlocProvider(
-      create: (context) => LoginBloc(),
+      create: (context) => RegisterBloc(),
       child: Scaffold(
-        appBar: AppBar(leading: null),
-        resizeToAvoidBottomInset: true,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LogInPage(),
+                  ));
+            },
+            color: Colors.grey[700],
+          ),
+        ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
                 CustomAuthImage(
-                  imageName: AppImages.loginImage,
+                  imageName: AppImages.registerImage,
                   height: screenHeight,
                   width: screenWidth,
                 ),
@@ -35,7 +46,7 @@ class LogInPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.login,
+                      AppLocalizations.of(context)!.registerTitle,
                       style: TextStyle(
                           fontSize: screenWidth * 0.08,
                           fontWeight: FontWeight.bold,
@@ -56,7 +67,13 @@ class LogInPage extends StatelessWidget {
                           const SizedBox(
                             height: 5,
                           ),
-                          BlocBuilder<LoginBloc, LoginState>(
+                          CustomAuthTextField(
+                              icon: Icons.person_outline_outlined,
+                              hintText: AppLocalizations.of(context)!.name),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          BlocBuilder<RegisterBloc, RegisterState>(
                             builder: (context, state) {
                               return CustomAuthTextField(
                                 icon: Icons.lock_outline,
@@ -67,7 +84,7 @@ class LogInPage extends StatelessWidget {
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
                                 onSuffixTap: () => context
-                                    .read<LoginBloc>()
+                                    .read<RegisterBloc>()
                                     .add(TogglePasswordVisibility()),
                               );
                             },
@@ -75,35 +92,27 @@ class LogInPage extends StatelessWidget {
                           const SizedBox(
                             height: 5,
                           ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 8, right: 8),
-                                  child: InkWell(
-                                    onTap: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ForgetPasswordPage(),
-                                        )),
-                                    child: Text(
-                                      AppLocalizations.of(context)!
-                                          .forgotPassword,
-                                      style: const TextStyle(
-                                          color: Color(0xFF4CAF50),
-                                          fontFamily: 'Lora',
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                              ]),
+                          BlocBuilder<RegisterBloc, RegisterState>(
+                            builder: (context, state) {
+                              return CustomAuthTextField(
+                                icon: Icons.lock_outline,
+                                obscureText: state.isPasswordConfirmObscured,
+                                hintText: AppLocalizations.of(context)!
+                                    .confirmPassword,
+                                suffixIcon: state.isPasswordConfirmObscured
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                onSuffixTap: () => context
+                                    .read<RegisterBloc>()
+                                    .add(TogglePasswordConfirmVisibility()),
+                              );
+                            },
+                          ),
                           const SizedBox(
                             height: 50,
                           ),
                           CustomAuthButton(
-                              title: AppLocalizations.of(context)!.login,
+                              title: AppLocalizations.of(context)!.continuee,
                               onPressed: () {}),
                           const SizedBox(
                             height: 10,
@@ -111,7 +120,7 @@ class LogInPage extends StatelessWidget {
                           RichText(
                               text: TextSpan(
                                   text: AppLocalizations.of(context)!
-                                      .newToLogistics,
+                                      .joinedBefore,
                                   style: const TextStyle(
                                     color: Colors.grey,
                                     fontFamily: 'Lora',
@@ -121,27 +130,26 @@ class LogInPage extends StatelessWidget {
                                     alignment: PlaceholderAlignment.baseline,
                                     baseline: TextBaseline.alphabetic,
                                     child: InkWell(
-                                      onTap: () => Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const RegisterPage(),
-                                          )),
-                                      child: Text(
-                                          AppLocalizations.of(context)!
-                                              .register,
-                                          style: const TextStyle(
-                                              color: Color(0xFF4CAF50),
-                                              fontFamily: 'Lora',
-                                              fontWeight: FontWeight.bold)),
-                                    ))
-                              ])),
-                          const SizedBox(height: 10)
+                                        onTap: () {
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const LogInPage(),
+                                              ));
+                                        },
+                                        child: Text(
+                                            AppLocalizations.of(context)!.login,
+                                            style: const TextStyle(
+                                                color: Color(0xFF4CAF50),
+                                                fontFamily: 'Lora',
+                                                fontWeight: FontWeight.bold))))
+                              ]))
                         ],
                       ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),

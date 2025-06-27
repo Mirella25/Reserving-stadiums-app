@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -20,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _startSplashSequence() async {
     final prefs = await SharedPreferences.getInstance();
 
-
     await prefs.remove('seen_intro'); // ❗احذفه بعد الانتهاء من التعديل
 
     final seenIntro = prefs.getBool('seen_intro') ?? false;
@@ -34,7 +34,6 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +57,10 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Text(
                 AppLocalizations.of(context)!.splash_screen,
                 style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey,
-                  fontFamily: 'Poppins'
-                ),
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueGrey,
+                    fontFamily: 'Poppins'),
               ),
             ),
           ],

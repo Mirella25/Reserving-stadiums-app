@@ -9,5 +9,19 @@
   "next": "التالي",
   "startNow": "ابدأ الآن",
   "switchLang": "تغيير اللغة",
-  "splash_screen":"أهلاً يك في سبورتيفاي"
+  "splash_screen": "أهلاً بك في سبورتيفاي",
+  "login": "تسجيل الدخول",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "forgotPassword": "هل نسيت كلمة المرور؟",
+  "newToLogistics": "جديد على التطبيق؟ ",
+  "register": "سجّل الآن",
+  "forgotPasswordTitle": "هل نسيت\nكلمة المرور؟",
+  "forgotPasswordSubtitle": "لا تقلق! هذا يحدث. الرجاء إدخال البريد الإلكتروني المرتبط بحسابك.",
+  "submit": "إرسال",
+  "registerTitle": "إنشاء حساب",
+  "name": "الاسم",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "continuee": "استمرار",
+  "joinedBefore": "لديك حساب مسبقًا؟"
 }

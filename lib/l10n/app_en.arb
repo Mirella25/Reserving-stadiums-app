@@ -9,5 +9,19 @@
   "next": "Next",
   "startNow": "Start Now",
   "switchLang": "Switch Language",
-  "splash_screen":"Welcome to Sportify"
+  "splash_screen": "Welcome to Sportify",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot Password?",
+  "newToLogistics": "New to logistics? ",
+  "register": "Register",
+  "forgotPasswordTitle": "Forgot\nPassword?",
+  "forgotPasswordSubtitle": "Don't worry! It happens. Please enter the address associated with your account.",
+  "submit": "Submit",
+  "registerTitle": "Register",
+  "name": "Name",
+  "confirmPassword": "Confirm Password",
+  "continuee": "Continue",
+  "joinedBefore": "Joined us before?"
 }

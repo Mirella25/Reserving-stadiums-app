@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
+import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../core/localization/cubit_localization.dart';
 import 'intro_page.dart';
@@ -57,7 +57,6 @@ class _IntroScreenState extends State<IntroScreen> {
             },
             itemBuilder: (_, index) => pages[index],
           ),
-
           Positioned(
             bottom: 110.h,
             left: 0,
@@ -74,7 +73,6 @@ class _IntroScreenState extends State<IntroScreen> {
               ),
             ),
           ),
-
           Positioned(
             top: 40.h,
             right: 20.w,
@@ -87,11 +85,11 @@ class _IntroScreenState extends State<IntroScreen> {
               child: Text(AppLocalizations.of(context)!.switchLang),
             ),
           ),
-
           Positioned(
             bottom: 40.h,
             left: Directionality.of(context) == TextDirection.rtl ? null : 20.w,
-            right: Directionality.of(context) == TextDirection.rtl ? 20.w : null,
+            right:
+                Directionality.of(context) == TextDirection.rtl ? 20.w : null,
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryColor,
@@ -113,14 +111,19 @@ class _IntroScreenState extends State<IntroScreen> {
                 }
               },
               icon: Icon(
-                currentPage < pages.length - 1 ? Icons.arrow_forward : Icons.check,
+                currentPage < pages.length - 1
+                    ? Icons.arrow_forward
+                    : Icons.check,
                 color: Colors.white,
               ),
               label: Text(
                 currentPage < pages.length - 1
                     ? AppLocalizations.of(context)!.next
                     : AppLocalizations.of(context)!.startNow,
-                style: TextStyle(fontSize: 16.sp, color: Colors.white,fontFamily: 'Montserrat'),
+                style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.white,
+                    fontFamily: 'Montserrat'),
               ),
             ),
           ),

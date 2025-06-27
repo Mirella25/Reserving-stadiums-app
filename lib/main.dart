@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'core/localization/cubit_localization.dart';
 import 'features/auth/presentation/pages/login_page.dart';
 import 'shared/widgets/splash_screen.dart';
 import 'features/onboarding/presentation/pages/intro_screen.dart';
-
 
 void main() {
   runApp(
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
             routes: {
               '/': (_) => const SplashScreen(),
               '/intro': (_) => const IntroScreen(),
-              '/login': (_) => const LoginScreen(),
+              '/login': (_) => const LogInPage(),
             },
           ),
         );
