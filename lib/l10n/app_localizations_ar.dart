@@ -80,4 +80,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get joinedBefore => 'لديك حساب مسبقًا؟';
+
+  @override
+  String get enterOtp => 'أدخل رمز التحقق';
+
+  @override
+  String get otpSentToEmail => 'تم إرسال الرمز إلى بريدك الإلكتروني.';
+
+  @override
+  String get didntGetCode => 'لم يصلك رمز؟ ';
+
+  @override
+  String get resend => 'إعادة الإرسال';
+
+  @override
+  String get emailVerified => 'تم التحقق من بريدك الإلكتروني بنجاح!';
+
+  @override
+  String get letsGetStarted => 'لنبدأ الآن';
 }

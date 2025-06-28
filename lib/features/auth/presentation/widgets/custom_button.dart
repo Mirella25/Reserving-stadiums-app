@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 
 class CustomAuthButton extends StatelessWidget {
   final String title;
@@ -13,13 +15,13 @@ class CustomAuthButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      height: 50,
-      minWidth: 350,
-      color: const Color(0xFF4CAF50),
+      height: 50.h,
+      minWidth: 1.sw,
+      color: AppColors.primaryColor,
       child: Text(
         title,
-        style: const TextStyle(
-            color: Colors.white, fontSize: 18, fontFamily: 'Montserrat'),
+        style: TextStyle(
+            color: Colors.white, fontSize: 16.sp, fontFamily: 'Montserrat'),
       ),
     );
   }

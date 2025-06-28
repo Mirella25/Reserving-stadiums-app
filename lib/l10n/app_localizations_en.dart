@@ -81,4 +81,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get joinedBefore => 'Joined us before?';
+
+  @override
+  String get enterOtp => 'Enter OTP';
+
+  @override
+  String get otpSentToEmail => 'The code has been sent to your email.';
+
+  @override
+  String get didntGetCode => 'Didn\'t get a code? ';
+
+  @override
+  String get resend => 'Resend';
+
+  @override
+  String get emailVerified => 'Your email has been verified successfully!';
+
+  @override
+  String get letsGetStarted => 'Let\'s Get Started';
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_button.dart';
@@ -10,64 +11,60 @@ class ForgetPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          color: Colors.grey[700],
-        ),
-      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h),
           child: Column(
             children: [
-              CustomAuthImage(
-                imageName: AppImages.forgotPasswordImage,
-                height: screenHeight,
-                width: screenWidth,
-              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    AppLocalizations.of(context)!.forgotPasswordTitle,
-                    style: TextStyle(
-                        fontSize: screenWidth * 0.08,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Poppins',
-                        color: Colors.grey[700]),
-                  ),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back_ios, size: 24.r)),
                 ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                AppLocalizations.of(context)!.forgotPasswordSubtitle,
-                maxLines: 2,
-                style: TextStyle(
-                  color: Colors.grey[500],
-                  fontFamily: 'Lora',
-                ),
               ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: EdgeInsets.only(bottom: 20.h),
                   child: Form(
                     child: Column(
                       children: [
+                        const CustomAuthImage(
+                          imageName: AppImages.forgotPasswordImage,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.forgotPasswordTitle,
+                              style: TextStyle(
+                                  fontSize: 28.sp.clamp(20.sp, 32.sp),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Poppins',
+                                  color: Colors.grey[700]),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.forgotPasswordSubtitle,
+                          maxLines: 2,
+                          style: TextStyle(
+                              color: Colors.grey[500],
+                              fontFamily: 'Lora',
+                              fontSize: 13.sp),
+                        ),
+                        SizedBox(height: 30.h),
                         CustomAuthTextField(
                             icon: Icons.mail_outline_outlined,
                             hintText: AppLocalizations.of(context)!.email),
-                        const SizedBox(
-                          height: 50,
+                        SizedBox(
+                          height: 40.h,
                         ),
                         CustomAuthButton(
                             title: AppLocalizations.of(context)!.submit,

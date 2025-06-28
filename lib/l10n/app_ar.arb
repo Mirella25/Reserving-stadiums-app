@@ -23,5 +23,11 @@
   "name": "الاسم",
   "confirmPassword": "تأكيد كلمة المرور",
   "continuee": "استمرار",
-  "joinedBefore": "لديك حساب مسبقًا؟"
+  "joinedBefore": "لديك حساب مسبقًا؟",
+    "enterOtp": "أدخل رمز التحقق",
+  "otpSentToEmail": "تم إرسال الرمز إلى بريدك الإلكتروني.",
+  "didntGetCode": "لم يصلك رمز؟ ",
+  "resend": "إعادة الإرسال",
+  "emailVerified": "تم التحقق من بريدك الإلكتروني بنجاح!",
+  "letsGetStarted": "لنبدأ الآن"
 }

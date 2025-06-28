@@ -241,6 +241,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Joined us before?'**
   String get joinedBefore;
+
+  /// No description provided for @enterOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter OTP'**
+  String get enterOtp;
+
+  /// No description provided for @otpSentToEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'The code has been sent to your email.'**
+  String get otpSentToEmail;
+
+  /// No description provided for @didntGetCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t get a code? '**
+  String get didntGetCode;
+
+  /// No description provided for @resend.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend'**
+  String get resend;
+
+  /// No description provided for @emailVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Your email has been verified successfully!'**
+  String get emailVerified;
+
+  /// No description provided for @letsGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s Get Started'**
+  String get letsGetStarted;
 }
 
 class _AppLocalizationsDelegate

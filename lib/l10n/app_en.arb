@@ -23,5 +23,11 @@
   "name": "Name",
   "confirmPassword": "Confirm Password",
   "continuee": "Continue",
-  "joinedBefore": "Joined us before?"
+  "joinedBefore": "Joined us before?",
+ "enterOtp": "Enter OTP",
+  "otpSentToEmail": "The code has been sent to your email.",
+  "didntGetCode": "Didn't get a code? ",
+  "resend": "Resend",
+  "emailVerified": "Your email has been verified successfully!",
+  "letsGetStarted": "Let's Get Started"
 }
