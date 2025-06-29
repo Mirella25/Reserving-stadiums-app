@@ -39,7 +39,8 @@ dependencies:
   shared_preferences:
   flutter_localization:
   flutter_bloc:
-
+  google_sign_in: ^6.2.1
+  http:
 
 
   cupertino_icons: ^1.0.6

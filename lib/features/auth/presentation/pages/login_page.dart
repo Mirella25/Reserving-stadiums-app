@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/bloc/login/bloc/login_bloc.dart';
@@ -124,7 +126,71 @@ class LogInPage extends StatelessWidget {
                                         fontWeight: FontWeight.bold)),
                               ))
                         ])),
-                    SizedBox(height: 10.h)
+                    SizedBox(height: 10.h),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(vertical: 10.h),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(vertical: 12.h),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                            side: const BorderSide(color: AppColors.primaryColor),
+                          ),
+                          elevation: 2,
+                        ),
+                        onPressed: () async {
+                          try {
+                            final GoogleSignIn _googleSignIn = GoogleSignIn(
+                              scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
+                              serverClientId: '266284559474-445vihh4cn3jh508puopf1sd28l9snto.apps.googleusercontent.com',
+                            );
+
+                            final googleUser = await _googleSignIn.signIn();
+
+                            if (googleUser != null) {
+                              final googleAuth = await googleUser.authentication;
+                              final idToken = googleAuth.idToken;
+                              final accessToken = googleAuth.accessToken;
+
+                              print('🧑 الاسم: ${googleUser.displayName}');
+                              print('📧 الإيميل: ${googleUser.email}');
+                              print('🪪 ID Token: $idToken');
+                              print('🔐 Access Token: $accessToken');
+                              final response = await http.get(Uri.parse("https://oauth2.googleapis.com/tokeninfo?id_token=$idToken"));
+                              print(response.body);
+
+                              // إرسال التوكن إلى الباك Laravel
+                            } else {
+                              print('❌ تم الإلغاء من قبل المستخدم');
+                            }
+                          } catch (e) {
+                            print('💥 خطأ أثناء تسجيل الدخول عبر Google: $e');
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/google_icon.png',
+                              height: 24.h,
+                              width: 24.h,
+                            ),
+                            SizedBox(width: 10.w),
+                            Text(
+                              "تسجيل الدخول عبر Google",
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
                   ],
                 ),
               ),
