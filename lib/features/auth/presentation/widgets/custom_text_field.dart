@@ -6,28 +6,35 @@ class CustomAuthTextField extends StatelessWidget {
   final String hintText;
   final VoidCallback? onSuffixTap;
   final bool obscureText;
-  const CustomAuthTextField(
-      {super.key,
-      required this.icon,
-      required this.hintText,
-      this.suffixIcon,
-      this.onSuffixTap,
-      this.obscureText = false});
+  final TextEditingController? controller;
+
+  const CustomAuthTextField({
+    super.key,
+    required this.icon,
+    required this.hintText,
+    this.suffixIcon,
+    this.onSuffixTap,
+    this.obscureText = false,
+    this.controller
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      Expanded(
+    return Row(
+      children: [
+        Expanded(
           flex: 1,
           child: Icon(
             icon,
             color: Colors.grey,
-          )),
-      Expanded(
+          ),
+        ),
+        Expanded(
           flex: 4,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
+              controller: controller, // ✅ استخدمه هنا
               obscureText: obscureText,
               decoration: InputDecoration(
                 hintStyle: const TextStyle(
@@ -40,15 +47,17 @@ class CustomAuthTextField extends StatelessWidget {
                 suffixIconColor: Colors.grey,
                 enabledBorder: const UnderlineInputBorder(
                   borderSide:
-                      BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
+                  BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
                 ),
                 focusedBorder: const UnderlineInputBorder(
                   borderSide:
-                      BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
+                  BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
                 ),
               ),
             ),
-          ))
-    ]);
+          ),
+        ),
+      ],
+    );
   }
 }
