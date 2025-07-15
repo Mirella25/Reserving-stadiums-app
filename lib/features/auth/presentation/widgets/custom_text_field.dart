@@ -34,7 +34,7 @@ class CustomAuthTextField extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
-              controller: controller, // ✅ استخدمه هنا
+              controller: controller,
               obscureText: obscureText,
               decoration: InputDecoration(
                 hintStyle: const TextStyle(

@@ -31,7 +31,7 @@ class RegisterPage extends StatelessWidget {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const LogInPage(),
+                                builder: (context) => const LoginPage(),
                               ));
                         },
                         icon: Icon(Icons.arrow_back_ios, size: 24.r)),
@@ -142,7 +142,7 @@ class RegisterPage extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const LogInPage(),
+                                                    const LoginPage(),
                                               ));
                                         },
                                         child: Text(
