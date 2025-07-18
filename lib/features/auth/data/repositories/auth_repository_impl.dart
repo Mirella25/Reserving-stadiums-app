@@ -1,3 +1,5 @@
+import 'package:reserving_stadiums_app/features/auth/domain/entities/register_entity.dart';
+
 import '../../../../core/result/result.dart';
 import '../../domain/entities/login_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -28,5 +30,14 @@ class AuthRepositoryImpl implements AuthRepository {
     return result;
   }
 
+  @override
+  Future<Result<RegisterEntity>> register(String email, String role,
+      String password, String confirmPassword) async {
+    final result =
+        await remote.register(email, role, password, confirmPassword);
+    if (result is Success<RegisterEntity>) {
+      await local.cacheToken(result.data.token);
+    }
+    return result;
+  }
 }
-

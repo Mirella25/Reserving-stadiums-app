@@ -7,16 +7,17 @@ class CustomAuthTextField extends StatelessWidget {
   final VoidCallback? onSuffixTap;
   final bool obscureText;
   final TextEditingController? controller;
+  final String? Function(String?) validator;
 
-  const CustomAuthTextField({
-    super.key,
-    required this.icon,
-    required this.hintText,
-    this.suffixIcon,
-    this.onSuffixTap,
-    this.obscureText = false,
-    this.controller
-  });
+  const CustomAuthTextField(
+      {super.key,
+      required this.icon,
+      required this.hintText,
+      this.suffixIcon,
+      this.onSuffixTap,
+      this.obscureText = false,
+      this.controller,
+      required this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,7 @@ class CustomAuthTextField extends StatelessWidget {
             child: TextFormField(
               controller: controller,
               obscureText: obscureText,
+              validator: validator,
               decoration: InputDecoration(
                 hintStyle: const TextStyle(
                   color: Colors.grey,
@@ -47,11 +49,11 @@ class CustomAuthTextField extends StatelessWidget {
                 suffixIconColor: Colors.grey,
                 enabledBorder: const UnderlineInputBorder(
                   borderSide:
-                  BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
+                      BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
                 ),
                 focusedBorder: const UnderlineInputBorder(
                   borderSide:
-                  BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
+                      BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
                 ),
               ),
             ),

@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
+import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
+import 'package:reserving_stadiums_app/core/utils/validators.dart';
+import 'package:reserving_stadiums_app/features/auth/domain/usecases/register_usecase.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/bloc/register/bloc/register_bloc.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/verification_page.dart';
@@ -11,13 +14,32 @@ import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_text_field.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  String? selectedRole;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegisterBloc(),
+      create: (context) => RegisterBloc(getIt<RegisterUsecase>()),
       child: Scaffold(
         body: SafeArea(
           child: Padding(
@@ -41,6 +63,7 @@ class RegisterPage extends StatelessWidget {
                   child: SingleChildScrollView(
                     padding: EdgeInsets.only(bottom: 20.h),
                     child: Form(
+                      key: formKey,
                       child: Column(
                         children: [
                           const CustomAuthImage(
@@ -62,13 +85,74 @@ class RegisterPage extends StatelessWidget {
                           SizedBox(height: 20.h),
                           CustomAuthTextField(
                               icon: Icons.mail_outline_outlined,
-                              hintText: AppLocalizations.of(context)!.email),
+                              hintText: AppLocalizations.of(context)!.email,
+                              controller: emailController,
+                              validator: (value) => Validators.combine([
+                                    Validators.required(),
+                                    Validators.email()
+                                  ])(value)),
                           SizedBox(
                             height: 5.h,
                           ),
-                          CustomAuthTextField(
-                              icon: Icons.person_outline_outlined,
-                              hintText: AppLocalizations.of(context)!.name),
+                          Row(
+                            children: [
+                              const Expanded(
+                                flex: 1,
+                                child: Icon(
+                                  Icons.supervised_user_circle_outlined,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 4,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: DropdownButtonFormField<String>(
+                                    iconEnabledColor: Colors.grey,
+                                    validator: (value) => Validators.combine([
+                                      Validators.required(),
+                                    ])(value),
+                                    hint: const Text(
+                                      "User",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontFamily: 'Lora',
+                                      ),
+                                    ),
+                                    items: const [
+                                      DropdownMenuItem(
+                                        value: "player",
+                                        child: Text("Player"),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: "stadium_owner",
+                                        child: Text("Stadium owner"),
+                                      ),
+                                    ],
+                                    onChanged: (String? value) {
+                                      if (value != null) {
+                                        setState(() {
+                                          selectedRole = value;
+                                        });
+                                      }
+                                    },
+                                    decoration: const InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 209, 208, 208)),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 209, 208, 208)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             height: 5.h,
                           ),
@@ -82,6 +166,11 @@ class RegisterPage extends StatelessWidget {
                                 suffixIcon: state.isPasswordObscured
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
+                                controller: passwordController,
+                                validator: (value) => Validators.combine([
+                                  Validators.required(),
+                                  Validators.password()
+                                ])(value),
                                 onSuffixTap: () => context
                                     .read<RegisterBloc>()
                                     .add(TogglePasswordVisibility()),
@@ -101,6 +190,12 @@ class RegisterPage extends StatelessWidget {
                                 suffixIcon: state.isPasswordConfirmObscured
                                     ? Icons.visibility_off_outlined
                                     : Icons.visibility_outlined,
+                                validator: (value) => Validators.combine([
+                                  Validators.required(),
+                                  Validators.confirmPassword(
+                                    passwordController.text,
+                                  )
+                                ])(value),
                                 onSuffixTap: () => context
                                     .read<RegisterBloc>()
                                     .add(TogglePasswordConfirmVisibility()),
@@ -110,16 +205,53 @@ class RegisterPage extends StatelessWidget {
                           SizedBox(
                             height: 25.h,
                           ),
-                          CustomAuthButton(
-                              title: AppLocalizations.of(context)!.continuee,
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
+                          BlocConsumer<RegisterBloc, RegisterState>(
+                            listener: (context, state) {
+                              if (state.errorMessage != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.errorMessage!)),
+                                );
+                              }
+                              if (state.registerEntity != null) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
                                       builder: (context) =>
-                                          const VerificationPage(),
-                                    ));
-                              }),
+                                          const VerificationPage()),
+                                );
+                              }
+                            },
+                            builder: (context, state) {
+                              return state.isLoading
+                                  ? const CircularProgressIndicator()
+                                  : CustomAuthButton(
+                                      title: AppLocalizations.of(context)!
+                                          .continuee,
+                                      onPressed: () {
+                                        if (formKey.currentState!.validate() &&
+                                            selectedRole != null) {
+                                          final email =
+                                              emailController.text.trim();
+                                          final password =
+                                              passwordController.text.trim();
+                                          final confirmPassword =
+                                              confirmPasswordController.text
+                                                  .trim();
+
+                                          context.read<RegisterBloc>().add(
+                                                RegisterSubmitted(
+                                                  email: email,
+                                                  password: password,
+                                                  confirmPassword:
+                                                      confirmPassword,
+                                                  role: selectedRole!,
+                                                ),
+                                              );
+                                        }
+                                      },
+                                    );
+                            },
+                          ),
                           SizedBox(
                             height: 20.h,
                           ),

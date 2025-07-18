@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../domain/entities/user_entity.dart';
@@ -14,8 +16,10 @@ class UserModel with _$UserModel {
     @JsonKey(name: 'updated_at') String? updatedAt,
   }) = _UserModel;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 }
+
 extension UserModelX on UserModel {
   UserEntity toEntity() {
     return UserEntity(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
+import 'package:reserving_stadiums_app/core/utils/validators.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_button.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_text_field.dart';
@@ -61,8 +62,14 @@ class ForgetPasswordPage extends StatelessWidget {
                         ),
                         SizedBox(height: 30.h),
                         CustomAuthTextField(
-                            icon: Icons.mail_outline_outlined,
-                            hintText: AppLocalizations.of(context)!.email),
+                          icon: Icons.mail_outline_outlined,
+                          hintText: AppLocalizations.of(context)!.email,
+                          validator: (value) => Validators.combine([
+                            Validators.required(
+                                message: 'الرجاء إدخال البريد الإلكتروني'),
+                            Validators.email()
+                          ])(value),
+                        ),
                         SizedBox(
                           height: 40.h,
                         ),

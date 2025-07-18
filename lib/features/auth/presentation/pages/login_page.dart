@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
+import 'package:reserving_stadiums_app/core/utils/validators.dart';
 import 'package:reserving_stadiums_app/features/auth/domain/usecases/google_login_usecase.dart';
 import 'package:reserving_stadiums_app/features/auth/domain/usecases/login_usecase.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/bloc/login/bloc/login_bloc.dart';
@@ -14,7 +15,6 @@ import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_text_field.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,6 +24,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -37,7 +38,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => LoginBloc(getIt<LoginUseCase>(),getIt<GoogleLoginUseCase>()),
+      create: (_) =>
+          LoginBloc(getIt<LoginUseCase>(), getIt<GoogleLoginUseCase>()),
       child: Scaffold(
         body: SafeArea(
           child: Padding(
@@ -45,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
             child: SingleChildScrollView(
               padding: EdgeInsets.only(bottom: 20.h),
               child: Form(
+                key: formKey,
                 child: Column(
                   children: [
                     const CustomAuthImage(imageName: AppImages.loginImage),
@@ -65,6 +68,11 @@ class _LoginPageState extends State<LoginPage> {
                       icon: Icons.mail_outline_outlined,
                       hintText: AppLocalizations.of(context)!.email,
                       controller: emailController,
+                      validator: (value) => Validators.combine([
+                        Validators.required(
+                            message: 'الرجاء إدخال البريد الإلكتروني'),
+                        Validators.email()
+                      ])(value),
                     ),
                     SizedBox(height: 10.h),
                     BlocBuilder<LoginBloc, LoginState>(
@@ -74,10 +82,16 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: AppLocalizations.of(context)!.password,
                           obscureText: state.isPasswordObscured,
                           controller: passwordController,
+                          validator: (value) => Validators.combine([
+                            Validators.required(),
+                            Validators.password()
+                          ])(value),
                           suffixIcon: state.isPasswordObscured
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
-                          onSuffixTap: () => context.read<LoginBloc>().add(TogglePasswordVisibility()),
+                          onSuffixTap: () => context
+                              .read<LoginBloc>()
+                              .add(TogglePasswordVisibility()),
                         );
                       },
                     ),
@@ -118,15 +132,19 @@ class _LoginPageState extends State<LoginPage> {
                         return state.isLoading
                             ? const CircularProgressIndicator()
                             : CustomAuthButton(
-                          title: AppLocalizations.of(context)!.login,
-                          onPressed: () {
-                            final email = emailController.text.trim();
-                            final password = passwordController.text.trim();
-                            context.read<LoginBloc>().add(
-                              LoginSubmitted(email: email, password: password),
-                            );
-                          },
-                        );
+                                title: AppLocalizations.of(context)!.login,
+                                onPressed: () {
+                                  if (formKey.currentState!.validate()) {
+                                    final email = emailController.text.trim();
+                                    final password =
+                                        passwordController.text.trim();
+                                    context.read<LoginBloc>().add(
+                                          LoginSubmitted(
+                                              email: email, password: password),
+                                        );
+                                  }
+                                },
+                              );
                       },
                     ),
                     SizedBox(height: 20.h),
@@ -168,9 +186,12 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async {
                         try {
                           final googleSignIn = GoogleSignIn(
-                            scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
+                            scopes: [
+                              'email',
+                              'https://www.googleapis.com/auth/userinfo.profile'
+                            ],
                             serverClientId:
-                            '266284559474-445vihh4cn3jh508puopf1sd28l9snto.apps.googleusercontent.com',
+                                '266284559474-445vihh4cn3jh508puopf1sd28l9snto.apps.googleusercontent.com',
                           );
 
                           final googleUser = await googleSignIn.signIn();
@@ -180,8 +201,8 @@ class _LoginPageState extends State<LoginPage> {
 
                             if (idToken != null) {
                               context.read<LoginBloc>().add(
-                                GoogleLoginSubmitted(idToken: idToken),
-                              );
+                                    GoogleLoginSubmitted(idToken: idToken),
+                                  );
                             }
                           }
                         } catch (e) {

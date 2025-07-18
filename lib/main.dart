@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'core/localization/cubit_localization.dart';
 import 'features/auth/presentation/pages/login_page.dart';
 import 'shared/widgets/splash_screen.dart';
 import 'features/onboarding/presentation/pages/intro_screen.dart';
 
-void main() {
+void main() async {
+  await setupDependencies();
   runApp(
     BlocProvider(
       create: (_) => LanguageCubit()..loadSavedLanguage(),
