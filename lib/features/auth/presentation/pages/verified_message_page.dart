@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/home_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
+import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
+
+import '../../../../main.dart';
 
 class VerifiedMessagePage extends StatefulWidget {
   const VerifiedMessagePage({super.key});
@@ -125,7 +129,12 @@ class _VerifiedMessagePageState extends State<VerifiedMessagePage>
                           borderRadius: BorderRadius.circular(30.r),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        navigatorKey.currentState?.pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (_) => const CreateProfilePage()),
+                              (route) => false,
+                        );
+                      },
                       icon:
                           const Icon(Icons.arrow_forward, color: Colors.white),
                       label: Text(

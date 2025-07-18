@@ -9,11 +9,11 @@ part of 'register_data_model.dart';
 _$RegisterDataModelImpl _$$RegisterDataModelImplFromJson(
         Map<String, dynamic> json) =>
     _$RegisterDataModelImpl(
-      token: json['token'] as String,
+      role: json['role'] as String,
     );
 
 Map<String, dynamic> _$$RegisterDataModelImplToJson(
         _$RegisterDataModelImpl instance) =>
     <String, dynamic>{
-      'token': instance.token,
+      'role': instance.role,
     };

@@ -199,6 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 onSuffixTap: () => context
                                     .read<RegisterBloc>()
                                     .add(TogglePasswordConfirmVisibility()),
+                                  controller: confirmPasswordController
                               );
                             },
                           ),
@@ -216,8 +217,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const VerificationPage()),
+                                    builder: (_) => WaitingVerificationPage(),
+                                  ),
                                 );
                               }
                             },

@@ -29,7 +29,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         event.email, event.role, event.password, event.confirmPassword);
     if (result is Success<RegisterEntity>) {
       emit(state.copyWith(
-          isLoading: false, isSuccess: true, registerEntity: result.data));
+          isLoading: false, isSuccess: true, registerEntity: result.data,errorMessage: null));
     } else if (result is Error<RegisterEntity>) {
       emit(state.copyWith(
         isLoading: false,

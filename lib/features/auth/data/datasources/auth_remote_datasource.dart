@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:reserving_stadiums_app/core/result/result.dart';
 import 'package:reserving_stadiums_app/features/auth/data/models/request/register_request_model.dart';
 import 'package:reserving_stadiums_app/features/auth/data/models/response/login_models/login_data_model.dart';
@@ -37,12 +39,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<Result<LoginEntity>> loginWithGoogle(String idToken) {
     return dioClient.callApi<LoginEntity>(
-      endpoint: 'login/google-mobile',
+      endpoint: 'auth/google-mobile',
       data: {
         'id_token': idToken,
       },
       fromJson: (json) => LoginResponseModel.fromJson(json).data.toEntity(),
+
     );
+
   }
 
   @override
@@ -53,6 +57,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         role: role,
         password: password,
         confirmPassword: confirmPassword);
+    print(request.toJson());
 
     return dioClient.callApi<RegisterEntity>(
       endpoint: 'register',

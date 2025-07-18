@@ -7,7 +7,7 @@ part 'register_data_model.g.dart';
 @freezed
 class RegisterDataModel with _$RegisterDataModel {
   const factory RegisterDataModel({
-    required String token,
+    required String role,
   }) = _RegisterDataModel;
 
   factory RegisterDataModel.fromJson(Map<String, dynamic> json) =>
@@ -15,5 +15,5 @@ class RegisterDataModel with _$RegisterDataModel {
 }
 
 extension RegisterDataModelX on RegisterDataModel {
-  RegisterEntity toEntity() => RegisterEntity(token: token);
+  RegisterEntity toEntity() => RegisterEntity(role: role);
 }

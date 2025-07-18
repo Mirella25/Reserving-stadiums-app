@@ -9,6 +9,7 @@ part 'register_response_model.g.dart';
 @freezed
 class RegisterResponseModel with _$RegisterResponseModel {
   const factory RegisterResponseModel({
+    @JsonKey(required: true)
     required bool status,
     @JsonKey(name: 'status_code') required int statusCode,
     String? message,

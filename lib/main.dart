@@ -3,24 +3,43 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
+import 'package:reserving_stadiums_app/core/localization/cubit_localization.dart';
+import 'package:reserving_stadiums_app/core/navigation/deep_link_handler.dart';
+import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/verified_message_page.dart';
+
+import 'package:reserving_stadiums_app/features/onboarding/presentation/pages/intro_screen.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
-import 'core/localization/cubit_localization.dart';
-import 'features/auth/presentation/pages/login_page.dart';
-import 'shared/widgets/splash_screen.dart';
-import 'features/onboarding/presentation/pages/intro_screen.dart';
+import 'package:reserving_stadiums_app/shared/widgets/splash_screen.dart';
+
+import 'features/auth/domain/usecases/google_login_usecase.dart';
+import 'features/auth/domain/usecases/login_usecase.dart';
+import 'features/auth/presentation/bloc/login/bloc/login_bloc.dart';
+import 'features/auth/presentation/pages/home_page.dart';
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
-  await setupDependencies();
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupDependencies(); // تأكد أنك تستدعي الـ getIt
   runApp(
     BlocProvider(
       create: (_) => LanguageCubit()..loadSavedLanguage(),
-      child: const MyApp(),
+      child: DeepLinkHandler(child: const MyApp()),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  Future<bool> _hasVerifiedToken() async {
+    final authLocal = getIt<AuthLocalDataSource>();
+    final token = await authLocal.getCachedToken();
+    final isVerified = await authLocal.getIsVerified(); // ✅ أضف هذه
+    return token != null && token.isNotEmpty && isVerified == true;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +49,8 @@ class MyApp extends StatelessWidget {
           designSize: const Size(375, 812),
           minTextAdapt: true,
           splitScreenMode: true,
-          builder: (_, child) => MaterialApp(
+          builder: (_, __) => MaterialApp(
+            navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'Stadium Booking App',
             locale: locale,
@@ -41,12 +61,27 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            initialRoute: '/',
-            routes: {
-              '/': (_) => const SplashScreen(),
-              '/intro': (_) => const IntroScreen(),
-              '/login': (_) => const LoginPage(),
-            },
+            home: FutureBuilder<bool>(
+              future: _hasVerifiedToken(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SplashScreen();
+                }
+                if (snapshot.data == true) {
+                  return const HomePage();
+                } else {
+                  return BlocProvider(
+                    create: (_) => LoginBloc(
+                      getIt<LoginUseCase>(),
+                      getIt<GoogleLoginUseCase>(),
+                      getIt<AuthLocalDataSource>(),
+                    ),
+                    child: const LoginPage(),
+                  );
+
+                }
+              },
+            ),
           ),
         );
       },

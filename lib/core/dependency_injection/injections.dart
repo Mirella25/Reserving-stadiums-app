@@ -8,17 +8,15 @@ import 'package:reserving_stadiums_app/features/auth/domain/usecases/register_us
 
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/auth/domain/usecases/google_login_usecase.dart';
+import '../constants/app_strings.dart';
 import '../network/api_client.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> setupDependencies() async {
-  // 🔧 DioClient
-  getIt.registerLazySingleton<DioClient>(
-    () => DioClient('http://127.0.0.1:8000/api/'),
-  );
 
-  // 🌐 Remote Data Source
+  getIt.registerLazySingleton(() => DioClient(AppConstants.baseUrl));
+
   getIt.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(dioClient: getIt<DioClient>()),
   );
@@ -26,14 +24,13 @@ Future<void> setupDependencies() async {
     () => AuthLocalDataSourceImpl(),
   );
 
-  // 📦 Repository
+
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
         remote: getIt<AuthRemoteDataSource>(),
         local: getIt<AuthLocalDataSource>()),
   );
 
-  // ✅ UseCases
   getIt.registerLazySingleton<LoginUseCase>(
     () => LoginUseCase(getIt<AuthRepository>()),
   );

@@ -20,7 +20,7 @@ RegisterDataModel _$RegisterDataModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RegisterDataModel {
-  String get token => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
 
   /// Serializes this RegisterDataModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $RegisterDataModelCopyWith<$Res> {
           RegisterDataModel value, $Res Function(RegisterDataModel) then) =
       _$RegisterDataModelCopyWithImpl<$Res, RegisterDataModel>;
   @useResult
-  $Res call({String token});
+  $Res call({String role});
 }
 
 /// @nodoc
@@ -56,12 +56,12 @@ class _$RegisterDataModelCopyWithImpl<$Res, $Val extends RegisterDataModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? token = null,
+    Object? role = null,
   }) {
     return _then(_value.copyWith(
-      token: null == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -75,7 +75,7 @@ abstract class _$$RegisterDataModelImplCopyWith<$Res>
       __$$RegisterDataModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String token});
+  $Res call({String role});
 }
 
 /// @nodoc
@@ -91,12 +91,12 @@ class __$$RegisterDataModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? token = null,
+    Object? role = null,
   }) {
     return _then(_$RegisterDataModelImpl(
-      token: null == token
-          ? _value.token
-          : token // ignore: cast_nullable_to_non_nullable
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -105,17 +105,17 @@ class __$$RegisterDataModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$RegisterDataModelImpl implements _RegisterDataModel {
-  const _$RegisterDataModelImpl({required this.token});
+  const _$RegisterDataModelImpl({required this.role});
 
   factory _$RegisterDataModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RegisterDataModelImplFromJson(json);
 
   @override
-  final String token;
+  final String role;
 
   @override
   String toString() {
-    return 'RegisterDataModel(token: $token)';
+    return 'RegisterDataModel(role: $role)';
   }
 
   @override
@@ -123,12 +123,12 @@ class _$RegisterDataModelImpl implements _RegisterDataModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RegisterDataModelImpl &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.role, role) || other.role == role));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token);
+  int get hashCode => Object.hash(runtimeType, role);
 
   /// Create a copy of RegisterDataModel
   /// with the given fields replaced by the non-null parameter values.
@@ -148,14 +148,14 @@ class _$RegisterDataModelImpl implements _RegisterDataModel {
 }
 
 abstract class _RegisterDataModel implements RegisterDataModel {
-  const factory _RegisterDataModel({required final String token}) =
+  const factory _RegisterDataModel({required final String role}) =
       _$RegisterDataModelImpl;
 
   factory _RegisterDataModel.fromJson(Map<String, dynamic> json) =
       _$RegisterDataModelImpl.fromJson;
 
   @override
-  String get token;
+  String get role;
 
   /// Create a copy of RegisterDataModel
   /// with the given fields replaced by the non-null parameter values.

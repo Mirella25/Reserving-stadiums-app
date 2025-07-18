@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/home_page.dart';
 import 'package:uni_links/uni_links.dart';
 import 'dart:async';
 
 import '../../features/auth/data/datasources/auth_local_datasource.dart';
 import '../../features/auth/presentation/pages/verified_message_page.dart';
+import '../../main.dart';
+import '../dependency_injection/injections.dart';
 
 class DeepLinkHandler extends StatefulWidget {
   final Widget child;
@@ -31,20 +34,21 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
     });
   }
 
-  void _handleLink(String link) {
+  void _handleLink(String link) async {
     final uri = Uri.parse(link);
     if (uri.host == 'email-verified') {
       final token = uri.queryParameters['token'];
       final email = uri.queryParameters['email'];
 
       if (token != null && email != null) {
-        AuthLocalDataSourceImpl sh = AuthLocalDataSourceImpl();
-        sh.cacheToken(token);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const VerifiedMessagePage(),
-          ),
+        final authLocal = getIt<AuthLocalDataSource>();
+        await authLocal.cacheToken(token);
+        await authLocal.cacheIsVerified(true);
+
+              // ✅ استخدم navigatorKey بدل context
+              navigatorKey.currentState?.pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => const VerifiedMessagePage()),
+              (route) => false,
         );
       }
     }

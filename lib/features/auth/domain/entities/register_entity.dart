@@ -1,7 +1,8 @@
 // lib/features/auth/domain/entities/register_entity.dart
 
 class RegisterEntity {
-  final String token;
+  final String role;
 
-  RegisterEntity({required this.token});
+
+  RegisterEntity( {required this.role});
 }
