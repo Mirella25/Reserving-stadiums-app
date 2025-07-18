@@ -12,6 +12,7 @@ import 'package:reserving_stadiums_app/features/auth/presentation/pages/verified
 import 'package:reserving_stadiums_app/features/onboarding/presentation/pages/intro_screen.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:reserving_stadiums_app/shared/widgets/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'features/auth/domain/usecases/google_login_usecase.dart';
 import 'features/auth/domain/usecases/login_usecase.dart';
@@ -33,10 +34,16 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  Future<bool> _hasSeenIntro() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('seen_intro') ?? false;
+  }
+
+
   Future<bool> _hasVerifiedToken() async {
     final authLocal = getIt<AuthLocalDataSource>();
     final token = await authLocal.getCachedToken();
-    final isVerified = await authLocal.getIsVerified(); // ✅ أضف هذه
+    final isVerified = await authLocal.getIsVerified();
     return token != null && token.isNotEmpty && isVerified == true;
   }
 
@@ -61,27 +68,38 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: FutureBuilder<bool>(
-              future: _hasVerifiedToken(),
+            home: FutureBuilder<List<bool>>(
+              future: Future.wait([
+                _hasSeenIntro(),
+                _hasVerifiedToken(),
+              ]),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const SplashScreen();
                 }
-                if (snapshot.data == true) {
-                  return const HomePage();
-                } else {
-                  return BlocProvider(
-                    create: (_) => LoginBloc(
-                      getIt<LoginUseCase>(),
-                      getIt<GoogleLoginUseCase>(),
-                      getIt<AuthLocalDataSource>(),
-                    ),
-                    child: const LoginPage(),
-                  );
 
+                final seenIntro = snapshot.data?[0] ?? false;
+                final isVerified = snapshot.data?[1] ?? false;
+
+                if (!seenIntro) {
+                  return const IntroScreen();
                 }
+
+                if (isVerified) {
+                  return const HomePage();
+                }
+
+                return BlocProvider(
+                  create: (_) => LoginBloc(
+                    getIt<LoginUseCase>(),
+                    getIt<GoogleLoginUseCase>(),
+                    getIt<AuthLocalDataSource>(),
+                  ),
+                  child: const LoginPage(),
+                );
               },
             ),
+
           ),
         );
       },

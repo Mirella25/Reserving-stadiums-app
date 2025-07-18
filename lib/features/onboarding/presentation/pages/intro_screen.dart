@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/register_page.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -107,7 +108,11 @@ class _IntroScreenState extends State<IntroScreen> {
                 } else {
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.setBool('seen_intro', true);
-                  Navigator.pushReplacementNamed(context, '/login');
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => const RegisterPage()),
+                        (route) => false,
+                  );
                 }
               },
               icon: Icon(

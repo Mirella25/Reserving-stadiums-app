@@ -19,20 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _startSplashSequence() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.remove('seen_intro'); // ❗احذفه بعد الانتهاء من التعديل
-
-    final seenIntro = prefs.getBool('seen_intro') ?? false;
-
     await Future.delayed(const Duration(seconds: 2));
-
-    if (mounted) {
-      Navigator.pushReplacementNamed(
-        context,
-        seenIntro ? '/login' : '/intro',
-      );
-    }
   }
 
   @override
