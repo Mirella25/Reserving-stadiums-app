@@ -29,5 +29,6 @@
   "didntGetCode": "Didn't get a code? ",
   "resend": "Resend",
   "emailVerified": "Your email has been verified successfully!",
-  "letsGetStarted": "Let's Get Started"
+  "letsGetStarted": "Let's Get Started",
+  "loginwithgoogle":"Login with Google"
 }

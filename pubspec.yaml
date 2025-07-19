@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
 
 
+
   flutter_svg:
   flutter_screenutil:
   smooth_page_indicator:
@@ -48,6 +49,8 @@ dependencies:
   uni_links: ^0.5.1
   cupertino_icons: ^1.0.6
   pin_code_text_field: ^1.8.0
+  another_flushbar: ^1.12.30
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +91,7 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+    - assets/lootie/
   fonts:
     - family: Poppins
       fonts:

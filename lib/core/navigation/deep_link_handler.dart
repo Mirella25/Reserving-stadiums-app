@@ -41,9 +41,11 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
       final email = uri.queryParameters['email'];
 
       if (token != null && email != null) {
+
         final authLocal = getIt<AuthLocalDataSource>();
         await authLocal.cacheToken(token);
         await authLocal.cacheIsVerified(true);
+        print('✅ Email verified link received: token=$token, email=$email');
 
               // ✅ استخدم navigatorKey بدل context
               navigatorKey.currentState?.pushAndRemoveUntil(

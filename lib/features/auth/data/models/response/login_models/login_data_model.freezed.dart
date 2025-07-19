@@ -22,6 +22,7 @@ LoginDataModel _$LoginDataModelFromJson(Map<String, dynamic> json) {
 mixin _$LoginDataModel {
   String get token => throw _privateConstructorUsedError;
   UserModel get user => throw _privateConstructorUsedError;
+  int get profileId => throw _privateConstructorUsedError;
 
   /// Serializes this LoginDataModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $LoginDataModelCopyWith<$Res> {
           LoginDataModel value, $Res Function(LoginDataModel) then) =
       _$LoginDataModelCopyWithImpl<$Res, LoginDataModel>;
   @useResult
-  $Res call({String token, UserModel user});
+  $Res call({String token, UserModel user, int profileId});
 
   $UserModelCopyWith<$Res> get user;
 }
@@ -61,6 +62,7 @@ class _$LoginDataModelCopyWithImpl<$Res, $Val extends LoginDataModel>
   $Res call({
     Object? token = null,
     Object? user = null,
+    Object? profileId = null,
   }) {
     return _then(_value.copyWith(
       token: null == token
@@ -71,6 +73,10 @@ class _$LoginDataModelCopyWithImpl<$Res, $Val extends LoginDataModel>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel,
+      profileId: null == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -93,7 +99,7 @@ abstract class _$$LoginDataModelImplCopyWith<$Res>
       __$$LoginDataModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String token, UserModel user});
+  $Res call({String token, UserModel user, int profileId});
 
   @override
   $UserModelCopyWith<$Res> get user;
@@ -114,6 +120,7 @@ class __$$LoginDataModelImplCopyWithImpl<$Res>
   $Res call({
     Object? token = null,
     Object? user = null,
+    Object? profileId = null,
   }) {
     return _then(_$LoginDataModelImpl(
       token: null == token
@@ -124,6 +131,10 @@ class __$$LoginDataModelImplCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserModel,
+      profileId: null == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -131,7 +142,8 @@ class __$$LoginDataModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LoginDataModelImpl implements _LoginDataModel {
-  const _$LoginDataModelImpl({required this.token, required this.user});
+  const _$LoginDataModelImpl(
+      {required this.token, required this.user, this.profileId = 0});
 
   factory _$LoginDataModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LoginDataModelImplFromJson(json);
@@ -140,10 +152,13 @@ class _$LoginDataModelImpl implements _LoginDataModel {
   final String token;
   @override
   final UserModel user;
+  @override
+  @JsonKey()
+  final int profileId;
 
   @override
   String toString() {
-    return 'LoginDataModel(token: $token, user: $user)';
+    return 'LoginDataModel(token: $token, user: $user, profileId: $profileId)';
   }
 
   @override
@@ -152,12 +167,14 @@ class _$LoginDataModelImpl implements _LoginDataModel {
         (other.runtimeType == runtimeType &&
             other is _$LoginDataModelImpl &&
             (identical(other.token, token) || other.token == token) &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.profileId, profileId) ||
+                other.profileId == profileId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token, user);
+  int get hashCode => Object.hash(runtimeType, token, user, profileId);
 
   /// Create a copy of LoginDataModel
   /// with the given fields replaced by the non-null parameter values.
@@ -179,7 +196,8 @@ class _$LoginDataModelImpl implements _LoginDataModel {
 abstract class _LoginDataModel implements LoginDataModel {
   const factory _LoginDataModel(
       {required final String token,
-      required final UserModel user}) = _$LoginDataModelImpl;
+      required final UserModel user,
+      final int profileId}) = _$LoginDataModelImpl;
 
   factory _LoginDataModel.fromJson(Map<String, dynamic> json) =
       _$LoginDataModelImpl.fromJson;
@@ -188,6 +206,8 @@ abstract class _LoginDataModel implements LoginDataModel {
   String get token;
   @override
   UserModel get user;
+  @override
+  int get profileId;
 
   /// Create a copy of LoginDataModel
   /// with the given fields replaced by the non-null parameter values.

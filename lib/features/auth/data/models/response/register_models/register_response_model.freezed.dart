@@ -21,6 +21,7 @@ RegisterResponseModel _$RegisterResponseModelFromJson(
 
 /// @nodoc
 mixin _$RegisterResponseModel {
+  @JsonKey(required: true)
   bool get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'status_code')
   int get statusCode => throw _privateConstructorUsedError;
@@ -44,7 +45,7 @@ abstract class $RegisterResponseModelCopyWith<$Res> {
       _$RegisterResponseModelCopyWithImpl<$Res, RegisterResponseModel>;
   @useResult
   $Res call(
-      {bool status,
+      {@JsonKey(required: true) bool status,
       @JsonKey(name: 'status_code') int statusCode,
       String? message,
       RegisterDataModel data});
@@ -114,7 +115,7 @@ abstract class _$$RegisterResponseModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool status,
+      {@JsonKey(required: true) bool status,
       @JsonKey(name: 'status_code') int statusCode,
       String? message,
       RegisterDataModel data});
@@ -167,7 +168,7 @@ class __$$RegisterResponseModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RegisterResponseModelImpl implements _RegisterResponseModel {
   const _$RegisterResponseModelImpl(
-      {required this.status,
+      {@JsonKey(required: true) required this.status,
       @JsonKey(name: 'status_code') required this.statusCode,
       this.message,
       required this.data});
@@ -176,6 +177,7 @@ class _$RegisterResponseModelImpl implements _RegisterResponseModel {
       _$$RegisterResponseModelImplFromJson(json);
 
   @override
+  @JsonKey(required: true)
   final bool status;
   @override
   @JsonKey(name: 'status_code')
@@ -226,7 +228,7 @@ class _$RegisterResponseModelImpl implements _RegisterResponseModel {
 
 abstract class _RegisterResponseModel implements RegisterResponseModel {
   const factory _RegisterResponseModel(
-      {required final bool status,
+      {@JsonKey(required: true) required final bool status,
       @JsonKey(name: 'status_code') required final int statusCode,
       final String? message,
       required final RegisterDataModel data}) = _$RegisterResponseModelImpl;
@@ -235,6 +237,7 @@ abstract class _RegisterResponseModel implements RegisterResponseModel {
       _$RegisterResponseModelImpl.fromJson;
 
   @override
+  @JsonKey(required: true)
   bool get status;
   @override
   @JsonKey(name: 'status_code')

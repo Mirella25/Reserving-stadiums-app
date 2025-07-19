@@ -13,6 +13,9 @@ import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_button.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_text_field.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
+import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
+
+import '../../../../shared/widgets/loading.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -208,24 +211,29 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           BlocConsumer<RegisterBloc, RegisterState>(
                             listener: (context, state) {
-                              if (state.errorMessage != null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(state.errorMessage!)),
+                              if(state.isLoading){
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (_) => const CustomLoadingPage(),
                                 );
                               }
+                              if (state.errorMessage != null) {
+                                Navigator.pop(context);
+                              CustomSnackbar.show(context, message: state.errorMessage!,isError: true);
+                              }
                               if (state.registerEntity != null) {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => WaitingVerificationPage(),
-                                  ),
-                                );
+                               Navigator.pop(context);
+                               Navigator.pushReplacement(
+                                 context,
+                                 MaterialPageRoute(
+                                   builder: (_) => WaitingVerificationPage(),
+                                 ),
+                               );
                               }
                             },
                             builder: (context, state) {
-                              return state.isLoading
-                                  ? const CircularProgressIndicator()
-                                  : CustomAuthButton(
+                      return CustomAuthButton(
                                       title: AppLocalizations.of(context)!
                                           .continuee,
                                       onPressed: () {

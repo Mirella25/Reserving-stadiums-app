@@ -10,6 +10,7 @@ _$LoginDataModelImpl _$$LoginDataModelImplFromJson(Map<String, dynamic> json) =>
     _$LoginDataModelImpl(
       token: json['token'] as String,
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      profileId: (json['profileId'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$LoginDataModelImplToJson(
@@ -17,4 +18,5 @@ Map<String, dynamic> _$$LoginDataModelImplToJson(
     <String, dynamic>{
       'token': instance.token,
       'user': instance.user,
+      'profileId': instance.profileId,
     };

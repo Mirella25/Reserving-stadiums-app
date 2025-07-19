@@ -99,4 +99,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get letsGetStarted => 'Let\'s Get Started';
+
+  @override
+
+  String get loginwithgoogle => 'Login with Google';
 }

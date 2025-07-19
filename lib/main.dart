@@ -18,11 +18,12 @@ import 'features/auth/domain/usecases/google_login_usecase.dart';
 import 'features/auth/domain/usecases/login_usecase.dart';
 import 'features/auth/presentation/bloc/login/bloc/login_bloc.dart';
 import 'features/auth/presentation/pages/home_page.dart';
+import 'features/auth/presentation/pages/verification_page.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setupDependencies(); // تأكد أنك تستدعي الـ getIt
+  await setupDependencies();
   runApp(
     BlocProvider(
       create: (_) => LanguageCubit()..loadSavedLanguage(),
@@ -34,17 +35,27 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  Future<bool> _hasSeenIntro() async {
+  // Future<bool> _hasSeenIntro() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.getBool('seen_intro') ?? false;
+  // }
+  //
+  //
+  // Future<bool> _hasVerifiedToken() async {
+  //   final authLocal = getIt<AuthLocalDataSource>();
+  //   final token = await authLocal.getCachedToken();
+  //   final isVerified = await authLocal.getIsVerified();
+  //   return token != null && token.isNotEmpty && isVerified == true;
+  // }
+  Future<List<dynamic>> _getInitialStatus() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('seen_intro') ?? false;
-  }
+    final seenIntro = prefs.getBool('seen_intro') ?? false;
 
-
-  Future<bool> _hasVerifiedToken() async {
     final authLocal = getIt<AuthLocalDataSource>();
     final token = await authLocal.getCachedToken();
     final isVerified = await authLocal.getIsVerified();
-    return token != null && token.isNotEmpty && isVerified == true;
+
+    return [seenIntro, token, isVerified];
   }
 
 
@@ -68,27 +79,28 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: FutureBuilder<List<bool>>(
-              future: Future.wait([
-                _hasSeenIntro(),
-                _hasVerifiedToken(),
-              ]),
+            home: FutureBuilder<List<dynamic>>(
+              future: _getInitialStatus(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const SplashScreen();
                 }
 
                 final seenIntro = snapshot.data?[0] ?? false;
-                final isVerified = snapshot.data?[1] ?? false;
+                final token = snapshot.data?[1] as String?;
+                final isVerified = snapshot.data?[2] ?? false;
 
-                if (!seenIntro) {
-                  return const IntroScreen();
+                if (!seenIntro) return const IntroScreen();
+
+                if (token != null && token.isNotEmpty) {
+                  if (isVerified == true) {
+                    return const HomePage();
+                  } else {
+                    return const WaitingVerificationPage();
+                  }
                 }
 
-                if (isVerified) {
-                  return const HomePage();
-                }
-
+                // ما في توكن
                 return BlocProvider(
                   create: (_) => LoginBloc(
                     getIt<LoginUseCase>(),
@@ -99,6 +111,7 @@ class MyApp extends StatelessWidget {
                 );
               },
             ),
+
 
           ),
         );

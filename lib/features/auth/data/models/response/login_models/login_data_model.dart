@@ -10,6 +10,7 @@ class LoginDataModel with _$LoginDataModel {
   const factory LoginDataModel({
     required String token,
     required UserModel user,
+    @Default(0) int profileId,
   }) = _LoginDataModel;
 
   factory LoginDataModel.fromJson(Map<String, dynamic> json) =>
@@ -20,6 +21,7 @@ extension LoginDataModelX on LoginDataModel {
     return LoginEntity(
       token: token,
       user: user.toEntity(),
+        profileId: profileId
     );
   }
 }

@@ -29,5 +29,6 @@
   "didntGetCode": "لم يصلك رمز؟ ",
   "resend": "إعادة الإرسال",
   "emailVerified": "تم التحقق من بريدك الإلكتروني بنجاح!",
-  "letsGetStarted": "لنبدأ الآن"
+  "letsGetStarted": "لنبدأ الآن",
+  "loginwithgoogle":"تسجيل الدخول عبر غوغل"
 }

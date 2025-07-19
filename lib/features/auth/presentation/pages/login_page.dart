@@ -11,6 +11,7 @@ import 'package:reserving_stadiums_app/features/auth/domain/usecases/login_useca
 import 'package:reserving_stadiums_app/features/auth/presentation/bloc/login/bloc/login_bloc.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/register_page.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/verification_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_button.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_text_field.dart';
@@ -18,6 +19,10 @@ import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../main.dart';
+import '../../../../shared/widgets/loading.dart';
+import '../../../../shared/widgets/snackbar.dart';
+import '../../../profile/presentation/pages/profile.dart';
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -122,27 +127,56 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 30.h),
                         BlocConsumer<LoginBloc, LoginState>(
-                          listener: (context, state) async{
-                            if (state.errorMessage != null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(state.errorMessage!)),
-                              );
-                            }
-                            if (state.loginEntity != null) {
-                              final prefs = await SharedPreferences.getInstance();
-                              await prefs.setString('token', state.loginEntity!.token);
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const HomePage(),
-                                ),
-                              );
-                            }
-                          },
-                          builder: (context, state) {
-                            return state.isLoading
-                                ? const CircularProgressIndicator()
-                                : CustomAuthButton(
+                            listener: (context, state) async {
+                              if (state.isLoading) {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (_) => const CustomLoadingPage(),
+                                );
+                              }
+
+                              if (state.errorMessage != null) {
+                                Navigator.of(context).pop();
+
+                                if (state.errorMessage!.toLowerCase().contains("not verified")) {
+
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (_) => const WaitingVerificationPage()),
+                                  );
+                                } else {
+                                  CustomSnackbar.show(context, message: state.errorMessage!, isError: true);
+                                }
+                              }
+
+
+                              if (state.loginEntity != null) {
+                                Navigator.of(context).pop();
+                                CustomSnackbar.show(navigatorKey.currentContext!, message: 'Login Success!', isError: false);
+
+
+                                final prefs = await SharedPreferences.getInstance();
+                                await prefs.setString('token', state.loginEntity!.token);
+
+                                await Future.delayed(const Duration(milliseconds: 2000)); // انتظر ليظهر السناك بار
+
+                                if (state.loginEntity!.profileId == 0) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (_) => const CreateProfilePage()),
+                                  );
+                                } else {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (_) => const HomePage()),
+                                  );
+                                }
+                              }
+                            },
+
+                            builder: (context, state) {
+                           return CustomAuthButton(
                                     title: AppLocalizations.of(context)!.login,
                                     onPressed: () {
                                       if (formKey.currentState!.validate()) {
@@ -242,7 +276,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 SizedBox(width: 10.w),
                                 Text(
-                                  "تسجيل الدخول عبر Google",
+                                  "${AppLocalizations.of(context)!.loginwithgoogle}",
                                   style: TextStyle(
                                     color: Colors.black87,
                                     fontSize: 16.sp,

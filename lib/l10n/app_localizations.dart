@@ -277,6 +277,8 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Let\'s Get Started'**
   String get letsGetStarted;
+
+ String get loginwithgoogle ;
 }
 
 class _AppLocalizationsDelegate

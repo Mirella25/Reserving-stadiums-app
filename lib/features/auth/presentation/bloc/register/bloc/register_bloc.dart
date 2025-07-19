@@ -6,6 +6,9 @@ import 'package:reserving_stadiums_app/core/result/result.dart';
 import 'package:reserving_stadiums_app/features/auth/domain/entities/register_entity.dart';
 import 'package:reserving_stadiums_app/features/auth/domain/usecases/register_usecase.dart';
 
+import '../../../../../../core/dependency_injection/injections.dart';
+import '../../../../data/datasources/auth_local_datasource.dart';
+
 part 'register_event.dart';
 part 'register_state.dart';
 
@@ -28,6 +31,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     final result = await registerUsecase.execute(
         event.email, event.role, event.password, event.confirmPassword);
     if (result is Success<RegisterEntity>) {
+      final authLocal = getIt<AuthLocalDataSource>();
+      await authLocal.clearToken();
+      await authLocal.cacheIsVerified(false);
       emit(state.copyWith(
           isLoading: false, isSuccess: true, registerEntity: result.data,errorMessage: null));
     } else if (result is Error<RegisterEntity>) {

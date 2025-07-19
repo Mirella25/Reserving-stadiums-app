@@ -98,4 +98,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get letsGetStarted => 'لنبدأ الآن';
+
+  @override
+
+  String get loginwithgoogle => "تسجيل الدخول عبر غوغل";
 }
