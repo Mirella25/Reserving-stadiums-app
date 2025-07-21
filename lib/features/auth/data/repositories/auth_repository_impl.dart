@@ -1,3 +1,6 @@
+import 'package:reserving_stadiums_app/features/auth/data/models/request/forget_password/reset_password_request.dart';
+import 'package:reserving_stadiums_app/features/auth/data/models/request/forget_password/reset_password_submit_request.dart';
+
 import 'package:reserving_stadiums_app/features/auth/domain/entities/register_entity.dart';
 
 import '../../../../core/result/result.dart';
@@ -5,6 +8,7 @@ import '../../domain/entities/login_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_local_datasource.dart';
 import '../datasources/auth_remote_datasource.dart';
+import '../models/response/forget_pass/base_response.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remote;
@@ -39,5 +43,12 @@ class AuthRepositoryImpl implements AuthRepository {
       await local.cacheToken(result.data.role);
     }
     return result;
+  }
+
+  Future<Result<BaseResponse>> sendResetPasswordLink(ResetPasswordRequest request) {
+    return remote.sendResetLink(request);
+  }
+  Future<Result<BaseResponse>> resetPassword(ResetPasswordSubmitRequest request) {
+    return remote.resetPassword(request);
   }
 }
