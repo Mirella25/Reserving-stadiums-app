@@ -101,6 +101,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get letsGetStarted => 'Let\'s Get Started';
 
   @override
-
   String get loginwithgoogle => 'Login with Google';
 }

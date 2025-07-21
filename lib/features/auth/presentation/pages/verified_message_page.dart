@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/home_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
-import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile.dart';
+import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_data_page.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 
 import '../../../../main.dart';
@@ -131,8 +130,9 @@ class _VerifiedMessagePageState extends State<VerifiedMessagePage>
                       ),
                       onPressed: () {
                         navigatorKey.currentState?.pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (_) => const CreateProfilePage()),
-                              (route) => false,
+                          MaterialPageRoute(
+                              builder: (_) => const CreateProfileDataPage()),
+                          (route) => false,
                         );
                       },
                       icon:

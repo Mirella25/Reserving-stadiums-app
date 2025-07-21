@@ -278,7 +278,11 @@ abstract class AppLocalizations {
   /// **'Let\'s Get Started'**
   String get letsGetStarted;
 
- String get loginwithgoogle ;
+  /// No description provided for @loginwithgoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Login with Google'**
+  String get loginwithgoogle;
 }
 
 class _AppLocalizationsDelegate

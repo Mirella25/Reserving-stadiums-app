@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

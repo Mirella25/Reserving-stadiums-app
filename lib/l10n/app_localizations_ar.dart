@@ -100,6 +100,5 @@ class AppLocalizationsAr extends AppLocalizations {
   String get letsGetStarted => 'لنبدأ الآن';
 
   @override
-
-  String get loginwithgoogle => "تسجيل الدخول عبر غوغل";
+  String get loginwithgoogle => 'تسجيل الدخول عبر غوغل';
 }

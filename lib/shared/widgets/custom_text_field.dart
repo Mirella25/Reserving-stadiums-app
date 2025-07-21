@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+
+class CustomTextField extends StatelessWidget {
+  final IconData icon;
+  final IconData? suffixIcon;
+  final String hintText;
+  final VoidCallback? onSuffixTap;
+  final bool obscureText;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+
+  const CustomTextField(
+      {super.key,
+      required this.icon,
+      required this.hintText,
+      this.suffixIcon,
+      this.onSuffixTap,
+      this.obscureText = false,
+      this.controller,
+      this.validator,
+      this.keyboardType});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Icon(
+            icon,
+            color: Colors.grey,
+          ),
+        ),
+        Expanded(
+          flex: 4,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: controller,
+              obscureText: obscureText,
+              validator: validator,
+              keyboardType: keyboardType,
+              decoration: InputDecoration(
+                hintStyle: const TextStyle(
+                  color: Colors.grey,
+                  fontFamily: 'Lora',
+                ),
+                hintText: hintText,
+                suffixIcon: GestureDetector(
+                    onTap: onSuffixTap, child: Icon(suffixIcon)),
+                suffixIconColor: Colors.grey,
+                enabledBorder: const UnderlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
+                ),
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

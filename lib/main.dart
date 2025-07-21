@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,18 +9,16 @@ import 'package:reserving_stadiums_app/core/localization/cubit_localization.dart
 import 'package:reserving_stadiums_app/core/navigation/deep_link_handler.dart';
 import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/verified_message_page.dart';
-
 import 'package:reserving_stadiums_app/features/onboarding/presentation/pages/intro_screen.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:reserving_stadiums_app/shared/widgets/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'features/auth/domain/usecases/google_login_usecase.dart';
 import 'features/auth/domain/usecases/login_usecase.dart';
 import 'features/auth/presentation/bloc/login/bloc/login_bloc.dart';
 import 'features/auth/presentation/pages/home_page.dart';
 import 'features/auth/presentation/pages/verification_page.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
@@ -57,7 +57,6 @@ class MyApp extends StatelessWidget {
 
     return [seenIntro, token, isVerified];
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -111,8 +110,6 @@ class MyApp extends StatelessWidget {
                 );
               },
             ),
-
-
           ),
         );
       },

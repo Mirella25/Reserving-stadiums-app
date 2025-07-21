@@ -6,6 +6,10 @@ import 'package:reserving_stadiums_app/features/auth/domain/repositories/auth_re
 import 'package:reserving_stadiums_app/features/auth/domain/usecases/login_usecase.dart';
 import 'package:reserving_stadiums_app/features/auth/domain/usecases/register_usecase.dart';
 import 'package:reserving_stadiums_app/features/auth/domain/usecases/reset_password_send_usecase.dart';
+import 'package:reserving_stadiums_app/features/profile/data/datasources/profile_remote_datasource.dart';
+import 'package:reserving_stadiums_app/features/profile/data/repositories/profile_repository_impl.dart';
+import 'package:reserving_stadiums_app/features/profile/domain/repositories/profile_repository.dart';
+import 'package:reserving_stadiums_app/features/profile/domain/usecases/create_profile_usecase.dart';
 
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/auth/domain/usecases/google_login_usecase.dart';
@@ -16,7 +20,6 @@ import '../network/api_client.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupDependencies() async {
-
   getIt.registerLazySingleton(() => DioClient(AppConstants.baseUrl));
 
   getIt.registerLazySingleton<AuthRemoteDataSource>(
@@ -25,7 +28,6 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<AuthLocalDataSource>(
     () => AuthLocalDataSourceImpl(),
   );
-
 
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
@@ -44,9 +46,23 @@ Future<void> setupDependencies() async {
     () => RegisterUsecase(getIt<AuthRepository>()),
   );
   getIt.registerLazySingleton<SendResetLinkUseCase>(
-        () => SendResetLinkUseCase(getIt<AuthRepository>()),
+    () => SendResetLinkUseCase(getIt<AuthRepository>()),
   );
   getIt.registerLazySingleton<ResetPasswordUseCase>(
-        () => ResetPasswordUseCase(getIt()), // إذا بيحتاج repo
+    () => ResetPasswordUseCase(getIt()), // إذا بيحتاج repo
+  );
+  getIt.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSourceImpl(
+        dioClient: getIt<DioClient>(), local: getIt<AuthLocalDataSource>()),
+  );
+
+  getIt.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(
+      profileRemoteDataSource: getIt<ProfileRemoteDataSource>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<CreateProfileUsecase>(
+    () => CreateProfileUsecase(getIt<ProfileRepository>()),
   );
 }
