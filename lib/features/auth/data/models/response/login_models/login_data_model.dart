@@ -10,7 +10,7 @@ class LoginDataModel with _$LoginDataModel {
   const factory LoginDataModel({
     required String token,
     required UserModel user,
-    @Default(0) int profileId,
+    @JsonKey(name: 'profile_id') @Default(0) int profileId,
   }) = _LoginDataModel;
 
   factory LoginDataModel.fromJson(Map<String, dynamic> json) =>

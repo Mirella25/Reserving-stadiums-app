@@ -31,6 +31,7 @@ mixin _$CreateProfileRequestModel {
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   String? get mine => throw _privateConstructorUsedError;
+  @JsonKey(name: 'Sport')
   String? get sport => throw _privateConstructorUsedError;
   String? get height => throw _privateConstructorUsedError;
   String? get weight => throw _privateConstructorUsedError;
@@ -72,7 +73,7 @@ abstract class $CreateProfileRequestModelCopyWith<$Res> {
       @JsonKey(name: 'phone_number') String? phoneNumber,
       String? gender,
       String? mine,
-      String? sport,
+      @JsonKey(name: 'Sport') String? sport,
       String? height,
       String? weight,
       @JsonKey(name: 'emergency_contact_information')
@@ -339,7 +340,7 @@ class _$CreateProfileRequestModelImpl implements _CreateProfileRequestModel {
       @JsonKey(name: 'phone_number') this.phoneNumber,
       this.gender,
       this.mine,
-      this.sport,
+      @JsonKey(name: 'Sport') this.sport,
       this.height,
       this.weight,
       @JsonKey(name: 'emergency_contact_information')
