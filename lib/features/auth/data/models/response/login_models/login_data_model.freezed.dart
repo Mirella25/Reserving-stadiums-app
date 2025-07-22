@@ -24,6 +24,8 @@ mixin _$LoginDataModel {
   UserModel get user => throw _privateConstructorUsedError;
   @JsonKey(name: 'profile_id')
   int get profileId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'roles')
+  List<String> get roles => throw _privateConstructorUsedError;
 
   /// Serializes this LoginDataModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,7 +46,8 @@ abstract class $LoginDataModelCopyWith<$Res> {
   $Res call(
       {String token,
       UserModel user,
-      @JsonKey(name: 'profile_id') int profileId});
+      @JsonKey(name: 'profile_id') int profileId,
+      @JsonKey(name: 'roles') List<String> roles});
 
   $UserModelCopyWith<$Res> get user;
 }
@@ -67,6 +70,7 @@ class _$LoginDataModelCopyWithImpl<$Res, $Val extends LoginDataModel>
     Object? token = null,
     Object? user = null,
     Object? profileId = null,
+    Object? roles = null,
   }) {
     return _then(_value.copyWith(
       token: null == token
@@ -81,6 +85,10 @@ class _$LoginDataModelCopyWithImpl<$Res, $Val extends LoginDataModel>
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
               as int,
+      roles: null == roles
+          ? _value.roles
+          : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 
@@ -106,7 +114,8 @@ abstract class _$$LoginDataModelImplCopyWith<$Res>
   $Res call(
       {String token,
       UserModel user,
-      @JsonKey(name: 'profile_id') int profileId});
+      @JsonKey(name: 'profile_id') int profileId,
+      @JsonKey(name: 'roles') List<String> roles});
 
   @override
   $UserModelCopyWith<$Res> get user;
@@ -128,6 +137,7 @@ class __$$LoginDataModelImplCopyWithImpl<$Res>
     Object? token = null,
     Object? user = null,
     Object? profileId = null,
+    Object? roles = null,
   }) {
     return _then(_$LoginDataModelImpl(
       token: null == token
@@ -142,6 +152,10 @@ class __$$LoginDataModelImplCopyWithImpl<$Res>
           ? _value.profileId
           : profileId // ignore: cast_nullable_to_non_nullable
               as int,
+      roles: null == roles
+          ? _value._roles
+          : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -152,7 +166,9 @@ class _$LoginDataModelImpl implements _LoginDataModel {
   const _$LoginDataModelImpl(
       {required this.token,
       required this.user,
-      @JsonKey(name: 'profile_id') this.profileId = 0});
+      @JsonKey(name: 'profile_id') this.profileId = 0,
+      @JsonKey(name: 'roles') final List<String> roles = const []})
+      : _roles = roles;
 
   factory _$LoginDataModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LoginDataModelImplFromJson(json);
@@ -164,10 +180,18 @@ class _$LoginDataModelImpl implements _LoginDataModel {
   @override
   @JsonKey(name: 'profile_id')
   final int profileId;
+  final List<String> _roles;
+  @override
+  @JsonKey(name: 'roles')
+  List<String> get roles {
+    if (_roles is EqualUnmodifiableListView) return _roles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_roles);
+  }
 
   @override
   String toString() {
-    return 'LoginDataModel(token: $token, user: $user, profileId: $profileId)';
+    return 'LoginDataModel(token: $token, user: $user, profileId: $profileId, roles: $roles)';
   }
 
   @override
@@ -178,12 +202,14 @@ class _$LoginDataModelImpl implements _LoginDataModel {
             (identical(other.token, token) || other.token == token) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.profileId, profileId) ||
-                other.profileId == profileId));
+                other.profileId == profileId) &&
+            const DeepCollectionEquality().equals(other._roles, _roles));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, token, user, profileId);
+  int get hashCode => Object.hash(runtimeType, token, user, profileId,
+      const DeepCollectionEquality().hash(_roles));
 
   /// Create a copy of LoginDataModel
   /// with the given fields replaced by the non-null parameter values.
@@ -206,7 +232,8 @@ abstract class _LoginDataModel implements LoginDataModel {
   const factory _LoginDataModel(
       {required final String token,
       required final UserModel user,
-      @JsonKey(name: 'profile_id') final int profileId}) = _$LoginDataModelImpl;
+      @JsonKey(name: 'profile_id') final int profileId,
+      @JsonKey(name: 'roles') final List<String> roles}) = _$LoginDataModelImpl;
 
   factory _LoginDataModel.fromJson(Map<String, dynamic> json) =
       _$LoginDataModelImpl.fromJson;
@@ -218,6 +245,9 @@ abstract class _LoginDataModel implements LoginDataModel {
   @override
   @JsonKey(name: 'profile_id')
   int get profileId;
+  @override
+  @JsonKey(name: 'roles')
+  List<String> get roles;
 
   /// Create a copy of LoginDataModel
   /// with the given fields replaced by the non-null parameter values.

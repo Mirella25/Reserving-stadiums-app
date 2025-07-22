@@ -145,7 +145,6 @@ class _LoginPageState extends State<LoginPage> {
                           if (state.errorMessage!
                               .toLowerCase()
                               .contains("not verified")) {
-                            // ✅ خزّن الإيميل هون
                             final prefs = await SharedPreferences.getInstance();
                             await prefs.setString(
                                 'email', emailController.text.trim());
@@ -164,58 +163,51 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         }
 
+
                         if (state.loginEntity != null) {
                           Navigator.of(context).pop();
                           final prefs = await SharedPreferences.getInstance();
 
-                          // خزّن الإيميل دايمًا، لأنه نحتاجه للـ resend
-                          await prefs.setString(
-                              'email', state.loginEntity!.user.email);
-                          print(
-                              "📩 Saved email for resend: ${state.loginEntity!.user.email}");
+                          await prefs.setString('email', state.loginEntity!.user.email);
+                          print("📩 Saved email for resend: ${state.loginEntity!.user.email}");
 
-                          // إذا الحساب مو مفعل → لا تخزن التوكين، ووديه ع صفحة الانتظار
                           if (state.loginEntity!.user.emailVerifiedAt == null) {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      const WaitingVerificationPage()),
+                              MaterialPageRoute(builder: (_) => const WaitingVerificationPage()),
                             );
                             return;
                           }
-                          final role = await authLocal.getCachedRole();
-                          // إذا الحساب مفعل → خزّن التوكين وتابع التنقل العادي
-                          await prefs.setString(
-                              'token', state.loginEntity!.token);
+
+
+                          await prefs.setString('role', state.loginEntity!.roles.first);
+
+                          await prefs.setString('token', state.loginEntity!.token);
                           CustomSnackbar.show(navigatorKey.currentContext!,
                               message: 'Login Success!', isError: false);
 
-                          await Future.delayed(
-                              const Duration(milliseconds: 2000));
+                          await Future.delayed(const Duration(milliseconds: 2000));
 
-                          if (state.loginEntity!.profileId == 0 &&
-                              role == "player") {
+                          final role = state.loginEntity!.roles.first;
+
+                          if (state.loginEntity!.profileId == 0 && role == "player") {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      const CreateProfileDataPage()),
+                              MaterialPageRoute(builder: (_) => const CreateProfileDataPage()),
                             );
                           } else if (role == "stadium_owner") {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                  builder: (_) => const StadiumOwnerHomePage()),
+                              MaterialPageRoute(builder: (_) => const StadiumOwnerHomePage()),
                             );
                           } else {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                  builder: (_) => const HomePage()),
+                              MaterialPageRoute(builder: (_) => const HomePage()),
                             );
                           }
                         }
+
                       },
                       builder: (context, state) {
                         return CustomAuthButton(

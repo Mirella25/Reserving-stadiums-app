@@ -11,6 +11,7 @@ class LoginDataModel with _$LoginDataModel {
     required String token,
     required UserModel user,
     @JsonKey(name: 'profile_id') @Default(0) int profileId,
+    @JsonKey(name: 'roles') @Default([]) List<String> roles,
   }) = _LoginDataModel;
 
   factory LoginDataModel.fromJson(Map<String, dynamic> json) =>
@@ -21,7 +22,8 @@ extension LoginDataModelX on LoginDataModel {
     return LoginEntity(
       token: token,
       user: user.toEntity(),
-        profileId: profileId
+        profileId: profileId,
+      roles: roles,
     );
   }
 }

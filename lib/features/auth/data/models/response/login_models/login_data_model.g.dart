@@ -11,6 +11,9 @@ _$LoginDataModelImpl _$$LoginDataModelImplFromJson(Map<String, dynamic> json) =>
       token: json['token'] as String,
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
       profileId: (json['profile_id'] as num?)?.toInt() ?? 0,
+      roles:
+          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
     );
 
 Map<String, dynamic> _$$LoginDataModelImplToJson(
@@ -19,4 +22,5 @@ Map<String, dynamic> _$$LoginDataModelImplToJson(
       'token': instance.token,
       'user': instance.user,
       'profile_id': instance.profileId,
+      'roles': instance.roles,
     };

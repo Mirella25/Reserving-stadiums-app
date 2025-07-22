@@ -8,14 +8,18 @@ import 'package:reserving_stadiums_app/core/utils/validators.dart';
 import 'package:reserving_stadiums_app/features/auth/domain/usecases/register_usecase.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/bloc/register/bloc/register_bloc.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/stadium_owner_home_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/verification_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_button.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_text_field.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../shared/widgets/loading.dart';
+import '../../../profile/presentation/pages/profile_data_page.dart';
+import 'home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -210,28 +214,38 @@ class _RegisterPageState extends State<RegisterPage> {
                             height: 25.h,
                           ),
                           BlocConsumer<RegisterBloc, RegisterState>(
-                            listener: (context, state) {
-                              if(state.isLoading){
+                            listener: (context, state) async {
+                              if (state.isLoading) {
                                 showDialog(
                                   context: context,
                                   barrierDismissible: false,
                                   builder: (_) => const CustomLoadingPage(),
                                 );
                               }
+
                               if (state.errorMessage != null) {
                                 Navigator.pop(context);
-                              CustomSnackbar.show(context, message: state.errorMessage!,isError: true);
+                                CustomSnackbar.show(context, message: state.errorMessage!, isError: true);
                               }
+
                               if (state.registerEntity != null) {
-                               Navigator.pop(context);
-                               Navigator.pushReplacement(
-                                 context,
-                                 MaterialPageRoute(
-                                   builder: (_) => WaitingVerificationPage(),
-                                 ),
-                               );
+                                Navigator.pop(context);
+
+                                final prefs = await SharedPreferences.getInstance();
+                                await prefs.setString('email', emailController.text.trim());
+                                await prefs.setString('role', state.registerEntity!.role);
+                                print("✅ Saved role after register: ${state.registerEntity!.role}");
+
+                                // ❗️توجيه المستخدم إلى صفحة انتظار التفعيل فقط
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => const WaitingVerificationPage()),
+                                );
                               }
+
+
                             },
+
                             builder: (context, state) {
                       return CustomAuthButton(
                                       title: AppLocalizations.of(context)!
