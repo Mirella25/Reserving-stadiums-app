@@ -16,7 +16,7 @@ _$CreateProfileRequestModelImpl _$$CreateProfileRequestModelImplFromJson(
       phoneNumber: json['phone_number'] as String?,
       gender: json['gender'] as String?,
       mine: json['mine'] as String?,
-      sport: json['sport'] as String?,
+      sport: json['Sport'] as String?,
       height: json['height'] as String?,
       weight: json['weight'] as String?,
       emergencyContactInformation:
@@ -39,7 +39,7 @@ Map<String, dynamic> _$$CreateProfileRequestModelImplToJson(
       'phone_number': instance.phoneNumber,
       'gender': instance.gender,
       'mine': instance.mine,
-      'sport': instance.sport,
+      'Sport': instance.sport,
       'height': instance.height,
       'weight': instance.weight,
       'emergency_contact_information': instance.emergencyContactInformation,

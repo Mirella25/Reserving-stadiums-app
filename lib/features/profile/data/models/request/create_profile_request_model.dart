@@ -16,7 +16,7 @@ class CreateProfileRequestModel with _$CreateProfileRequestModel {
     @JsonKey(name: 'phone_number') String? phoneNumber,
     String? gender,
     String? mine,
-    String? sport,
+    @JsonKey(name: 'Sport') String? sport,
     String? height,
     String? weight,
     @JsonKey(name: 'emergency_contact_information')

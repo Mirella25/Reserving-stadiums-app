@@ -209,7 +209,7 @@ abstract class _$$CreateProfileRequestModelImplCopyWith<$Res>
       @JsonKey(name: 'phone_number') String? phoneNumber,
       String? gender,
       String? mine,
-      String? sport,
+      @JsonKey(name: 'Sport') String? sport,
       String? height,
       String? weight,
       @JsonKey(name: 'emergency_contact_information')
@@ -372,6 +372,7 @@ class _$CreateProfileRequestModelImpl implements _CreateProfileRequestModel {
   @override
   final String? mine;
   @override
+  @JsonKey(name: 'Sport')
   final String? sport;
   @override
   final String? height;
@@ -488,7 +489,7 @@ abstract class _CreateProfileRequestModel implements CreateProfileRequestModel {
       @JsonKey(name: 'phone_number') final String? phoneNumber,
       final String? gender,
       final String? mine,
-      final String? sport,
+      @JsonKey(name: 'Sport') final String? sport,
       final String? height,
       final String? weight,
       @JsonKey(name: 'emergency_contact_information')
@@ -522,6 +523,7 @@ abstract class _CreateProfileRequestModel implements CreateProfileRequestModel {
   @override
   String? get mine;
   @override
+  @JsonKey(name: 'Sport')
   String? get sport;
   @override
   String? get height;
