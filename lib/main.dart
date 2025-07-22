@@ -9,6 +9,7 @@ import 'package:reserving_stadiums_app/core/localization/cubit_localization.dart
 import 'package:reserving_stadiums_app/core/navigation/deep_link_handler.dart';
 import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/stadium_owner_home_page.dart';
 import 'package:reserving_stadiums_app/features/onboarding/presentation/pages/intro_screen.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:reserving_stadiums_app/shared/widgets/splash_screen.dart';
@@ -54,8 +55,8 @@ class MyApp extends StatelessWidget {
     final authLocal = getIt<AuthLocalDataSource>();
     final token = await authLocal.getCachedToken();
     final isVerified = await authLocal.getIsVerified();
-
-    return [seenIntro, token, isVerified];
+    final role = await authLocal.getCachedRole();
+    return [seenIntro, token, isVerified, role];
   }
 
   @override
@@ -88,15 +89,25 @@ class MyApp extends StatelessWidget {
                 final seenIntro = snapshot.data?[0] ?? false;
                 final token = snapshot.data?[1] as String?;
                 final isVerified = snapshot.data?[2] ?? false;
+                final role = snapshot.data?[3] as String?;
 
                 if (!seenIntro) return const IntroScreen();
 
                 if (token != null && token.isNotEmpty) {
-                  if (isVerified == true) {
-                    return const HomePage();
-                  } else {
+                  if (!isVerified) {
                     return const WaitingVerificationPage();
                   }
+
+                  if (role == 'stadium_owner') {
+                    return const StadiumOwnerHomePage();
+                  } else {
+                    return const HomePage();
+                  }
+                  // if (isVerified == true) {
+                  //   return const HomePage();
+                  // } else {
+                  //   return const WaitingVerificationPage();
+                  // }
                 }
 
                 // ما في توكن

@@ -52,6 +52,7 @@ class _CreateProfilePhotoPageState extends State<CreateProfilePhotoPage> {
                     }
 
                     if (state.isSuccess) {
+                      Navigator.pop(context);
                       CustomSnackbar.show(context,
                           message: 'Profile created successfully!',
                           isError: false);

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
+import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
+import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/home_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_data_page.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
@@ -26,6 +29,7 @@ class _VerifiedMessagePageState extends State<VerifiedMessagePage>
   late final AnimationController _buttonController;
   late final Animation<Offset> _buttonOffset;
   late final Animation<double> _buttonOpacity;
+  final authLocal = getIt<AuthLocalDataSource>();
 
   @override
   void initState() {
@@ -128,12 +132,20 @@ class _VerifiedMessagePageState extends State<VerifiedMessagePage>
                           borderRadius: BorderRadius.circular(30.r),
                         ),
                       ),
-                      onPressed: () {
-                        navigatorKey.currentState?.pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (_) => const CreateProfileDataPage()),
-                          (route) => false,
-                        );
+                      onPressed: () async {
+                        final role = await authLocal.getCachedRole();
+                        if (role == "player") {
+                          navigatorKey.currentState?.pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (_) => const CreateProfileDataPage()),
+                            (route) => false,
+                          );
+                        } else if (role == "stadium_owner") {
+                          navigatorKey.currentState?.pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (_) => const HomePage()),
+                            (route) => false,
+                          );
+                        }
                       },
                       icon:
                           const Icon(Icons.arrow_forward, color: Colors.white),

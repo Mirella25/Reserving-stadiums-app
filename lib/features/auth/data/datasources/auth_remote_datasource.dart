@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:reserving_stadiums_app/core/result/result.dart';
 import 'package:reserving_stadiums_app/features/auth/data/models/request/forget_password/reset_password_submit_request.dart';
 import 'package:reserving_stadiums_app/features/auth/data/models/request/register/register_request_model.dart';
@@ -23,7 +21,8 @@ abstract class AuthRemoteDataSource {
   Future<Result<RegisterEntity>> register(
       String email, String role, String password, String confirmPassword);
   Future<Result<BaseResponse>> sendResetLink(ResetPasswordRequest request);
-  Future<Result<BaseResponse>> resetPassword(ResetPasswordSubmitRequest request);
+  Future<Result<BaseResponse>> resetPassword(
+      ResetPasswordSubmitRequest request);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -50,9 +49,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         'id_token': idToken,
       },
       fromJson: (json) => LoginResponseModel.fromJson(json).data.toEntity(),
-
     );
-
   }
 
   @override
@@ -74,14 +71,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<Result<BaseResponse>> sendResetLink(ResetPasswordRequest request) {
-return dioClient.callApi( endpoint: 'password/forgot',
-  data: request.toJson(),
-  fromJson: (json) => BaseResponse.fromJson(json),
-  method: 'POST'
-);
+    return dioClient.callApi(
+        endpoint: 'password/forgot',
+        data: request.toJson(),
+        fromJson: (json) => BaseResponse.fromJson(json),
+        method: 'POST');
   }
 
-  Future<Result<BaseResponse>> resetPassword(ResetPasswordSubmitRequest request) async {
+  Future<Result<BaseResponse>> resetPassword(
+      ResetPasswordSubmitRequest request) async {
     return dioClient.callApi<BaseResponse>(
       endpoint: '/password/reset',
       fromJson: (json) => BaseResponse.fromJson(json),

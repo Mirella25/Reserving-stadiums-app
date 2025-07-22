@@ -1,3 +1,5 @@
+// ignore: unnecessary_import
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
@@ -9,7 +11,8 @@ class WaitingVerificationPage extends StatefulWidget {
   const WaitingVerificationPage({super.key});
 
   @override
-  State<WaitingVerificationPage> createState() => _WaitingVerificationPageState();
+  State<WaitingVerificationPage> createState() =>
+      _WaitingVerificationPageState();
 }
 
 class _WaitingVerificationPageState extends State<WaitingVerificationPage> {
@@ -52,7 +55,8 @@ class _WaitingVerificationPageState extends State<WaitingVerificationPage> {
       }
     } catch (e) {
       print(" Resend failed: $e");
-      CustomSnackbar.show(context, message: ' حدث خطأ أثناء الإرسال', isError: true);
+      CustomSnackbar.show(context,
+          message: ' حدث خطأ أثناء الإرسال', isError: true);
     } finally {
       setState(() => isSending = false);
     }
@@ -69,7 +73,11 @@ class _WaitingVerificationPageState extends State<WaitingVerificationPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.email_outlined, size: 80, color: AppColors.primaryColor,),
+                  const Icon(
+                    Icons.email_outlined,
+                    size: 80,
+                    color: AppColors.primaryColor,
+                  ),
                   const SizedBox(height: 24),
                   const Text(
                     'تم إرسال رابط التحقق إلى بريدك الإلكتروني:',
@@ -87,16 +95,21 @@ class _WaitingVerificationPageState extends State<WaitingVerificationPage> {
                       ),
                     ),
                   const SizedBox(height: 32),
-
-
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: isSending ? null : _resendVerification,
-                      icon: const Icon(Icons.refresh,color: AppColors.backgroundColor,),
-                      label: const Text('إعادة إرسال الرابط',style: TextStyle(fontFamily: 'Montserrat',color: Colors.white),),
+                      icon: const Icon(
+                        Icons.refresh,
+                        color: AppColors.backgroundColor,
+                      ),
+                      label: const Text(
+                        'إعادة إرسال الرابط',
+                        style: TextStyle(
+                            fontFamily: 'Montserrat', color: Colors.white),
+                      ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:AppColors.primaryColor,
+                        backgroundColor: AppColors.primaryColor,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         textStyle: const TextStyle(
                           fontSize: 16,
@@ -108,7 +121,6 @@ class _WaitingVerificationPageState extends State<WaitingVerificationPage> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 24),
                   const Text(
                     'يرجى التحقق من بريدك.\nسيتم تأكيد الحساب تلقائيًا عند الضغط على الرابط.',
@@ -118,8 +130,6 @@ class _WaitingVerificationPageState extends State<WaitingVerificationPage> {
               ),
             ),
           ),
-
-
           if (isSending)
             Positioned.fill(
               child: Container(

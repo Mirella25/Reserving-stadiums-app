@@ -40,15 +40,18 @@ class AuthRepositoryImpl implements AuthRepository {
     final result =
         await remote.register(email, role, password, confirmPassword);
     if (result is Success<RegisterEntity>) {
-      await local.cacheToken(result.data.role);
+      await local.cacheRole(result.data.role);
     }
     return result;
   }
 
-  Future<Result<BaseResponse>> sendResetPasswordLink(ResetPasswordRequest request) {
+  Future<Result<BaseResponse>> sendResetPasswordLink(
+      ResetPasswordRequest request) {
     return remote.sendResetLink(request);
   }
-  Future<Result<BaseResponse>> resetPassword(ResetPasswordSubmitRequest request) {
+
+  Future<Result<BaseResponse>> resetPassword(
+      ResetPasswordSubmitRequest request) {
     return remote.resetPassword(request);
   }
 }

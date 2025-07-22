@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/home_page.dart';
 import 'package:uni_links/uni_links.dart';
 import 'dart:async';
 
@@ -74,7 +73,7 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
 
       navigatorKey.currentState?.pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const VerifiedMessagePage()),
-            (route) => false,
+        (route) => false,
       );
     } else {
       print('⚠️ Missing token or email in email verification link');
