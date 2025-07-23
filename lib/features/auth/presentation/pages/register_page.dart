@@ -8,7 +8,6 @@ import 'package:reserving_stadiums_app/core/utils/validators.dart';
 import 'package:reserving_stadiums_app/features/auth/domain/usecases/register_usecase.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/bloc/register/bloc/register_bloc.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/stadium_owner_home_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/verification_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_button.dart';
@@ -18,8 +17,6 @@ import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../shared/widgets/loading.dart';
-import '../../../profile/presentation/pages/profile_data_page.dart';
-import 'home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -190,24 +187,23 @@ class _RegisterPageState extends State<RegisterPage> {
                           BlocBuilder<RegisterBloc, RegisterState>(
                             builder: (context, state) {
                               return CustomAuthTextField(
-                                icon: Icons.lock_outline,
-                                obscureText: state.isPasswordConfirmObscured,
-                                hintText: AppLocalizations.of(context)!
-                                    .confirmPassword,
-                                suffixIcon: state.isPasswordConfirmObscured
-                                    ? Icons.visibility_off_outlined
-                                    : Icons.visibility_outlined,
-                                validator: (value) => Validators.combine([
-                                  Validators.required(),
-                                  Validators.confirmPassword(
-                                    passwordController.text,
-                                  )
-                                ])(value),
-                                onSuffixTap: () => context
-                                    .read<RegisterBloc>()
-                                    .add(TogglePasswordConfirmVisibility()),
-                                  controller: confirmPasswordController
-                              );
+                                  icon: Icons.lock_outline,
+                                  obscureText: state.isPasswordConfirmObscured,
+                                  hintText: AppLocalizations.of(context)!
+                                      .confirmPassword,
+                                  suffixIcon: state.isPasswordConfirmObscured
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                  validator: (value) => Validators.combine([
+                                        Validators.required(),
+                                        Validators.confirmPassword(
+                                          passwordController.text,
+                                        )
+                                      ])(value),
+                                  onSuffixTap: () => context
+                                      .read<RegisterBloc>()
+                                      .add(TogglePasswordConfirmVisibility()),
+                                  controller: confirmPasswordController);
                             },
                           ),
                           SizedBox(
@@ -225,54 +221,55 @@ class _RegisterPageState extends State<RegisterPage> {
 
                               if (state.errorMessage != null) {
                                 Navigator.pop(context);
-                                CustomSnackbar.show(context, message: state.errorMessage!, isError: true);
+                                CustomSnackbar.show(context,
+                                    message: state.errorMessage!,
+                                    isError: true);
                               }
 
                               if (state.registerEntity != null) {
                                 Navigator.pop(context);
 
-                                final prefs = await SharedPreferences.getInstance();
-                                await prefs.setString('email', emailController.text.trim());
-                                await prefs.setString('role', state.registerEntity!.role);
-                                print("✅ Saved role after register: ${state.registerEntity!.role}");
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.setString(
+                                    'email', emailController.text.trim());
+                                await prefs.setString(
+                                    'role', state.registerEntity!.role);
+                                print(
+                                    "✅ Saved role after register: ${state.registerEntity!.role}");
 
                                 // ❗️توجيه المستخدم إلى صفحة انتظار التفعيل فقط
                                 Navigator.pushReplacement(
                                   context,
-                                  MaterialPageRoute(builder: (_) => const WaitingVerificationPage()),
+                                  MaterialPageRoute(
+                                      builder: (_) =>
+                                          const WaitingVerificationPage()),
                                 );
                               }
-
-
                             },
-
                             builder: (context, state) {
-                      return CustomAuthButton(
-                                      title: AppLocalizations.of(context)!
-                                          .continuee,
-                                      onPressed: () {
-                                        if (formKey.currentState!.validate() &&
-                                            selectedRole != null) {
-                                          final email =
-                                              emailController.text.trim();
-                                          final password =
-                                              passwordController.text.trim();
-                                          final confirmPassword =
-                                              confirmPasswordController.text
-                                                  .trim();
+                              return CustomAuthButton(
+                                title: AppLocalizations.of(context)!.continuee,
+                                onPressed: () {
+                                  if (formKey.currentState!.validate() &&
+                                      selectedRole != null) {
+                                    final email = emailController.text.trim();
+                                    final password =
+                                        passwordController.text.trim();
+                                    final confirmPassword =
+                                        confirmPasswordController.text.trim();
 
-                                          context.read<RegisterBloc>().add(
-                                                RegisterSubmitted(
-                                                  email: email,
-                                                  password: password,
-                                                  confirmPassword:
-                                                      confirmPassword,
-                                                  role: selectedRole!,
-                                                ),
-                                              );
-                                        }
-                                      },
-                                    );
+                                    context.read<RegisterBloc>().add(
+                                          RegisterSubmitted(
+                                            email: email,
+                                            password: password,
+                                            confirmPassword: confirmPassword,
+                                            role: selectedRole!,
+                                          ),
+                                        );
+                                  }
+                                },
+                              );
                             },
                           ),
                           SizedBox(

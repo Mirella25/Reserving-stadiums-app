@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:uni_links/uni_links.dart';
 import 'dart:async';
 
 import '../../features/auth/data/datasources/auth_local_datasource.dart';
-import '../../features/auth/presentation/pages/home_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
-import '../../features/auth/presentation/pages/stadium_owner_home_page.dart';
+
 import '../../features/auth/presentation/pages/verified_message_page.dart';
 
-import '../../features/profile/presentation/pages/profile_data_page.dart';
 import '../../main.dart';
 import '../dependency_injection/injections.dart';
 
@@ -78,14 +76,12 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
 
       navigatorKey.currentState?.pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const VerifiedMessagePage()),
-            (route) => false,
+        (route) => false,
       );
     } else {
       print('⚠️ Missing token or email in email verification link');
     }
   }
-
-
 
   void _handleResetPassword(Uri uri) {
     final token = uri.queryParameters['token'];

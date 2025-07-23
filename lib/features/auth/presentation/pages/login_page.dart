@@ -11,11 +11,11 @@ import 'package:reserving_stadiums_app/features/auth/domain/usecases/login_useca
 import 'package:reserving_stadiums_app/features/auth/presentation/bloc/login/bloc/login_bloc.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/register_page.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/stadium_owner_home_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/verification_page.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_button.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_text_field.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner_shell.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_data_page.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -25,7 +25,7 @@ import '../../../../main.dart';
 import '../../../../shared/widgets/loading.dart';
 import '../../../../shared/widgets/snackbar.dart';
 
-import 'home_page.dart';
+import '../../../home/presentation/pages/player_home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -163,51 +163,60 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         }
 
-
                         if (state.loginEntity != null) {
                           Navigator.of(context).pop();
                           final prefs = await SharedPreferences.getInstance();
 
-                          await prefs.setString('email', state.loginEntity!.user.email);
-                          print("📩 Saved email for resend: ${state.loginEntity!.user.email}");
+                          await prefs.setString(
+                              'email', state.loginEntity!.user.email);
+                          print(
+                              "📩 Saved email for resend: ${state.loginEntity!.user.email}");
 
                           if (state.loginEntity!.user.emailVerifiedAt == null) {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => const WaitingVerificationPage()),
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      const WaitingVerificationPage()),
                             );
                             return;
                           }
 
+                          await prefs.setString(
+                              'role', state.loginEntity!.roles.first);
 
-                          await prefs.setString('role', state.loginEntity!.roles.first);
-
-                          await prefs.setString('token', state.loginEntity!.token);
+                          await prefs.setString(
+                              'token', state.loginEntity!.token);
                           CustomSnackbar.show(navigatorKey.currentContext!,
                               message: 'Login Success!', isError: false);
 
-                          await Future.delayed(const Duration(milliseconds: 2000));
+                          await Future.delayed(
+                              const Duration(milliseconds: 2000));
 
                           final role = state.loginEntity!.roles.first;
 
-                          if (state.loginEntity!.profileId == 0 && role == "player") {
+                          if (state.loginEntity!.profileId == 0 &&
+                              role == "player") {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => const CreateProfileDataPage()),
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      const CreateProfileDataPage()),
                             );
                           } else if (role == "stadium_owner") {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => const StadiumOwnerHomePage()),
+                              MaterialPageRoute(
+                                  builder: (_) => const StadiumOwnerShell()),
                             );
                           } else {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => const HomePage()),
+                              MaterialPageRoute(
+                                  builder: (_) => const HomePage()),
                             );
                           }
                         }
-
                       },
                       builder: (context, state) {
                         return CustomAuthButton(

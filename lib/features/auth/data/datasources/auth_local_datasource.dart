@@ -6,6 +6,7 @@ abstract class AuthLocalDataSource {
   Future<String?> getCachedToken();
   Future<String?> getCachedRole();
   Future<void> clearToken();
+  Future<void> clearRole();
   Future<void> cacheIsVerified(bool value);
   Future<bool?> getIsVerified();
 }
@@ -54,5 +55,11 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   Future<String?> getCachedRole() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_roleKey);
+  }
+
+  @override
+  Future<void> clearRole() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_roleKey);
   }
 }

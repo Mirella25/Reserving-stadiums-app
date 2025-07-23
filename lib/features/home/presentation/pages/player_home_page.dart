@@ -6,7 +6,7 @@ import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_pa
 
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/dependency_injection/injections.dart';
-import '../../data/datasources/auth_local_datasource.dart';
+import '../../../auth/data/datasources/auth_local_datasource.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,7 +16,6 @@ class HomePage extends StatelessWidget {
     final token = prefs.getString('token'); // 👈 خزن التوكن أولاً
 
     try {
-
       if (token != null) {
         final dio = Dio();
         await dio.post(
@@ -25,12 +24,13 @@ class HomePage extends StatelessWidget {
         );
       }
       if (token == null || token.isEmpty) {
-        CustomSnackbar.show(context, message: 'Token مفقود. تسجيل الخروج المحلي فقط.');
+        CustomSnackbar.show(context,
+            message: 'Token مفقود. تسجيل الخروج المحلي فقط.');
         await prefs.clear();
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (_) => const LoginPage()),
-              (route) => false,
+          (route) => false,
         );
         return;
       }
@@ -45,17 +45,17 @@ class HomePage extends StatelessWidget {
       Future.delayed(Duration(seconds: 2));
       CustomSnackbar.show(context, message: 'تم تسجيل الخروج بنجاح ✅');
     } catch (e) {
-      CustomSnackbar.show(context, message: '❌ فشل تسجيل الخروج من الخادم', isError: true);
+      CustomSnackbar.show(context,
+          message: '❌ فشل تسجيل الخروج من الخادم', isError: true);
       print("Logout error: $e");
     }
 
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (_) => const LoginPage()),
-          (route) => false,
+      (route) => false,
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,6 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-
       body: Column(
         children: [
           const Center(
@@ -80,14 +79,12 @@ class HomePage extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
-            _logout(context);
+              _logout(context);
             },
             child: const Text("logout"),
           ),
-
         ],
       ),
-
     );
   }
 }

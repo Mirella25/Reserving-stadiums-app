@@ -6,8 +6,8 @@ import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
 import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/home_page.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/stadium_owner_home_page.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/pages/player_home_page.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner_shell.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_data_page.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
@@ -134,33 +134,32 @@ class _VerifiedMessagePageState extends State<VerifiedMessagePage>
                           borderRadius: BorderRadius.circular(30.r),
                         ),
                       ),
+                      onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        final role = prefs.getString('role');
+                        final profileId = prefs.getInt('profile_id') ?? 0;
 
-                          onPressed: () async {
-                            final prefs = await SharedPreferences.getInstance();
-                            final role = prefs.getString('role');
-                            final profileId = prefs.getInt('profile_id') ?? 0;
-
-                            if (role == "player" && profileId == 0) {
-                              navigatorKey.currentState?.pushAndRemoveUntil(
-                                MaterialPageRoute(builder: (_) => const CreateProfileDataPage()),
-                                    (route) => false,
-                              );
-                            } else if (role == "stadium_owner") {
-                              navigatorKey.currentState?.pushAndRemoveUntil(
-                                MaterialPageRoute(builder: (_) => const StadiumOwnerHomePage()),
-                                    (route) => false,
-                              );
-                            } else {
-                              navigatorKey.currentState?.pushAndRemoveUntil(
-                                MaterialPageRoute(builder: (_) => const HomePage()),
-                                    (route) => false,
-                              );
-
-                          };
-
-                        },
-
-                        icon:
+                        if (role == "player" && profileId == 0) {
+                          navigatorKey.currentState?.pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (_) => const CreateProfileDataPage()),
+                            (route) => false,
+                          );
+                        } else if (role == "stadium_owner") {
+                          navigatorKey.currentState?.pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (_) => const StadiumOwnerShell()),
+                            (route) => false,
+                          );
+                        } else {
+                          navigatorKey.currentState?.pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (_) => const HomePage()),
+                            (route) => false,
+                          );
+                        }
+                        ;
+                      },
+                      icon:
                           const Icon(Icons.arrow_forward, color: Colors.white),
                       label: Text(
                         AppLocalizations.of(context)!.letsGetStarted,

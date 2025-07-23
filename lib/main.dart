@@ -9,7 +9,8 @@ import 'package:reserving_stadiums_app/core/localization/cubit_localization.dart
 import 'package:reserving_stadiums_app/core/navigation/deep_link_handler.dart';
 import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/stadium_owner_home_page.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/pages/player_home_page.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner_shell.dart';
 import 'package:reserving_stadiums_app/features/onboarding/presentation/pages/intro_screen.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:reserving_stadiums_app/shared/widgets/splash_screen.dart';
@@ -17,7 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'features/auth/domain/usecases/google_login_usecase.dart';
 import 'features/auth/domain/usecases/login_usecase.dart';
 import 'features/auth/presentation/bloc/login/bloc/login_bloc.dart';
-import 'features/auth/presentation/pages/home_page.dart';
+
 import 'features/auth/presentation/pages/verification_page.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -99,7 +100,7 @@ class MyApp extends StatelessWidget {
                   }
 
                   if (role == 'stadium_owner') {
-                    return const StadiumOwnerHomePage();
+                    return const StadiumOwnerShell();
                   } else {
                     return const HomePage();
                   }
