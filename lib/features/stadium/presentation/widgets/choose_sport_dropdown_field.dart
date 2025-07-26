@@ -1,46 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:reserving_stadiums_app/features/sport/domain/entities/sport_entity.dart';
 
-class CustomDropdownField extends StatelessWidget {
-  final String hintText;
-  final List<DropdownMenuItem<dynamic>> itemList;
+class ChooseSportDropdownField extends StatelessWidget {
   final String? Function(dynamic) onChanged;
-  final IconData icon;
-  final String? Function(dynamic)? validator;
-  const CustomDropdownField(
-      {super.key,
-      required this.hintText,
-      required this.itemList,
-      required this.onChanged,
-      required this.icon,
-      this.validator});
+  final List<DropdownMenuItem<SportEntity>>? items;
+  final SportEntity? selectedSport;
+  const ChooseSportDropdownField(
+      {super.key, required this.onChanged, this.items, this.selectedSport});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
+        const Expanded(
           flex: 1,
           child: Icon(
-            icon,
+            Icons.sports,
             color: Colors.grey,
           ),
         ),
         Expanded(
           flex: 4,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: DropdownButtonFormField<dynamic>(
-              validator: validator,
+            padding: EdgeInsets.all(8.0.w),
+            child: DropdownButtonFormField<SportEntity>(
               iconEnabledColor: Colors.grey,
-              hint: Text(
-                hintText,
-                style: const TextStyle(
+              hint: const Text(
+                "Sport",
+                style: TextStyle(
                   color: Colors.grey,
                   fontFamily: 'Lora',
                 ),
               ),
-              items: itemList,
-              onChanged: onChanged,
               decoration: const InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide:
@@ -51,6 +43,10 @@ class CustomDropdownField extends StatelessWidget {
                       BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
                 ),
               ),
+              value: selectedSport,
+              validator: (val) => val == null ? "Required field" : null,
+              onChanged: onChanged,
+              items: items,
             ),
           ),
         ),

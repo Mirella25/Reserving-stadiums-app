@@ -1,9 +1,16 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
+import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
 import 'package:reserving_stadiums_app/features/home/presentation/widgets/custom_grid_card.dart';
+import 'package:reserving_stadiums_app/features/sport/domain/usecases/get_sports_usecase.dart';
+import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/usecases/create_stadium_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/pages/add_stadium_page.dart';
 
 class StadiumOwnerHomePage extends StatelessWidget {
   const StadiumOwnerHomePage({super.key});
@@ -82,7 +89,21 @@ class StadiumOwnerHomePage extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                  create: (_) => StadiumBloc(
+                                      getIt<CreateStadiumUsecase>())),
+                              BlocProvider(
+                                  create: (_) =>
+                                      SportBloc(getIt<GetSportsUsecase>())),
+                            ],
+                            child: const AddStadiumPage(),
+                          ),
+                        ));
+                      },
                       icon: Icon(
                         Icons.add_circle_outline,
                         color: Colors.grey[700],

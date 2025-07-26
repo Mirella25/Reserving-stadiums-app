@@ -10,6 +10,16 @@ import 'package:reserving_stadiums_app/features/profile/data/datasources/profile
 import 'package:reserving_stadiums_app/features/profile/data/repositories/profile_repository_impl.dart';
 import 'package:reserving_stadiums_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:reserving_stadiums_app/features/profile/domain/usecases/create_profile_usecase.dart';
+import 'package:reserving_stadiums_app/features/sport/data/datasources/sport_remote_datasource.dart';
+import 'package:reserving_stadiums_app/features/sport/data/repositories/sport_repository_impl.dart';
+import 'package:reserving_stadiums_app/features/sport/domain/repositories/sport_repository.dart';
+import 'package:reserving_stadiums_app/features/sport/domain/usecases/get_sports_usecase.dart';
+import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadium/data/datasources/stadium_remote_datasource.dart';
+import 'package:reserving_stadiums_app/features/stadium/data/repositories/stadium_repository_impl.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/repositories/stadium_repository.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/usecases/create_stadium_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_bloc.dart';
 
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/auth/domain/usecases/google_login_usecase.dart';
@@ -65,4 +75,21 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<CreateProfileUsecase>(
     () => CreateProfileUsecase(getIt<ProfileRepository>()),
   );
+  getIt.registerLazySingleton<SportRemoteDataSource>(() =>
+      SportRemoteDataSourceImpl(
+          getIt<DioClient>(), getIt<AuthLocalDataSource>()));
+  getIt.registerLazySingleton<SportRepository>(
+      () => SportRepositoryImpl(getIt<SportRemoteDataSource>()));
+  getIt.registerLazySingleton<GetSportsUsecase>(
+      () => GetSportsUsecase(sportRepository: getIt<SportRepository>()));
+  getIt.registerLazySingleton<StadiumRemoteDataSource>(() =>
+      StadiumRemoteDataSourceImpl(
+          dioClient: getIt<DioClient>(), local: getIt<AuthLocalDataSource>()));
+  getIt.registerLazySingleton<StadiumRepository>(() => StadiumRepositoryImpl(
+      stadiumRemoteDataSource: getIt<StadiumRemoteDataSource>()));
+  getIt.registerLazySingleton<CreateStadiumUsecase>(() =>
+      CreateStadiumUsecase(stadiumRepository: getIt<StadiumRepository>()));
+  getIt.registerFactory<SportBloc>(() => SportBloc(getIt<GetSportsUsecase>()));
+  getIt.registerFactory<StadiumBloc>(
+      () => StadiumBloc(getIt<CreateStadiumUsecase>()));
 }

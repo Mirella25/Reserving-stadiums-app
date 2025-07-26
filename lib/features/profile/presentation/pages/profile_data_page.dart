@@ -186,7 +186,7 @@ class _CreateProfilePageState extends State<CreateProfileDataPage> {
                                             child: Text("Basketball"),
                                           ),
                                         ],
-                                        onChanged: (String? value) {
+                                        onChanged: (value) {
                                           if (value != null) {
                                             setState(() {
                                               selectedSport = value;
@@ -212,7 +212,7 @@ class _CreateProfilePageState extends State<CreateProfileDataPage> {
                                             child: Text("Female"),
                                           ),
                                         ],
-                                        onChanged: (String? value) {
+                                        onChanged: (value) {
                                           if (value != null) {
                                             setState(() {
                                               selectedGender = value;
