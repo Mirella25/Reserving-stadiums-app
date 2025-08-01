@@ -25,7 +25,7 @@ import '../../../../main.dart';
 import '../../../../shared/widgets/loading.dart';
 import '../../../../shared/widgets/snackbar.dart';
 
-import '../../../home/presentation/pages/player_home_page.dart';
+import '../../../home/presentation/pages/player/player_home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

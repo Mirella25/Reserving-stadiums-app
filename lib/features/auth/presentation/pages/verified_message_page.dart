@@ -6,7 +6,7 @@ import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/constants/app_images.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
 import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local_datasource.dart';
-import 'package:reserving_stadiums_app/features/home/presentation/pages/player_home_page.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/pages/player/player_home_page.dart';
 import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner_shell.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_data_page.dart';

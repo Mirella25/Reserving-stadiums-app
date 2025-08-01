@@ -4,9 +4,9 @@ import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
 
-import '../../../../core/constants/app_strings.dart';
-import '../../../../core/dependency_injection/injections.dart';
-import '../../../auth/data/datasources/auth_local_datasource.dart';
+import '../../../../../core/constants/app_strings.dart';
+import '../../../../../core/dependency_injection/injections.dart';
+import '../../../../auth/data/datasources/auth_local_datasource.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

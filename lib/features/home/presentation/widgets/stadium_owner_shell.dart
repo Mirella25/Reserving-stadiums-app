@@ -2,9 +2,9 @@ import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
-import 'package:reserving_stadiums_app/features/home/presentation/pages/stadium_owner_home_page.dart';
-import 'package:reserving_stadiums_app/features/home/presentation/pages/revenue_page.dart';
-import 'package:reserving_stadiums_app/features/home/presentation/pages/settings_page.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/pages/stadium_owner/stadium_owner_home_page.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/pages/stadium_owner/revenue_page.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/pages/stadium_owner/settings_page.dart';
 
 class StadiumOwnerShell extends StatefulWidget {
   const StadiumOwnerShell({super.key});

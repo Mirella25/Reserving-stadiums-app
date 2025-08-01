@@ -12,9 +12,10 @@ import 'package:reserving_stadiums_app/features/sport/domain/entities/sport_enti
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_event.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_state.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/entities/stadium_entity.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/usecases/create_stadium_usecase.dart';
-import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/entities/stadium_owner/stadium_entity.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/create_stadium_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_owner/add_stadium/stadium_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/widgets/add_stadium_loading.dart';
 import 'package:reserving_stadiums_app/features/stadium/presentation/widgets/choose_sport_dropdown_field.dart';
 import 'package:reserving_stadiums_app/shared/widgets/custom_text_field.dart';
 import 'package:reserving_stadiums_app/shared/widgets/loading.dart';
@@ -49,6 +50,24 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
     }
   }
 
+  Future<void> _showSinglePhoto(File file) async {
+    await showDialog(
+      context: context,
+      barrierColor: Colors.black54,
+      builder: (_) => Dialog(
+        insetPadding: EdgeInsets.all(16.w),
+        backgroundColor: Colors.transparent,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12.r),
+          child: Image.file(
+            file,
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -70,19 +89,23 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
       ],
       child: Scaffold(
         body: SafeArea(
-          child: BlocBuilder<SportBloc, SportState>(
-              builder: (context, sportState) {
-            if (sportState is SportLoading) {
-              return const Center(
-                child: CustomLoadingPage(),
-              );
-            }
-
-            if (sportState is SportError) {
+          child:
+              BlocConsumer<SportBloc, SportState>(listener: (context, state) {
+            if (state is SportError) {
               Navigator.of(context).pop();
               CustomSnackbar.show(context,
-                  message: sportState.message, isError: true);
+                  message: state.message, isError: true);
             }
+          }, builder: (context, sportState) {
+            if (sportState is SportLoading) {
+              return const AddStadiumLoading();
+            }
+
+            // if (sportState is SportError) {
+            //   Navigator.of(context).pop();
+            //   CustomSnackbar.show(context,
+            //       message: sportState.message, isError: true);
+            // }
 
             if (sportState is SportLoaded) {
               final sports = sportState.sports;
@@ -97,18 +120,15 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                         builder: (_) => const CustomLoadingPage(),
                       );
                     } else if (state.isSuccess) {
-                      Navigator.pop(context);
-                      CustomSnackbar.show(context,
-                          message: 'Request added successfully!',
-                          isError: false);
-                      await Future.delayed(const Duration(milliseconds: 2000));
-
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) => const StadiumOwnerShell(),
                         ),
                         (route) => false,
                       );
+                      CustomSnackbar.show(context,
+                          message: 'Request added successfully!',
+                          isError: false);
                     } else if (state.errorMessage != null) {
                       Navigator.of(context).pop();
                       CustomSnackbar.show(context,
@@ -214,7 +234,6 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                                   );
                                                 }).toList(),
                                               ),
-                                              SizedBox(height: 12.h),
                                               CustomTextField(
                                                 icon: Icons.height,
                                                 hintText: "Length",
@@ -243,11 +262,17 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                               Padding(
                                                 padding: EdgeInsets.all(8.w),
                                                 child: Wrap(
-                                                  spacing: 8,
+                                                  spacing: 8.w,
+                                                  runSpacing: 8.h,
                                                   children: [
                                                     GestureDetector(
-                                                      onTap: _pickPhoto,
+                                                      onTap: () async {
+                                                        await _pickPhoto();
+                                                        setState(() {});
+                                                      },
                                                       child: Container(
+                                                        margin: EdgeInsets.only(
+                                                            top: 2.w),
                                                         width: 50.w,
                                                         height: 50.h,
                                                         decoration:
@@ -257,7 +282,8 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                                                   Colors.grey),
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(8),
+                                                                  .circular(
+                                                                      8.r),
                                                         ),
                                                         child: const Icon(
                                                             Icons.add_a_photo),
@@ -266,24 +292,62 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                                     for (var i = 0;
                                                         i < _photos.length;
                                                         i++)
-                                                      Container(
-                                                        width: 50.h,
-                                                        height: 50.w,
-                                                        margin: EdgeInsets.only(
-                                                            top: 2.w),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Colors.green[100],
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        child: const Icon(
-                                                            Icons
-                                                                .photo_outlined,
-                                                            color:
-                                                                Colors.green),
+                                                      Stack(
+                                                        children: [
+                                                          GestureDetector(
+                                                            onTap: () =>
+                                                                _showSinglePhoto(
+                                                                    _photos[i]),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.r),
+                                                              child: Container(
+                                                                width: 50.h,
+                                                                height: 50.w,
+                                                                margin: EdgeInsets
+                                                                    .only(
+                                                                        top: 2
+                                                                            .w),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Colors
+                                                                          .green[
+                                                                      100],
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8),
+                                                                ),
+                                                                child: const Icon(
+                                                                    Icons
+                                                                        .photo_outlined,
+                                                                    color: Colors
+                                                                        .green),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Positioned(
+                                                            top: -2,
+                                                            right: -2,
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () => setState(
+                                                                  () => _photos
+                                                                      .removeAt(
+                                                                          i)),
+                                                              child: const Icon(
+                                                                Icons
+                                                                    .cancel_outlined,
+                                                                color:
+                                                                    Colors.red,
+                                                                size: 20,
+                                                                weight: 900,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                   ],
                                                 ),

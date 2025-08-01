@@ -8,9 +8,11 @@ import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart
 import 'package:reserving_stadiums_app/features/home/presentation/widgets/custom_grid_card.dart';
 import 'package:reserving_stadiums_app/features/sport/domain/usecases/get_sports_usecase.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/usecases/create_stadium_usecase.dart';
-import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_bloc.dart';
-import 'package:reserving_stadiums_app/features/stadium/presentation/pages/add_stadium_page.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/create_stadium_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_owner/add_stadium/stadium_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_owner/view_stadium_requests/stadium_requests_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/pages/stadium_owner/add_stadium_page.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/pages/stadium_owner/view_stadium_requests_page.dart';
 
 class StadiumOwnerHomePage extends StatelessWidget {
   const StadiumOwnerHomePage({super.key});
@@ -19,7 +21,21 @@ class StadiumOwnerHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = [
       {'icon': Icons.stadium, 'label': 'My Stadiums', 'onTap': () {}},
-      {'icon': Icons.playlist_add, 'label': 'Stadium Requests', 'onTap': () {}},
+      {
+        'icon': Icons.playlist_add,
+        'label': 'Stadium Requests',
+        'onTap': () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => BlocProvider<StadiumRequestsBloc>(
+                create: (_) => getIt<StadiumRequestsBloc>()
+                  ..add(LoadStadiumRequestsEvent()),
+                child: const ViewStadiumRequestsPage(),
+              ),
+            ),
+          );
+        }
+      },
       {'icon': Icons.event_available, 'label': 'Bookings', 'onTap': () {}},
       {
         'icon': Icons.schedule,

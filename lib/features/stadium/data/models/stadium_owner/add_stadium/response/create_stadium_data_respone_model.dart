@@ -2,12 +2,13 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/entities/stadium_entity.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/entities/stadium_owner/stadium_entity.dart';
 
 part 'create_stadium_data_respone_model.freezed.dart';
 part 'create_stadium_data_respone_model.g.dart';
 
 @freezed
+@JsonSerializable(explicitToJson: true)
 class CreateStadiumDataResponeModel with _$CreateStadiumDataResponeModel {
   factory CreateStadiumDataResponeModel({
     required int id,

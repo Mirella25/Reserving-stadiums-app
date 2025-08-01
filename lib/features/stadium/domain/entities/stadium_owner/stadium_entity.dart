@@ -11,6 +11,8 @@ class StadiumEntity {
   final int? userId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String? status;
+  final String? adminNotes;
 
   StadiumEntity({
     required this.sportId,
@@ -25,5 +27,7 @@ class StadiumEntity {
     this.userId,
     this.createdAt,
     this.updatedAt,
+    this.status,
+    this.adminNotes,
   });
 }

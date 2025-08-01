@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:reserving_stadiums_app/core/result/result.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/entities/stadium_entity.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/usecases/create_stadium_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/entities/stadium_owner/stadium_entity.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/create_stadium_usecase.dart';
 
 part 'stadium_event.dart';
 part 'stadium_state.dart';
