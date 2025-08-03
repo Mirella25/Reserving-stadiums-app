@@ -11,12 +11,24 @@ import 'package:reserving_stadiums_app/features/profile/data/datasources/profile
 import 'package:reserving_stadiums_app/features/profile/data/repositories/profile_repository_impl.dart';
 import 'package:reserving_stadiums_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:reserving_stadiums_app/features/profile/domain/usecases/create_profile_usecase.dart';
+import 'package:reserving_stadiums_app/features/sport/data/datasources/sport_remote_datasource.dart';
+import 'package:reserving_stadiums_app/features/sport/data/repositories/sport_repository_impl.dart';
+import 'package:reserving_stadiums_app/features/sport/domain/repositories/sport_repository.dart';
+import 'package:reserving_stadiums_app/features/sport/domain/usecases/get_sports_usecase.dart';
+import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/stadiums/data/datasources/player/stadiums_remote_datasource.dart';
+import '../../features/stadiums/data/datasources/stadium_owner/stadium_remote_datasource.dart';
 import '../../features/stadiums/data/repositories_impl/player/stadiums_repo_impl.dart';
+import '../../features/stadiums/data/repositories_impl/stadium_owner/stadium_repository_impl.dart';
 import '../../features/stadiums/domain/repositories/player/stadiums_repository.dart';
+import '../../features/stadiums/domain/repositories/stadium_owner/stadium_repository.dart';
 import '../../features/stadiums/domain/usecases/player/get_all_stadiums_usecase.dart';
+import '../../features/stadiums/domain/usecases/stadium_owner/create_stadium_usecase.dart';
+import '../../features/stadiums/domain/usecases/stadium_owner/get_stadium_requests_usecase.dart';
 import '../../features/stadiums/presentation/bloc/player/stadiums_bloc.dart';
+import '../../features/stadiums/presentation/bloc/stadium_owner/add_stadium/stadium_bloc.dart';
+import '../../features/stadiums/presentation/bloc/stadium_owner/view_stadium_requests/stadium_requests_bloc.dart';
 import '../constants/app_strings.dart';
 import '../network/api_client.dart';
 
@@ -70,6 +82,7 @@ Future<void> setupDependencies() async {
         () => CreateProfileUsecase(getIt<ProfileRepository>()),
   );
 
+
   // ✅ Stadiums 🏟️
   getIt.registerLazySingleton<StadiumsRemoteDatasource>(
         () => StadiumsRemoteDatasourceImpl(getIt<DioClient>()),
@@ -81,4 +94,28 @@ Future<void> setupDependencies() async {
         () => GetAllStadiumsUseCase(getIt<StadiumsRepository>()),
   );
   getIt.registerFactory(() => StadiumsBloc(getIt<GetAllStadiumsUseCase>()));
+
+  getIt.registerLazySingleton<SportRemoteDataSource>(() =>
+      SportRemoteDataSourceImpl(
+          getIt<DioClient>(), getIt<AuthLocalDataSource>()));
+  getIt.registerLazySingleton<SportRepository>(
+      () => SportRepositoryImpl(getIt<SportRemoteDataSource>()));
+  getIt.registerLazySingleton<GetSportsUsecase>(
+      () => GetSportsUsecase(sportRepository: getIt<SportRepository>()));
+  getIt.registerLazySingleton<StadiumRemoteDataSource>(() =>
+      StadiumRemoteDataSourceImpl(
+          dioClient: getIt<DioClient>(), local: getIt<AuthLocalDataSource>()));
+  getIt.registerLazySingleton<StadiumRepository>(() => StadiumRepositoryImpl(
+      stadiumRemoteDataSource: getIt<StadiumRemoteDataSource>()));
+  getIt.registerLazySingleton<CreateStadiumUsecase>(() =>
+      CreateStadiumUsecase(stadiumRepository: getIt<StadiumRepository>()));
+  getIt.registerFactory<SportBloc>(() => SportBloc(getIt<GetSportsUsecase>()));
+  getIt.registerFactory<StadiumBloc>(
+      () => StadiumBloc(getIt<CreateStadiumUsecase>()));
+  getIt.registerLazySingleton<GetStadiumRequestsUsecase>(() =>
+      GetStadiumRequestsUsecase(stadiumRepository: getIt<StadiumRepository>()));
+  getIt.registerFactory(
+    () => StadiumRequestsBloc(getIt<GetStadiumRequestsUsecase>()),
+  );
+
 }

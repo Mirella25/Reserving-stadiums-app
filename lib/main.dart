@@ -9,7 +9,12 @@ import 'package:reserving_stadiums_app/core/localization/cubit_localization.dart
 import 'package:reserving_stadiums_app/core/navigation/deep_link_handler.dart';
 import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
+
 import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner/stadium_owner_shell.dart';
+
+import 'package:reserving_stadiums_app/features/home/presentation/pages/player/player_home_page.dart';
+
+
 import 'package:reserving_stadiums_app/features/onboarding/presentation/pages/intro_screen.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:reserving_stadiums_app/shared/widgets/splash_screen.dart';

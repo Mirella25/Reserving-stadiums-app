@@ -55,13 +55,20 @@ dependencies:
   datepicker_dropdown: ^0.1.7
   curved_labeled_navigation_bar: ^2.0.6
   animated_text_kit: ^4.2.3
-  shimmer: ^3.0.0
   flutter_animate: ^4.5.2
   animations: ^2.0.7
   carousel_slider: ^5.1.1
   equatable:
   connectivity_plus: ^6.1.4
   flutter_rating_bar: ^4.0.0
+  flutter_map: ^8.1.1
+  latlong2: ^0.9.1
+  flutter_staggered_animations: ^1.1.1
+  shimmer: ^3.0.0
+  
+  
+
+
 
 dev_dependencies:
   flutter_test:

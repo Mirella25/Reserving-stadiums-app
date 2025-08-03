@@ -5,6 +5,7 @@ import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
 import 'package:reserving_stadiums_app/core/utils/validators.dart';
 
+import 'package:reserving_stadiums_app/features/home/presentation/pages/player/player_home_page.dart';
 import 'package:reserving_stadiums_app/features/profile/domain/entities/profile_entity.dart';
 import 'package:reserving_stadiums_app/features/profile/domain/usecases/create_profile_usecase.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/bloc/profile_bloc.dart';
@@ -188,7 +189,7 @@ class _CreateProfilePageState extends State<CreateProfileDataPage> {
                                             child: Text("Basketball"),
                                           ),
                                         ],
-                                        onChanged: (String? value) {
+                                        onChanged: (value) {
                                           if (value != null) {
                                             setState(() {
                                               selectedSport = value;
@@ -214,7 +215,7 @@ class _CreateProfilePageState extends State<CreateProfileDataPage> {
                                             child: Text("Female"),
                                           ),
                                         ],
-                                        onChanged: (String? value) {
+                                        onChanged: (value) {
                                           if (value != null) {
                                             setState(() {
                                               selectedGender = value;

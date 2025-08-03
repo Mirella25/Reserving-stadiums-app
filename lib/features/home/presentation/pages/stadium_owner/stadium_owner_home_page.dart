@@ -1,9 +1,21 @@
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
-import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner/custom_grid_card.dart';
+import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
+import 'package:reserving_stadiums_app/features/sport/domain/usecases/get_sports_usecase.dart';
+import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
+
+
+import '../../../../stadiums/domain/usecases/stadium_owner/create_stadium_usecase.dart';
+import '../../../../stadiums/presentation/bloc/stadium_owner/add_stadium/stadium_bloc.dart';
+import '../../../../stadiums/presentation/bloc/stadium_owner/view_stadium_requests/stadium_requests_bloc.dart';
+import '../../../../stadiums/presentation/pages/stadium_owner/add_stadium_page.dart';
+import '../../../../stadiums/presentation/pages/stadium_owner/view_stadium_requests_page.dart';
+import '../../widgets/stadium_owner/custom_grid_card.dart';
 
 class StadiumOwnerHomePage extends StatelessWidget {
   const StadiumOwnerHomePage({super.key});
@@ -12,7 +24,21 @@ class StadiumOwnerHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = [
       {'icon': Icons.stadium, 'label': 'My Stadiums', 'onTap': () {}},
-      {'icon': Icons.playlist_add, 'label': 'Stadium Requests', 'onTap': () {}},
+      {
+        'icon': Icons.playlist_add,
+        'label': 'Stadium Requests',
+        'onTap': () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => BlocProvider<StadiumRequestsBloc>(
+                create: (_) => getIt<StadiumRequestsBloc>()
+                  ..add(LoadStadiumRequestsEvent()),
+                child: const ViewStadiumRequestsPage(),
+              ),
+            ),
+          );
+        }
+      },
       {'icon': Icons.event_available, 'label': 'Bookings', 'onTap': () {}},
       {
         'icon': Icons.schedule,
@@ -82,7 +108,21 @@ class StadiumOwnerHomePage extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                  create: (_) => StadiumBloc(
+                                      getIt<CreateStadiumUsecase>())),
+                              BlocProvider(
+                                  create: (_) =>
+                                      SportBloc(getIt<GetSportsUsecase>())),
+                            ],
+                            child: const AddStadiumPage(),
+                          ),
+                        ));
+                      },
                       icon: Icon(
                         Icons.add_circle_outline,
                         color: Colors.grey[700],
@@ -122,3 +162,4 @@ class StadiumOwnerHomePage extends StatelessWidget {
             ])));
   }
 }
+

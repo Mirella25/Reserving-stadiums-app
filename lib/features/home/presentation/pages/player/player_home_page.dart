@@ -9,10 +9,9 @@ import 'package:reserving_stadiums_app/features/home/presentation/pages/player/p
 import 'package:reserving_stadiums_app/features/home/presentation/pages/player/player_leagues.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animations/animations.dart';
-import 'package:carousel_slider/carousel_slider.dart' ;
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
-
 import 'package:reserving_stadiums_app/features/home/presentation/pages/player/stadiums.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_data_page.dart';
 import '../../../../../core/constants/app_colors.dart';
@@ -25,7 +24,6 @@ import '../../../../stadiums/presentation/pages/player/stadiums_page.dart';
 import '../../widgets/player/home_appbar.dart';
 import '../../widgets/player/home_player_tile.dart';
 import '../../widgets/player/shimmer_player_stadiums.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -58,7 +56,6 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +98,6 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ✅ Search Field
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -121,8 +117,8 @@ class _HomePageState extends State<HomePage> {
                 hintStyle: TextStyle(fontSize: 15.sp, color: Colors.grey),
                 prefixIcon: const Icon(Icons.search, color: Colors.grey),
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: 12.w, vertical: 14.h),
+                contentPadding:
+                EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
               ),
               onChanged: (value) {
                 // Handle search
@@ -137,7 +133,8 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.explore, color: AppColors.primaryColor, size: 24.sp),
+                    Icon(Icons.explore,
+                        color: AppColors.primaryColor, size: 24.sp),
                     SizedBox(width: 8.w),
                     Text(
                       "?What do you want to do today",
@@ -166,8 +163,6 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-
-
           GridView.count(
             crossAxisCount: 2,
             childAspectRatio: 1.1,
@@ -195,8 +190,7 @@ class _HomePageState extends State<HomePage> {
               HomeTile(
                 label: 'My bookings',
                 onTap: () => setState(() => index = 2),
-                backgroundImage:
-                "assets/images/istockphoto-538012183-612x612.jpg",
+                backgroundImage: "assets/images/istockphoto-538012183-612x612.jpg",
               ),
             ],
           ),
@@ -234,9 +228,6 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-
-
-          // ✅ Carousel for nearby stadiums
           SizedBox(
             height: 180.h,
             child: isLoading
@@ -315,7 +306,8 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(height: 6.h),
                           Row(
                             children: [
-                              Icon(Icons.location_on, size: 16.sp, color: Colors.white70),
+                              Icon(Icons.location_on,
+                                  size: 16.sp, color: Colors.white70),
                               SizedBox(width: 4.w),
                               Text(
                                 "4.5 كم - \$40",
@@ -330,12 +322,11 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-
                   ),
                 );
               }),
             ),
-          )
+          ),
         ],
       ),
     );

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class CustomDropdownField extends StatelessWidget {
   final String hintText;
-  final List<DropdownMenuItem<String>> itemList;
-  final String? Function(String?) onChanged;
+  final List<DropdownMenuItem<dynamic>> itemList;
+  final String? Function(dynamic) onChanged;
   final IconData icon;
-  final String? Function(String?)? validator;
+  final String? Function(dynamic)? validator;
   const CustomDropdownField(
       {super.key,
       required this.hintText,
@@ -29,7 +29,7 @@ class CustomDropdownField extends StatelessWidget {
           flex: 4,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: DropdownButtonFormField<String>(
+            child: DropdownButtonFormField<dynamic>(
               validator: validator,
               iconEnabledColor: Colors.grey,
               hint: Text(
