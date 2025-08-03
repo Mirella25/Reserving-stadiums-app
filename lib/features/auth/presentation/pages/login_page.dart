@@ -15,7 +15,7 @@ import 'package:reserving_stadiums_app/features/auth/presentation/pages/verifica
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_auth_image.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_button.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/widgets/custom_text_field.dart';
-import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner_shell.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner/stadium_owner_shell.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_data_page.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -26,6 +26,7 @@ import '../../../../shared/widgets/loading.dart';
 import '../../../../shared/widgets/snackbar.dart';
 
 import '../../../home/presentation/pages/player/player_home_page.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
