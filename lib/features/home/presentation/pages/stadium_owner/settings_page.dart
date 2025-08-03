@@ -1,16 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:reserving_stadiums_app/core/constants/app_strings.dart';
+import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
+import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
 import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
 
-import '../../../../core/constants/app_strings.dart';
-import '../../../../core/dependency_injection/injections.dart';
-import '../../../auth/data/datasources/auth_local_datasource.dart';
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
   Future<void> _logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token'); // 👈 خزن التوكن أولاً
@@ -60,16 +58,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('🏟️ Stadium Booking - Home'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => _logout(context),
-          ),
-        ],
-      ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Center(
             child: Text(

@@ -6,11 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
-import 'package:reserving_stadiums_app/features/home/presentation/pages/player_home_page.dart';
+
 import 'package:reserving_stadiums_app/features/profile/domain/entities/profile_entity.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:reserving_stadiums_app/shared/widgets/loading.dart';
 import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
+
+import '../../../home/presentation/pages/player/player_home_page.dart';
 
 class CreateProfilePhotoPage extends StatefulWidget {
   final ProfileEntity profileEntity;

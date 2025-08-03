@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 
 import '../result/result.dart';
+import '../utils/internet_checker.dart';
 
 class DioClient {
   final Dio _dio;
@@ -16,6 +17,7 @@ class DioClient {
             'Accept': 'application/json',
           },
         ));
+
   Future<Result<T>> callApi<T>({
     required String endpoint,
     required T Function(Map<String, dynamic>) fromJson,
@@ -27,6 +29,11 @@ class DioClient {
   }) async {
     print("👉 Using DioClient with timeout: ${_dio.options.receiveTimeout}");
 
+    // final hasConnection = await InternetChecker.hasConnection();
+    // if (!hasConnection) {
+    //   print("🚫 No internet connection detected.");
+    //   return ConnectionError<T>();
+    // }
     try {
       if (requiresAuth && token != null) {
         _dio.options.headers['Authorization'] = 'Bearer $token';

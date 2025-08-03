@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
 import 'package:reserving_stadiums_app/core/utils/validators.dart';
-import 'package:reserving_stadiums_app/features/home/presentation/pages/player_home_page.dart';
+
 import 'package:reserving_stadiums_app/features/profile/domain/entities/profile_entity.dart';
 import 'package:reserving_stadiums_app/features/profile/domain/usecases/create_profile_usecase.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/bloc/profile_bloc.dart';
@@ -12,6 +12,8 @@ import 'package:reserving_stadiums_app/shared/widgets/custom_text_field.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_photo_page.dart';
 import 'package:reserving_stadiums_app/shared/widgets/custom_dropdown_field.dart';
 import 'package:reserving_stadiums_app/shared/widgets/date_picker_dropdown.dart';
+
+import '../../../home/presentation/pages/player/player_home_page.dart';
 
 class CreateProfileDataPage extends StatefulWidget {
   const CreateProfileDataPage({super.key});
