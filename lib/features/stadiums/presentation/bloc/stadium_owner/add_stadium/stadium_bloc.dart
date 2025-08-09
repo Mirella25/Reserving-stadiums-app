@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:reserving_stadiums_app/core/result/result.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/entities/stadium_owner/stadium_entity.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/create_stadium_usecase.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/delete_stadium_request_usecase.dart';
-import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_owner/view_stadium_requests/stadium_requests_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadiums/domain/entities/stadium_owner/stadium_entity.dart';
+import 'package:reserving_stadiums_app/features/stadiums/domain/usecases/stadium_owner/create_stadium_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadiums/domain/usecases/stadium_owner/delete_stadium_request_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadiums/presentation/bloc/stadium_owner/view_stadium_requests/stadium_requests_bloc.dart';
 
 part 'stadium_event.dart';
 part 'stadium_state.dart';
@@ -27,7 +27,7 @@ class StadiumBloc extends Bloc<StadiumEvent, StadiumState> {
   ) async {
     emit(state.copyWith(isLoading: true, errorMessage: null, isSuccess: false));
 
-    final Result<StadiumEntity> result = await createStadiumUsecase.execute(
+    final Result<void> result = await createStadiumUsecase.execute(
       stadiumEntity: event.stadiumEntity,
       photosFiles: event.photosFiles,
     );

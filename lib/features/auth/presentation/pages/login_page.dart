@@ -174,11 +174,12 @@ class _LoginPageState extends State<LoginPage> {
                               "📩 Saved email for resend: ${state.loginEntity!.user.email}");
 
                           if (state.loginEntity!.user.emailVerifiedAt == null) {
-                            Navigator.pushReplacement(
+                            Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                   builder: (_) =>
                                       const WaitingVerificationPage()),
+                              (route) => false,
                             );
                             return;
                           }
@@ -198,23 +199,26 @@ class _LoginPageState extends State<LoginPage> {
 
                           if (state.loginEntity!.profileId == 0 &&
                               role == "player") {
-                            Navigator.pushReplacement(
+                            Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                   builder: (_) =>
                                       const CreateProfileDataPage()),
+                              (route) => false,
                             );
                           } else if (role == "stadium_owner") {
-                            Navigator.pushReplacement(
+                            Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => const StadiumOwnerShell()),
+                              (route) => false,
                             );
                           } else {
-                            Navigator.pushReplacement(
+                            Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => const HomePage()),
+                              (route) => false,
                             );
                           }
                         }

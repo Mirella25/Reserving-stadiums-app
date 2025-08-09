@@ -19,6 +19,8 @@ _$StadiumModelImpl _$$StadiumModelImplFromJson(Map<String, dynamic> json) =>
       length: json['Length'] as String,
       width: json['Width'] as String,
       ownerNumber: (json['owner_number'] as num).toInt(),
+      latitude: _toDouble(json['latitude']),
+      longitude: _toDouble(json['longitude']),
     );
 
 Map<String, dynamic> _$$StadiumModelImplToJson(_$StadiumModelImpl instance) =>
@@ -33,4 +35,6 @@ Map<String, dynamic> _$$StadiumModelImplToJson(_$StadiumModelImpl instance) =>
       'Length': instance.length,
       'Width': instance.width,
       'owner_number': instance.ownerNumber,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
     };

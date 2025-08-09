@@ -16,16 +16,20 @@ import 'package:reserving_stadiums_app/features/sport/data/repositories/sport_re
 import 'package:reserving_stadiums_app/features/sport/domain/repositories/sport_repository.dart';
 import 'package:reserving_stadiums_app/features/sport/domain/usecases/get_sports_usecase.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
-import 'package:reserving_stadiums_app/features/stadium/data/datasources/stadium_owner/stadium_remote_datasource.dart';
-import 'package:reserving_stadiums_app/features/stadium/data/repositories/stadium_owner/stadium_repository_impl.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/repositories/stadium_owner/stadium_repository.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/create_stadium_usecase.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/delete_stadium_request_usecase.dart';
-import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/get_stadium_requests_usecase.dart';
-import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_owner/add_stadium/stadium_bloc.dart';
-import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_owner/view_stadium_requests/stadium_requests_bloc.dart';
+import '../../features/stadiums/domain/usecases/stadium_owner/delete_stadium_request_usecase.dart';
 
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
+import '../../features/booking/data/datasources/stadium_booking_remote_datasource.dart';
+import '../../features/booking/data/repo_impl/booking_repo_impl.dart';
+import '../../features/booking/domain/repositories/booking_repository.dart';
+import '../../features/booking/domain/usecases/get_stadium_times_usecase.dart';
+import '../../features/booking/presentation/bloc/booking_times_bloc.dart';
+import '../../features/stadium_details/data/datasources/player/stadium_details_remote_datasource.dart';
+import '../../features/stadium_details/data/repo_impl/player/stadium_details_repo_impl.dart';
+import '../../features/stadium_details/domain/repositories/player/stadium_details_repo.dart';
+import '../../features/stadium_details/domain/usecases/player/get_facilities_usecase.dart';
+import '../../features/stadium_details/domain/usecases/player/stadium_details_usecase.dart';
+import '../../features/stadium_details/presentation/bloc/player/facilities_bloc/facilities_bloc.dart';
 import '../../features/stadiums/data/datasources/player/stadiums_remote_datasource.dart';
 import '../../features/stadiums/data/datasources/stadium_owner/stadium_remote_datasource.dart';
 import '../../features/stadiums/data/repositories_impl/player/stadiums_repo_impl.dart';
@@ -129,5 +133,42 @@ Future<void> setupDependencies() async {
   getIt.registerFactory(
     () => StadiumRequestsBloc(getIt<GetStadiumRequestsUsecase>()),
   );
+
+
+// ✅ Stadium Details 🏟️
+  getIt.registerLazySingleton<StadiumDetailsRemoteDataSource>(
+        () => StadiumDetailsRemoteDataSourceImpl(getIt<DioClient>()),
+  );
+
+  getIt.registerLazySingleton<StadiumDetailsRepository>(
+        () => StadiumDetailsRepoImp(getIt<StadiumDetailsRemoteDataSource>()),
+  );
+
+  getIt.registerLazySingleton<GetStadiumDetailsUsecase>(
+        () => GetStadiumDetailsUsecase(getIt<StadiumDetailsRepository>()),
+  );
+
+
+
+  getIt.registerLazySingleton<GetFacilitiesUseCase>(
+        () => GetFacilitiesUseCase(getIt<StadiumDetailsRepository>()),
+  );
+
+  getIt.registerFactory<FacilitiesBloc>(
+        () => FacilitiesBloc(getIt<GetFacilitiesUseCase>()),
+  );
+
+  getIt.registerLazySingleton<BookingRemoteDataSource>(
+          () => BookingRemoteDataSourceImpl( dioClient: getIt<DioClient>(),));
+
+  getIt.registerLazySingleton<BookingRepository>(
+          () => BookingRepositoryImpl(getIt<BookingRemoteDataSource>()));
+
+
+      getIt.registerLazySingleton<GetStadiumTimesUseCase>(
+          () => GetStadiumTimesUseCase(getIt<BookingRepository>()));
+
+  getIt.registerFactory(() => BookingTimesBloc(getIt<GetStadiumTimesUseCase>()));
+
 
 }

@@ -167,9 +167,7 @@ class __$$CreateStadiumResponseModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CreateStadiumResponseModelImpl
-    with DiagnosticableTreeMixin
-    implements _CreateStadiumResponseModel {
+class _$CreateStadiumResponseModelImpl implements _CreateStadiumResponseModel {
   const _$CreateStadiumResponseModelImpl(
       {required this.status,
       @JsonKey(name: 'status_code') required this.statusCode,
@@ -191,19 +189,8 @@ class _$CreateStadiumResponseModelImpl
   final CreateStadiumDataResponeModel data;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'CreateStadiumResponseModel(status: $status, statusCode: $statusCode, message: $message, data: $data)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'CreateStadiumResponseModel'))
-      ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('statusCode', statusCode))
-      ..add(DiagnosticsProperty('message', message))
-      ..add(DiagnosticsProperty('data', data));
   }
 
   @override

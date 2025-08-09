@@ -12,8 +12,10 @@ _$GetStadiumRequestsResponseImpl _$$GetStadiumRequestsResponseImplFromJson(
       status: json['status'] as bool,
       statusCode: (json['status_code'] as num).toInt(),
       message: json['message'] as String?,
-      data:
-          RequestsDataContainer.fromJson(json['data'] as Map<String, dynamic>),
+      data: (json['data'] as List<dynamic>)
+          .map((e) => GetStadiumRequestsDataResponse.fromJson(
+              e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$GetStadiumRequestsResponseImplToJson(
@@ -23,19 +25,4 @@ Map<String, dynamic> _$$GetStadiumRequestsResponseImplToJson(
       'status_code': instance.statusCode,
       'message': instance.message,
       'data': instance.data,
-    };
-
-_$RequestsDataContainerImpl _$$RequestsDataContainerImplFromJson(
-        Map<String, dynamic> json) =>
-    _$RequestsDataContainerImpl(
-      asks: (json['Asks'] as List<dynamic>)
-          .map((e) => GetStadiumRequestsDataResponse.fromJson(
-              e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$$RequestsDataContainerImplToJson(
-        _$RequestsDataContainerImpl instance) =>
-    <String, dynamic>{
-      'Asks': instance.asks,
     };

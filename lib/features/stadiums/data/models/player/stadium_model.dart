@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 import '../../../domain/entities/player/stadium_entity.dart';
 
 part 'stadium_model.freezed.dart';
@@ -18,12 +17,21 @@ class StadiumModel with _$StadiumModel {
     @JsonKey(name: 'Length') required String length,
     @JsonKey(name: 'Width') required String width,
     @JsonKey(name: 'owner_number') required int ownerNumber,
+    @JsonKey(fromJson: _toDouble) required double latitude,
+    @JsonKey(fromJson: _toDouble) required double longitude,
   }) = _StadiumModel;
 
   factory StadiumModel.fromJson(Map<String, dynamic> json) =>
       _$StadiumModelFromJson(json);
-
 }
+
+double _toDouble(dynamic value) {
+  if (value == null) return 0.0;
+  if (value is num) return value.toDouble();
+  if (value is String) return double.tryParse(value) ?? 0.0;
+  return 0.0;
+}
+
 extension StadiumModelMapper on StadiumModel {
   StadiumEntity toEntity() {
     return StadiumEntity(
@@ -37,6 +45,8 @@ extension StadiumModelMapper on StadiumModel {
       length: length,
       width: width,
       ownerNumber: ownerNumber,
+      latitude: latitude,
+      longitude: longitude,
     );
   }
 }

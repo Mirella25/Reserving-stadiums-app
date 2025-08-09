@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../../../stadium_details/domain/entities/player/stadium_details_entity.dart';
 
 class StadiumEntity extends Equatable {
   final int id;
@@ -11,6 +12,8 @@ class StadiumEntity extends Equatable {
   final String length;
   final String width;
   final int ownerNumber;
+  final double latitude;   // ✅ جديد
+  final double longitude;  // ✅ جديد
 
   const StadiumEntity({
     required this.id,
@@ -23,6 +26,8 @@ class StadiumEntity extends Equatable {
     required this.length,
     required this.width,
     required this.ownerNumber,
+    required this.latitude,   // ✅ جديد
+    required this.longitude,  // ✅ جديد
   });
 
   @override
@@ -37,5 +42,26 @@ class StadiumEntity extends Equatable {
     length,
     width,
     ownerNumber,
+    latitude,
+    longitude,
   ];
+}
+
+extension StadiumEntityMapper on StadiumEntity {
+  StadiumDetailsEntity toDetailsEntity() {
+    return StadiumDetailsEntity(
+      id: id,
+      userId: userId,
+      sportId: sportId,
+      name: name,
+      location: location,
+      description: description,
+      photos: photos,
+      length: length,
+      width: width,
+      ownerNumber: ownerNumber,
+      latitude: latitude,   // ✅ صار يجي من الحقل
+      longitude: longitude, // ✅ صار يجي من الحقل
+    );
+  }
 }

@@ -6,15 +6,6 @@ part of 'create_stadium_response_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$CreateStadiumResponseModelToJson(
-        CreateStadiumResponseModel instance) =>
-    <String, dynamic>{
-      'status': instance.status,
-      'status_code': instance.statusCode,
-      'message': instance.message,
-      'data': instance.data.toJson(),
-    };
-
 _$CreateStadiumResponseModelImpl _$$CreateStadiumResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$CreateStadiumResponseModelImpl(

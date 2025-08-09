@@ -25,7 +25,8 @@ mixin _$GetStadiumRequestsResponse {
   @JsonKey(name: 'status_code')
   int get statusCode => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  RequestsDataContainer get data => throw _privateConstructorUsedError;
+  List<GetStadiumRequestsDataResponse> get data =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this GetStadiumRequestsResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,9 +49,7 @@ abstract class $GetStadiumRequestsResponseCopyWith<$Res> {
       {bool status,
       @JsonKey(name: 'status_code') int statusCode,
       String? message,
-      RequestsDataContainer data});
-
-  $RequestsDataContainerCopyWith<$Res> get data;
+      List<GetStadiumRequestsDataResponse> data});
 }
 
 /// @nodoc
@@ -90,18 +89,8 @@ class _$GetStadiumRequestsResponseCopyWithImpl<$Res,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as RequestsDataContainer,
+              as List<GetStadiumRequestsDataResponse>,
     ) as $Val);
-  }
-
-  /// Create a copy of GetStadiumRequestsResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $RequestsDataContainerCopyWith<$Res> get data {
-    return $RequestsDataContainerCopyWith<$Res>(_value.data, (value) {
-      return _then(_value.copyWith(data: value) as $Val);
-    });
   }
 }
 
@@ -118,10 +107,7 @@ abstract class _$$GetStadiumRequestsResponseImplCopyWith<$Res>
       {bool status,
       @JsonKey(name: 'status_code') int statusCode,
       String? message,
-      RequestsDataContainer data});
-
-  @override
-  $RequestsDataContainerCopyWith<$Res> get data;
+      List<GetStadiumRequestsDataResponse> data});
 }
 
 /// @nodoc
@@ -158,9 +144,9 @@ class __$$GetStadiumRequestsResponseImplCopyWithImpl<$Res>
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
       data: null == data
-          ? _value.data
+          ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as RequestsDataContainer,
+              as List<GetStadiumRequestsDataResponse>,
     ));
   }
 }
@@ -174,7 +160,8 @@ class _$GetStadiumRequestsResponseImpl
       {required this.status,
       @JsonKey(name: 'status_code') required this.statusCode,
       this.message,
-      required this.data});
+      required final List<GetStadiumRequestsDataResponse> data})
+      : _data = data;
 
   factory _$GetStadiumRequestsResponseImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -187,8 +174,13 @@ class _$GetStadiumRequestsResponseImpl
   final int statusCode;
   @override
   final String? message;
+  final List<GetStadiumRequestsDataResponse> _data;
   @override
-  final RequestsDataContainer data;
+  List<GetStadiumRequestsDataResponse> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_data);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -215,13 +207,13 @@ class _$GetStadiumRequestsResponseImpl
             (identical(other.statusCode, statusCode) ||
                 other.statusCode == statusCode) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.data, data) || other.data == data));
+            const DeepCollectionEquality().equals(other._data, _data));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, status, statusCode, message, data);
+  int get hashCode => Object.hash(runtimeType, status, statusCode, message,
+      const DeepCollectionEquality().hash(_data));
 
   /// Create a copy of GetStadiumRequestsResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -246,7 +238,7 @@ abstract class _GetStadiumRequestsResponse
           {required final bool status,
           @JsonKey(name: 'status_code') required final int statusCode,
           final String? message,
-          required final RequestsDataContainer data}) =
+          required final List<GetStadiumRequestsDataResponse> data}) =
       _$GetStadiumRequestsResponseImpl;
 
   factory _GetStadiumRequestsResponse.fromJson(Map<String, dynamic> json) =
@@ -260,192 +252,12 @@ abstract class _GetStadiumRequestsResponse
   @override
   String? get message;
   @override
-  RequestsDataContainer get data;
+  List<GetStadiumRequestsDataResponse> get data;
 
   /// Create a copy of GetStadiumRequestsResponse
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetStadiumRequestsResponseImplCopyWith<_$GetStadiumRequestsResponseImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-RequestsDataContainer _$RequestsDataContainerFromJson(
-    Map<String, dynamic> json) {
-  return _RequestsDataContainer.fromJson(json);
-}
-
-/// @nodoc
-mixin _$RequestsDataContainer {
-  @JsonKey(name: 'Asks')
-  List<GetStadiumRequestsDataResponse> get asks =>
-      throw _privateConstructorUsedError;
-
-  /// Serializes this RequestsDataContainer to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of RequestsDataContainer
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $RequestsDataContainerCopyWith<RequestsDataContainer> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $RequestsDataContainerCopyWith<$Res> {
-  factory $RequestsDataContainerCopyWith(RequestsDataContainer value,
-          $Res Function(RequestsDataContainer) then) =
-      _$RequestsDataContainerCopyWithImpl<$Res, RequestsDataContainer>;
-  @useResult
-  $Res call({@JsonKey(name: 'Asks') List<GetStadiumRequestsDataResponse> asks});
-}
-
-/// @nodoc
-class _$RequestsDataContainerCopyWithImpl<$Res,
-        $Val extends RequestsDataContainer>
-    implements $RequestsDataContainerCopyWith<$Res> {
-  _$RequestsDataContainerCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of RequestsDataContainer
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? asks = null,
-  }) {
-    return _then(_value.copyWith(
-      asks: null == asks
-          ? _value.asks
-          : asks // ignore: cast_nullable_to_non_nullable
-              as List<GetStadiumRequestsDataResponse>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$RequestsDataContainerImplCopyWith<$Res>
-    implements $RequestsDataContainerCopyWith<$Res> {
-  factory _$$RequestsDataContainerImplCopyWith(
-          _$RequestsDataContainerImpl value,
-          $Res Function(_$RequestsDataContainerImpl) then) =
-      __$$RequestsDataContainerImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'Asks') List<GetStadiumRequestsDataResponse> asks});
-}
-
-/// @nodoc
-class __$$RequestsDataContainerImplCopyWithImpl<$Res>
-    extends _$RequestsDataContainerCopyWithImpl<$Res,
-        _$RequestsDataContainerImpl>
-    implements _$$RequestsDataContainerImplCopyWith<$Res> {
-  __$$RequestsDataContainerImplCopyWithImpl(_$RequestsDataContainerImpl _value,
-      $Res Function(_$RequestsDataContainerImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of RequestsDataContainer
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? asks = null,
-  }) {
-    return _then(_$RequestsDataContainerImpl(
-      asks: null == asks
-          ? _value._asks
-          : asks // ignore: cast_nullable_to_non_nullable
-              as List<GetStadiumRequestsDataResponse>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$RequestsDataContainerImpl
-    with DiagnosticableTreeMixin
-    implements _RequestsDataContainer {
-  const _$RequestsDataContainerImpl(
-      {@JsonKey(name: 'Asks')
-      required final List<GetStadiumRequestsDataResponse> asks})
-      : _asks = asks;
-
-  factory _$RequestsDataContainerImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RequestsDataContainerImplFromJson(json);
-
-  final List<GetStadiumRequestsDataResponse> _asks;
-  @override
-  @JsonKey(name: 'Asks')
-  List<GetStadiumRequestsDataResponse> get asks {
-    if (_asks is EqualUnmodifiableListView) return _asks;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_asks);
-  }
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RequestsDataContainer(asks: $asks)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'RequestsDataContainer'))
-      ..add(DiagnosticsProperty('asks', asks));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RequestsDataContainerImpl &&
-            const DeepCollectionEquality().equals(other._asks, _asks));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_asks));
-
-  /// Create a copy of RequestsDataContainer
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RequestsDataContainerImplCopyWith<_$RequestsDataContainerImpl>
-      get copyWith => __$$RequestsDataContainerImplCopyWithImpl<
-          _$RequestsDataContainerImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$RequestsDataContainerImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _RequestsDataContainer implements RequestsDataContainer {
-  const factory _RequestsDataContainer(
-          {@JsonKey(name: 'Asks')
-          required final List<GetStadiumRequestsDataResponse> asks}) =
-      _$RequestsDataContainerImpl;
-
-  factory _RequestsDataContainer.fromJson(Map<String, dynamic> json) =
-      _$RequestsDataContainerImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'Asks')
-  List<GetStadiumRequestsDataResponse> get asks;
-
-  /// Create a copy of RequestsDataContainer
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RequestsDataContainerImplCopyWith<_$RequestsDataContainerImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -35,6 +35,10 @@ mixin _$StadiumModel {
   String get width => throw _privateConstructorUsedError;
   @JsonKey(name: 'owner_number')
   int get ownerNumber => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _toDouble)
+  double get latitude => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _toDouble)
+  double get longitude => throw _privateConstructorUsedError;
 
   /// Serializes this StadiumModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,7 +66,9 @@ abstract class $StadiumModelCopyWith<$Res> {
       List<String>? photos,
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
-      @JsonKey(name: 'owner_number') int ownerNumber});
+      @JsonKey(name: 'owner_number') int ownerNumber,
+      @JsonKey(fromJson: _toDouble) double latitude,
+      @JsonKey(fromJson: _toDouble) double longitude});
 }
 
 /// @nodoc
@@ -90,6 +96,8 @@ class _$StadiumModelCopyWithImpl<$Res, $Val extends StadiumModel>
     Object? length = null,
     Object? width = null,
     Object? ownerNumber = null,
+    Object? latitude = null,
+    Object? longitude = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -132,6 +140,14 @@ class _$StadiumModelCopyWithImpl<$Res, $Val extends StadiumModel>
           ? _value.ownerNumber
           : ownerNumber // ignore: cast_nullable_to_non_nullable
               as int,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 }
@@ -154,7 +170,9 @@ abstract class _$$StadiumModelImplCopyWith<$Res>
       List<String>? photos,
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
-      @JsonKey(name: 'owner_number') int ownerNumber});
+      @JsonKey(name: 'owner_number') int ownerNumber,
+      @JsonKey(fromJson: _toDouble) double latitude,
+      @JsonKey(fromJson: _toDouble) double longitude});
 }
 
 /// @nodoc
@@ -180,6 +198,8 @@ class __$$StadiumModelImplCopyWithImpl<$Res>
     Object? length = null,
     Object? width = null,
     Object? ownerNumber = null,
+    Object? latitude = null,
+    Object? longitude = null,
   }) {
     return _then(_$StadiumModelImpl(
       id: null == id
@@ -222,6 +242,14 @@ class __$$StadiumModelImplCopyWithImpl<$Res>
           ? _value.ownerNumber
           : ownerNumber // ignore: cast_nullable_to_non_nullable
               as int,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -239,7 +267,9 @@ class _$StadiumModelImpl implements _StadiumModel {
       final List<String>? photos,
       @JsonKey(name: 'Length') required this.length,
       @JsonKey(name: 'Width') required this.width,
-      @JsonKey(name: 'owner_number') required this.ownerNumber})
+      @JsonKey(name: 'owner_number') required this.ownerNumber,
+      @JsonKey(fromJson: _toDouble) required this.latitude,
+      @JsonKey(fromJson: _toDouble) required this.longitude})
       : _photos = photos;
 
   factory _$StadiumModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -278,10 +308,16 @@ class _$StadiumModelImpl implements _StadiumModel {
   @override
   @JsonKey(name: 'owner_number')
   final int ownerNumber;
+  @override
+  @JsonKey(fromJson: _toDouble)
+  final double latitude;
+  @override
+  @JsonKey(fromJson: _toDouble)
+  final double longitude;
 
   @override
   String toString() {
-    return 'StadiumModel(id: $id, userId: $userId, sportId: $sportId, name: $name, location: $location, description: $description, photos: $photos, length: $length, width: $width, ownerNumber: $ownerNumber)';
+    return 'StadiumModel(id: $id, userId: $userId, sportId: $sportId, name: $name, location: $location, description: $description, photos: $photos, length: $length, width: $width, ownerNumber: $ownerNumber, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
@@ -301,7 +337,11 @@ class _$StadiumModelImpl implements _StadiumModel {
             (identical(other.length, length) || other.length == length) &&
             (identical(other.width, width) || other.width == width) &&
             (identical(other.ownerNumber, ownerNumber) ||
-                other.ownerNumber == ownerNumber));
+                other.ownerNumber == ownerNumber) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -317,7 +357,9 @@ class _$StadiumModelImpl implements _StadiumModel {
       const DeepCollectionEquality().hash(_photos),
       length,
       width,
-      ownerNumber);
+      ownerNumber,
+      latitude,
+      longitude);
 
   /// Create a copy of StadiumModel
   /// with the given fields replaced by the non-null parameter values.
@@ -346,7 +388,9 @@ abstract class _StadiumModel implements StadiumModel {
           final List<String>? photos,
           @JsonKey(name: 'Length') required final String length,
           @JsonKey(name: 'Width') required final String width,
-          @JsonKey(name: 'owner_number') required final int ownerNumber}) =
+          @JsonKey(name: 'owner_number') required final int ownerNumber,
+          @JsonKey(fromJson: _toDouble) required final double latitude,
+          @JsonKey(fromJson: _toDouble) required final double longitude}) =
       _$StadiumModelImpl;
 
   factory _StadiumModel.fromJson(Map<String, dynamic> json) =
@@ -377,6 +421,12 @@ abstract class _StadiumModel implements StadiumModel {
   @override
   @JsonKey(name: 'owner_number')
   int get ownerNumber;
+  @override
+  @JsonKey(fromJson: _toDouble)
+  double get latitude;
+  @override
+  @JsonKey(fromJson: _toDouble)
+  double get longitude;
 
   /// Create a copy of StadiumModel
   /// with the given fields replaced by the non-null parameter values.

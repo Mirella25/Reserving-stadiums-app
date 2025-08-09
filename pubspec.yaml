@@ -65,8 +65,13 @@ dependencies:
   latlong2: ^0.9.1
   flutter_staggered_animations: ^1.1.1
   shimmer: ^3.0.0
-  
-  
+  photo_view: ^0.14.0
+  lucide_icons:
+  table_calendar: ^3.0.9
+  date_picker_timeline: ^1.2.5
+
+
+
 
 
 

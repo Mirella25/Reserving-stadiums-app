@@ -22,7 +22,7 @@ CreateStadiumRequestModel _$CreateStadiumRequestModelFromJson(
 /// @nodoc
 mixin _$CreateStadiumRequestModel {
   @JsonKey(name: 'sport_id')
-  String get sportId => throw _privateConstructorUsedError;
+  int get sportId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get location => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -31,7 +31,16 @@ mixin _$CreateStadiumRequestModel {
   @JsonKey(name: 'Width')
   String get width => throw _privateConstructorUsedError;
   @JsonKey(name: 'owner_number')
-  String get ownerNumber => throw _privateConstructorUsedError;
+  int get ownerNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'start_time')
+  String get startTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'end_time')
+  String get endTime => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String get deposit => throw _privateConstructorUsedError;
+  int get duration => throw _privateConstructorUsedError;
+  String get latitude => throw _privateConstructorUsedError;
+  String get longitude => throw _privateConstructorUsedError;
 
   /// Serializes this CreateStadiumRequestModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,13 +59,20 @@ abstract class $CreateStadiumRequestModelCopyWith<$Res> {
       _$CreateStadiumRequestModelCopyWithImpl<$Res, CreateStadiumRequestModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'sport_id') String sportId,
+      {@JsonKey(name: 'sport_id') int sportId,
       String name,
       String location,
       String description,
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
-      @JsonKey(name: 'owner_number') String ownerNumber});
+      @JsonKey(name: 'owner_number') int ownerNumber,
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
+      String price,
+      String deposit,
+      int duration,
+      String latitude,
+      String longitude});
 }
 
 /// @nodoc
@@ -82,12 +98,19 @@ class _$CreateStadiumRequestModelCopyWithImpl<$Res,
     Object? length = null,
     Object? width = null,
     Object? ownerNumber = null,
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? price = null,
+    Object? deposit = null,
+    Object? duration = null,
+    Object? latitude = null,
+    Object? longitude = null,
   }) {
     return _then(_value.copyWith(
       sportId: null == sportId
           ? _value.sportId
           : sportId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -111,6 +134,34 @@ class _$CreateStadiumRequestModelCopyWithImpl<$Res,
       ownerNumber: null == ownerNumber
           ? _value.ownerNumber
           : ownerNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      deposit: null == deposit
+          ? _value.deposit
+          : deposit // ignore: cast_nullable_to_non_nullable
+              as String,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -126,13 +177,20 @@ abstract class _$$CreateStadiumRequestModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'sport_id') String sportId,
+      {@JsonKey(name: 'sport_id') int sportId,
       String name,
       String location,
       String description,
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
-      @JsonKey(name: 'owner_number') String ownerNumber});
+      @JsonKey(name: 'owner_number') int ownerNumber,
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
+      String price,
+      String deposit,
+      int duration,
+      String latitude,
+      String longitude});
 }
 
 /// @nodoc
@@ -157,12 +215,19 @@ class __$$CreateStadiumRequestModelImplCopyWithImpl<$Res>
     Object? length = null,
     Object? width = null,
     Object? ownerNumber = null,
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? price = null,
+    Object? deposit = null,
+    Object? duration = null,
+    Object? latitude = null,
+    Object? longitude = null,
   }) {
     return _then(_$CreateStadiumRequestModelImpl(
       sportId: null == sportId
           ? _value.sportId
           : sportId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -186,6 +251,34 @@ class __$$CreateStadiumRequestModelImplCopyWithImpl<$Res>
       ownerNumber: null == ownerNumber
           ? _value.ownerNumber
           : ownerNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      deposit: null == deposit
+          ? _value.deposit
+          : deposit // ignore: cast_nullable_to_non_nullable
+              as String,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -201,14 +294,21 @@ class _$CreateStadiumRequestModelImpl implements _CreateStadiumRequestModel {
       required this.description,
       @JsonKey(name: 'Length') required this.length,
       @JsonKey(name: 'Width') required this.width,
-      @JsonKey(name: 'owner_number') required this.ownerNumber});
+      @JsonKey(name: 'owner_number') required this.ownerNumber,
+      @JsonKey(name: 'start_time') required this.startTime,
+      @JsonKey(name: 'end_time') required this.endTime,
+      required this.price,
+      required this.deposit,
+      required this.duration,
+      required this.latitude,
+      required this.longitude});
 
   factory _$CreateStadiumRequestModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateStadiumRequestModelImplFromJson(json);
 
   @override
   @JsonKey(name: 'sport_id')
-  final String sportId;
+  final int sportId;
   @override
   final String name;
   @override
@@ -223,11 +323,27 @@ class _$CreateStadiumRequestModelImpl implements _CreateStadiumRequestModel {
   final String width;
   @override
   @JsonKey(name: 'owner_number')
-  final String ownerNumber;
+  final int ownerNumber;
+  @override
+  @JsonKey(name: 'start_time')
+  final String startTime;
+  @override
+  @JsonKey(name: 'end_time')
+  final String endTime;
+  @override
+  final String price;
+  @override
+  final String deposit;
+  @override
+  final int duration;
+  @override
+  final String latitude;
+  @override
+  final String longitude;
 
   @override
   String toString() {
-    return 'CreateStadiumRequestModel(sportId: $sportId, name: $name, location: $location, description: $description, length: $length, width: $width, ownerNumber: $ownerNumber)';
+    return 'CreateStadiumRequestModel(sportId: $sportId, name: $name, location: $location, description: $description, length: $length, width: $width, ownerNumber: $ownerNumber, startTime: $startTime, endTime: $endTime, price: $price, deposit: $deposit, duration: $duration, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
@@ -244,13 +360,38 @@ class _$CreateStadiumRequestModelImpl implements _CreateStadiumRequestModel {
             (identical(other.length, length) || other.length == length) &&
             (identical(other.width, width) || other.width == width) &&
             (identical(other.ownerNumber, ownerNumber) ||
-                other.ownerNumber == ownerNumber));
+                other.ownerNumber == ownerNumber) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.deposit, deposit) || other.deposit == deposit) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sportId, name, location,
-      description, length, width, ownerNumber);
+  int get hashCode => Object.hash(
+      runtimeType,
+      sportId,
+      name,
+      location,
+      description,
+      length,
+      width,
+      ownerNumber,
+      startTime,
+      endTime,
+      price,
+      deposit,
+      duration,
+      latitude,
+      longitude);
 
   /// Create a copy of CreateStadiumRequestModel
   /// with the given fields replaced by the non-null parameter values.
@@ -271,21 +412,27 @@ class _$CreateStadiumRequestModelImpl implements _CreateStadiumRequestModel {
 
 abstract class _CreateStadiumRequestModel implements CreateStadiumRequestModel {
   const factory _CreateStadiumRequestModel(
-          {@JsonKey(name: 'sport_id') required final String sportId,
-          required final String name,
-          required final String location,
-          required final String description,
-          @JsonKey(name: 'Length') required final String length,
-          @JsonKey(name: 'Width') required final String width,
-          @JsonKey(name: 'owner_number') required final String ownerNumber}) =
-      _$CreateStadiumRequestModelImpl;
+      {@JsonKey(name: 'sport_id') required final int sportId,
+      required final String name,
+      required final String location,
+      required final String description,
+      @JsonKey(name: 'Length') required final String length,
+      @JsonKey(name: 'Width') required final String width,
+      @JsonKey(name: 'owner_number') required final int ownerNumber,
+      @JsonKey(name: 'start_time') required final String startTime,
+      @JsonKey(name: 'end_time') required final String endTime,
+      required final String price,
+      required final String deposit,
+      required final int duration,
+      required final String latitude,
+      required final String longitude}) = _$CreateStadiumRequestModelImpl;
 
   factory _CreateStadiumRequestModel.fromJson(Map<String, dynamic> json) =
       _$CreateStadiumRequestModelImpl.fromJson;
 
   @override
   @JsonKey(name: 'sport_id')
-  String get sportId;
+  int get sportId;
   @override
   String get name;
   @override
@@ -300,7 +447,23 @@ abstract class _CreateStadiumRequestModel implements CreateStadiumRequestModel {
   String get width;
   @override
   @JsonKey(name: 'owner_number')
-  String get ownerNumber;
+  int get ownerNumber;
+  @override
+  @JsonKey(name: 'start_time')
+  String get startTime;
+  @override
+  @JsonKey(name: 'end_time')
+  String get endTime;
+  @override
+  String get price;
+  @override
+  String get deposit;
+  @override
+  int get duration;
+  @override
+  String get latitude;
+  @override
+  String get longitude;
 
   /// Create a copy of CreateStadiumRequestModel
   /// with the given fields replaced by the non-null parameter values.

@@ -4,24 +4,23 @@ part of 'stadium_requests_bloc.dart';
 class StadiumRequestsState {
   final bool isLoading;
   final String? errorMessage;
-  final List<StadiumEntity>? stadiumEntity;
+  final List<StadiumEntity> requests;
 
   const StadiumRequestsState({
-    this.stadiumEntity,
     this.isLoading = false,
     this.errorMessage,
+    this.requests = const [],
   });
 
   StadiumRequestsState copyWith({
     bool? isLoading,
     String? errorMessage,
-    List<StadiumEntity>? stadiumEntity,
-    bool? isSuccess,
+    List<StadiumEntity>? requests,
   }) {
     return StadiumRequestsState(
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage,
-      stadiumEntity: stadiumEntity ?? this.stadiumEntity,
+      requests: requests ?? this.requests,
     );
   }
 }

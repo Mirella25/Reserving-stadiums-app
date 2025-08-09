@@ -6,18 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reserving_stadiums_app/features/home/presentation/pages/player/player_bookings.dart';
-import 'package:reserving_stadiums_app/features/home/presentation/pages/player/player_leagues.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animations/animations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
-import 'package:reserving_stadiums_app/features/home/presentation/pages/player/stadiums.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_data_page.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_strings.dart';
 import '../../../../../core/dependency_injection/injections.dart';
+import '../../../../../leagues/league_page.dart';
 import '../../../../auth/data/datasources/auth_local_datasource.dart';
+import '../../../../profile/presentation/pages/show_profile.dart';
 import '../../../../stadiums/presentation/bloc/player/stadiums_bloc.dart';
 import '../../../../stadiums/presentation/bloc/player/stadiums_event.dart';
 import '../../../../stadiums/presentation/pages/player/stadiums_page.dart';
@@ -43,8 +44,26 @@ class _HomePageState extends State<HomePage> {
       child: const StadiumsPage(),
     ),
     const PlayerBookings(),
-    const PlayerLeagues(),
-    const CreateProfileDataPage(),
+     LeaguesPage(),
+    const ProfilePage( profile: {
+      "first_name": "Sharbel",
+      "last_name": "al Mhanna",
+      "birthdate": "1990-01-01",
+      "address": "123 Street",
+      "phone_number": 123456789,
+      "avatar": "avatars/sample.jpg",
+      "gender": "male",
+      "nationality": "Syrian",
+      "height": 180,
+      "weight": 75,
+      "emergency_contact_information": "911",
+      "injuries": "None",
+      "positions_played": "Forward",
+      "notable_achievements": "MVP 2020",
+      "years_of_experience": 5,
+      "previous_teams": "Team A, Team B",
+      "extra_notes": "Very professional player",
+    },),
   ];
 
   @override
