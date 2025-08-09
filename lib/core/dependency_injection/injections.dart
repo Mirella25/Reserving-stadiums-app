@@ -16,6 +16,15 @@ import 'package:reserving_stadiums_app/features/sport/data/repositories/sport_re
 import 'package:reserving_stadiums_app/features/sport/domain/repositories/sport_repository.dart';
 import 'package:reserving_stadiums_app/features/sport/domain/usecases/get_sports_usecase.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadium/data/datasources/stadium_owner/stadium_remote_datasource.dart';
+import 'package:reserving_stadiums_app/features/stadium/data/repositories/stadium_owner/stadium_repository_impl.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/repositories/stadium_owner/stadium_repository.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/create_stadium_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/delete_stadium_request_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/get_stadium_requests_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_owner/add_stadium/stadium_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_owner/view_stadium_requests/stadium_requests_bloc.dart';
+
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/stadiums/data/datasources/player/stadiums_remote_datasource.dart';
 import '../../features/stadiums/data/datasources/stadium_owner/stadium_remote_datasource.dart';
@@ -109,9 +118,12 @@ Future<void> setupDependencies() async {
       stadiumRemoteDataSource: getIt<StadiumRemoteDataSource>()));
   getIt.registerLazySingleton<CreateStadiumUsecase>(() =>
       CreateStadiumUsecase(stadiumRepository: getIt<StadiumRepository>()));
+  getIt.registerLazySingleton<DeleteStadiumRequestUsecase>(() =>
+      DeleteStadiumRequestUsecase(
+          stadiumRepository: getIt<StadiumRepository>()));
   getIt.registerFactory<SportBloc>(() => SportBloc(getIt<GetSportsUsecase>()));
-  getIt.registerFactory<StadiumBloc>(
-      () => StadiumBloc(getIt<CreateStadiumUsecase>()));
+  getIt.registerFactory<StadiumBloc>(() => StadiumBloc(
+      getIt<CreateStadiumUsecase>(), getIt<DeleteStadiumRequestUsecase>()));
   getIt.registerLazySingleton<GetStadiumRequestsUsecase>(() =>
       GetStadiumRequestsUsecase(stadiumRepository: getIt<StadiumRepository>()));
   getIt.registerFactory(

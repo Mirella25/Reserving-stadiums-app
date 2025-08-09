@@ -11,7 +11,12 @@ import 'package:reserving_stadiums_app/features/sport/domain/entities/sport_enti
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_event.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_state.dart';
-
+import 'package:reserving_stadiums_app/features/stadium/domain/entities/stadium_owner/stadium_entity.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/create_stadium_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadium/domain/usecases/stadium_owner/delete_stadium_request_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/bloc/stadium_owner/add_stadium/stadium_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/widgets/add_stadium_loading.dart';
+import 'package:reserving_stadiums_app/features/stadium/presentation/widgets/choose_sport_dropdown_field.dart';
 import 'package:reserving_stadiums_app/shared/widgets/custom_text_field.dart';
 import 'package:reserving_stadiums_app/shared/widgets/loading.dart';
 import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
@@ -86,7 +91,9 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => StadiumBloc(getIt<CreateStadiumUsecase>())),
+        BlocProvider(
+            create: (_) => StadiumBloc(getIt<CreateStadiumUsecase>(),
+                getIt<DeleteStadiumRequestUsecase>())),
         BlocProvider(create: (_) => getIt<SportBloc>()..add(LoadSportsEvent())),
       ],
       child: Scaffold(
