@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'create_stadium_response_model.dart';
+part of 'owner_create_stadium_response_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,57 +14,58 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-CreateStadiumResponseModel _$CreateStadiumResponseModelFromJson(
+OwnerCreateStadiumResponseModel _$OwnerCreateStadiumResponseModelFromJson(
     Map<String, dynamic> json) {
-  return _CreateStadiumResponseModel.fromJson(json);
+  return _OwnerCreateStadiumResponseModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CreateStadiumResponseModel {
+mixin _$OwnerCreateStadiumResponseModel {
   bool get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'status_code')
   int get statusCode => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  CreateStadiumDataResponeModel get data => throw _privateConstructorUsedError;
+  OwnerCreateStadiumDataModel get data => throw _privateConstructorUsedError;
 
-  /// Serializes this CreateStadiumResponseModel to a JSON map.
+  /// Serializes this OwnerCreateStadiumResponseModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of CreateStadiumResponseModel
+  /// Create a copy of OwnerCreateStadiumResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CreateStadiumResponseModelCopyWith<CreateStadiumResponseModel>
+  $OwnerCreateStadiumResponseModelCopyWith<OwnerCreateStadiumResponseModel>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CreateStadiumResponseModelCopyWith<$Res> {
-  factory $CreateStadiumResponseModelCopyWith(CreateStadiumResponseModel value,
-          $Res Function(CreateStadiumResponseModel) then) =
-      _$CreateStadiumResponseModelCopyWithImpl<$Res,
-          CreateStadiumResponseModel>;
+abstract class $OwnerCreateStadiumResponseModelCopyWith<$Res> {
+  factory $OwnerCreateStadiumResponseModelCopyWith(
+          OwnerCreateStadiumResponseModel value,
+          $Res Function(OwnerCreateStadiumResponseModel) then) =
+      _$OwnerCreateStadiumResponseModelCopyWithImpl<$Res,
+          OwnerCreateStadiumResponseModel>;
   @useResult
   $Res call(
       {bool status,
       @JsonKey(name: 'status_code') int statusCode,
       String? message,
-      CreateStadiumDataResponeModel data});
+      OwnerCreateStadiumDataModel data});
 
-  $CreateStadiumDataResponeModelCopyWith<$Res> get data;
+  $OwnerCreateStadiumDataModelCopyWith<$Res> get data;
 }
 
 /// @nodoc
-class _$CreateStadiumResponseModelCopyWithImpl<$Res,
-        $Val extends CreateStadiumResponseModel>
-    implements $CreateStadiumResponseModelCopyWith<$Res> {
-  _$CreateStadiumResponseModelCopyWithImpl(this._value, this._then);
+class _$OwnerCreateStadiumResponseModelCopyWithImpl<$Res,
+        $Val extends OwnerCreateStadiumResponseModel>
+    implements $OwnerCreateStadiumResponseModelCopyWith<$Res> {
+  _$OwnerCreateStadiumResponseModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CreateStadiumResponseModel
+  /// Create a copy of OwnerCreateStadiumResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -90,51 +91,51 @@ class _$CreateStadiumResponseModelCopyWithImpl<$Res,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as CreateStadiumDataResponeModel,
+              as OwnerCreateStadiumDataModel,
     ) as $Val);
   }
 
-  /// Create a copy of CreateStadiumResponseModel
+  /// Create a copy of OwnerCreateStadiumResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CreateStadiumDataResponeModelCopyWith<$Res> get data {
-    return $CreateStadiumDataResponeModelCopyWith<$Res>(_value.data, (value) {
+  $OwnerCreateStadiumDataModelCopyWith<$Res> get data {
+    return $OwnerCreateStadiumDataModelCopyWith<$Res>(_value.data, (value) {
       return _then(_value.copyWith(data: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$CreateStadiumResponseModelImplCopyWith<$Res>
-    implements $CreateStadiumResponseModelCopyWith<$Res> {
-  factory _$$CreateStadiumResponseModelImplCopyWith(
-          _$CreateStadiumResponseModelImpl value,
-          $Res Function(_$CreateStadiumResponseModelImpl) then) =
-      __$$CreateStadiumResponseModelImplCopyWithImpl<$Res>;
+abstract class _$$OwnerCreateStadiumResponseModelImplCopyWith<$Res>
+    implements $OwnerCreateStadiumResponseModelCopyWith<$Res> {
+  factory _$$OwnerCreateStadiumResponseModelImplCopyWith(
+          _$OwnerCreateStadiumResponseModelImpl value,
+          $Res Function(_$OwnerCreateStadiumResponseModelImpl) then) =
+      __$$OwnerCreateStadiumResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {bool status,
       @JsonKey(name: 'status_code') int statusCode,
       String? message,
-      CreateStadiumDataResponeModel data});
+      OwnerCreateStadiumDataModel data});
 
   @override
-  $CreateStadiumDataResponeModelCopyWith<$Res> get data;
+  $OwnerCreateStadiumDataModelCopyWith<$Res> get data;
 }
 
 /// @nodoc
-class __$$CreateStadiumResponseModelImplCopyWithImpl<$Res>
-    extends _$CreateStadiumResponseModelCopyWithImpl<$Res,
-        _$CreateStadiumResponseModelImpl>
-    implements _$$CreateStadiumResponseModelImplCopyWith<$Res> {
-  __$$CreateStadiumResponseModelImplCopyWithImpl(
-      _$CreateStadiumResponseModelImpl _value,
-      $Res Function(_$CreateStadiumResponseModelImpl) _then)
+class __$$OwnerCreateStadiumResponseModelImplCopyWithImpl<$Res>
+    extends _$OwnerCreateStadiumResponseModelCopyWithImpl<$Res,
+        _$OwnerCreateStadiumResponseModelImpl>
+    implements _$$OwnerCreateStadiumResponseModelImplCopyWith<$Res> {
+  __$$OwnerCreateStadiumResponseModelImplCopyWithImpl(
+      _$OwnerCreateStadiumResponseModelImpl _value,
+      $Res Function(_$OwnerCreateStadiumResponseModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CreateStadiumResponseModel
+  /// Create a copy of OwnerCreateStadiumResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -144,7 +145,7 @@ class __$$CreateStadiumResponseModelImplCopyWithImpl<$Res>
     Object? message = freezed,
     Object? data = null,
   }) {
-    return _then(_$CreateStadiumResponseModelImpl(
+    return _then(_$OwnerCreateStadiumResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -160,25 +161,25 @@ class __$$CreateStadiumResponseModelImplCopyWithImpl<$Res>
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as CreateStadiumDataResponeModel,
+              as OwnerCreateStadiumDataModel,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$CreateStadiumResponseModelImpl
+class _$OwnerCreateStadiumResponseModelImpl
     with DiagnosticableTreeMixin
-    implements _CreateStadiumResponseModel {
-  const _$CreateStadiumResponseModelImpl(
+    implements _OwnerCreateStadiumResponseModel {
+  const _$OwnerCreateStadiumResponseModelImpl(
       {required this.status,
       @JsonKey(name: 'status_code') required this.statusCode,
       this.message,
       required this.data});
 
-  factory _$CreateStadiumResponseModelImpl.fromJson(
+  factory _$OwnerCreateStadiumResponseModelImpl.fromJson(
           Map<String, dynamic> json) =>
-      _$$CreateStadiumResponseModelImplFromJson(json);
+      _$$OwnerCreateStadiumResponseModelImplFromJson(json);
 
   @override
   final bool status;
@@ -188,18 +189,18 @@ class _$CreateStadiumResponseModelImpl
   @override
   final String? message;
   @override
-  final CreateStadiumDataResponeModel data;
+  final OwnerCreateStadiumDataModel data;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CreateStadiumResponseModel(status: $status, statusCode: $statusCode, message: $message, data: $data)';
+    return 'OwnerCreateStadiumResponseModel(status: $status, statusCode: $statusCode, message: $message, data: $data)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CreateStadiumResponseModel'))
+      ..add(DiagnosticsProperty('type', 'OwnerCreateStadiumResponseModel'))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('statusCode', statusCode))
       ..add(DiagnosticsProperty('message', message))
@@ -210,7 +211,7 @@ class _$CreateStadiumResponseModelImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CreateStadiumResponseModelImpl &&
+            other is _$OwnerCreateStadiumResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.statusCode, statusCode) ||
                 other.statusCode == statusCode) &&
@@ -223,34 +224,35 @@ class _$CreateStadiumResponseModelImpl
   int get hashCode =>
       Object.hash(runtimeType, status, statusCode, message, data);
 
-  /// Create a copy of CreateStadiumResponseModel
+  /// Create a copy of OwnerCreateStadiumResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CreateStadiumResponseModelImplCopyWith<_$CreateStadiumResponseModelImpl>
-      get copyWith => __$$CreateStadiumResponseModelImplCopyWithImpl<
-          _$CreateStadiumResponseModelImpl>(this, _$identity);
+  _$$OwnerCreateStadiumResponseModelImplCopyWith<
+          _$OwnerCreateStadiumResponseModelImpl>
+      get copyWith => __$$OwnerCreateStadiumResponseModelImplCopyWithImpl<
+          _$OwnerCreateStadiumResponseModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CreateStadiumResponseModelImplToJson(
+    return _$$OwnerCreateStadiumResponseModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _CreateStadiumResponseModel
-    implements CreateStadiumResponseModel {
-  const factory _CreateStadiumResponseModel(
+abstract class _OwnerCreateStadiumResponseModel
+    implements OwnerCreateStadiumResponseModel {
+  const factory _OwnerCreateStadiumResponseModel(
           {required final bool status,
           @JsonKey(name: 'status_code') required final int statusCode,
           final String? message,
-          required final CreateStadiumDataResponeModel data}) =
-      _$CreateStadiumResponseModelImpl;
+          required final OwnerCreateStadiumDataModel data}) =
+      _$OwnerCreateStadiumResponseModelImpl;
 
-  factory _CreateStadiumResponseModel.fromJson(Map<String, dynamic> json) =
-      _$CreateStadiumResponseModelImpl.fromJson;
+  factory _OwnerCreateStadiumResponseModel.fromJson(Map<String, dynamic> json) =
+      _$OwnerCreateStadiumResponseModelImpl.fromJson;
 
   @override
   bool get status;
@@ -260,12 +262,13 @@ abstract class _CreateStadiumResponseModel
   @override
   String? get message;
   @override
-  CreateStadiumDataResponeModel get data;
+  OwnerCreateStadiumDataModel get data;
 
-  /// Create a copy of CreateStadiumResponseModel
+  /// Create a copy of OwnerCreateStadiumResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CreateStadiumResponseModelImplCopyWith<_$CreateStadiumResponseModelImpl>
+  _$$OwnerCreateStadiumResponseModelImplCopyWith<
+          _$OwnerCreateStadiumResponseModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

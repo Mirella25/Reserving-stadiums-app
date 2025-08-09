@@ -35,7 +35,8 @@ AppBar buildHomeAppBar(BuildContext context) {
       await prefs.clear();
       final authLocal = getIt<AuthLocalDataSource>();
       await authLocal.clearToken();
-
+      await authLocal.clearRole();
+      // await prefs.remove('seen_intro');
       CustomSnackbar.show(context, message: 'تم تسجيل الخروج بنجاح ✅');
 
       Navigator.pushAndRemoveUntil(

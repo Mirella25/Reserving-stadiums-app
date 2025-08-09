@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'create_stadium_data_respone_model.dart';
+part of 'owner_create_stadium_data_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,13 +14,13 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-CreateStadiumDataResponeModel _$CreateStadiumDataResponeModelFromJson(
+OwnerCreateStadiumDataModel _$OwnerCreateStadiumDataModelFromJson(
     Map<String, dynamic> json) {
-  return _CreateStadiumDataResponeModel.fromJson(json);
+  return _OwnerCreateStadiumDataModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CreateStadiumDataResponeModel {
+mixin _$OwnerCreateStadiumDataModel {
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'sport_id')
   String get sportId => throw _privateConstructorUsedError;
@@ -41,23 +41,23 @@ mixin _$CreateStadiumDataResponeModel {
   @JsonKey(name: 'updated_at')
   String get updatedAt => throw _privateConstructorUsedError;
 
-  /// Serializes this CreateStadiumDataResponeModel to a JSON map.
+  /// Serializes this OwnerCreateStadiumDataModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of CreateStadiumDataResponeModel
+  /// Create a copy of OwnerCreateStadiumDataModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CreateStadiumDataResponeModelCopyWith<CreateStadiumDataResponeModel>
+  $OwnerCreateStadiumDataModelCopyWith<OwnerCreateStadiumDataModel>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CreateStadiumDataResponeModelCopyWith<$Res> {
-  factory $CreateStadiumDataResponeModelCopyWith(
-          CreateStadiumDataResponeModel value,
-          $Res Function(CreateStadiumDataResponeModel) then) =
-      _$CreateStadiumDataResponeModelCopyWithImpl<$Res,
-          CreateStadiumDataResponeModel>;
+abstract class $OwnerCreateStadiumDataModelCopyWith<$Res> {
+  factory $OwnerCreateStadiumDataModelCopyWith(
+          OwnerCreateStadiumDataModel value,
+          $Res Function(OwnerCreateStadiumDataModel) then) =
+      _$OwnerCreateStadiumDataModelCopyWithImpl<$Res,
+          OwnerCreateStadiumDataModel>;
   @useResult
   $Res call(
       {int id,
@@ -75,17 +75,17 @@ abstract class $CreateStadiumDataResponeModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CreateStadiumDataResponeModelCopyWithImpl<$Res,
-        $Val extends CreateStadiumDataResponeModel>
-    implements $CreateStadiumDataResponeModelCopyWith<$Res> {
-  _$CreateStadiumDataResponeModelCopyWithImpl(this._value, this._then);
+class _$OwnerCreateStadiumDataModelCopyWithImpl<$Res,
+        $Val extends OwnerCreateStadiumDataModel>
+    implements $OwnerCreateStadiumDataModelCopyWith<$Res> {
+  _$OwnerCreateStadiumDataModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CreateStadiumDataResponeModel
+  /// Create a copy of OwnerCreateStadiumDataModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -157,12 +157,12 @@ class _$CreateStadiumDataResponeModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$CreateStadiumDataResponeModelImplCopyWith<$Res>
-    implements $CreateStadiumDataResponeModelCopyWith<$Res> {
-  factory _$$CreateStadiumDataResponeModelImplCopyWith(
-          _$CreateStadiumDataResponeModelImpl value,
-          $Res Function(_$CreateStadiumDataResponeModelImpl) then) =
-      __$$CreateStadiumDataResponeModelImplCopyWithImpl<$Res>;
+abstract class _$$OwnerCreateStadiumDataModelImplCopyWith<$Res>
+    implements $OwnerCreateStadiumDataModelCopyWith<$Res> {
+  factory _$$OwnerCreateStadiumDataModelImplCopyWith(
+          _$OwnerCreateStadiumDataModelImpl value,
+          $Res Function(_$OwnerCreateStadiumDataModelImpl) then) =
+      __$$OwnerCreateStadiumDataModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -181,16 +181,16 @@ abstract class _$$CreateStadiumDataResponeModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CreateStadiumDataResponeModelImplCopyWithImpl<$Res>
-    extends _$CreateStadiumDataResponeModelCopyWithImpl<$Res,
-        _$CreateStadiumDataResponeModelImpl>
-    implements _$$CreateStadiumDataResponeModelImplCopyWith<$Res> {
-  __$$CreateStadiumDataResponeModelImplCopyWithImpl(
-      _$CreateStadiumDataResponeModelImpl _value,
-      $Res Function(_$CreateStadiumDataResponeModelImpl) _then)
+class __$$OwnerCreateStadiumDataModelImplCopyWithImpl<$Res>
+    extends _$OwnerCreateStadiumDataModelCopyWithImpl<$Res,
+        _$OwnerCreateStadiumDataModelImpl>
+    implements _$$OwnerCreateStadiumDataModelImplCopyWith<$Res> {
+  __$$OwnerCreateStadiumDataModelImplCopyWithImpl(
+      _$OwnerCreateStadiumDataModelImpl _value,
+      $Res Function(_$OwnerCreateStadiumDataModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CreateStadiumDataResponeModel
+  /// Create a copy of OwnerCreateStadiumDataModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -208,7 +208,7 @@ class __$$CreateStadiumDataResponeModelImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(_$CreateStadiumDataResponeModelImpl(
+    return _then(_$OwnerCreateStadiumDataModelImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -263,10 +263,10 @@ class __$$CreateStadiumDataResponeModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CreateStadiumDataResponeModelImpl
+class _$OwnerCreateStadiumDataModelImpl
     with DiagnosticableTreeMixin
-    implements _CreateStadiumDataResponeModel {
-  _$CreateStadiumDataResponeModelImpl(
+    implements _OwnerCreateStadiumDataModel {
+  _$OwnerCreateStadiumDataModelImpl(
       {required this.id,
       @JsonKey(name: 'sport_id') required this.sportId,
       required this.name,
@@ -281,9 +281,9 @@ class _$CreateStadiumDataResponeModelImpl
       @JsonKey(name: 'updated_at') required this.updatedAt})
       : _photos = photos;
 
-  factory _$CreateStadiumDataResponeModelImpl.fromJson(
+  factory _$OwnerCreateStadiumDataModelImpl.fromJson(
           Map<String, dynamic> json) =>
-      _$$CreateStadiumDataResponeModelImplFromJson(json);
+      _$$OwnerCreateStadiumDataModelImplFromJson(json);
 
   @override
   final int id;
@@ -327,14 +327,14 @@ class _$CreateStadiumDataResponeModelImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CreateStadiumDataResponeModel(id: $id, sportId: $sportId, name: $name, location: $location, description: $description, length: $length, width: $width, ownerNumber: $ownerNumber, photos: $photos, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'OwnerCreateStadiumDataModel(id: $id, sportId: $sportId, name: $name, location: $location, description: $description, length: $length, width: $width, ownerNumber: $ownerNumber, photos: $photos, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CreateStadiumDataResponeModel'))
+      ..add(DiagnosticsProperty('type', 'OwnerCreateStadiumDataModel'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('sportId', sportId))
       ..add(DiagnosticsProperty('name', name))
@@ -353,7 +353,7 @@ class _$CreateStadiumDataResponeModelImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CreateStadiumDataResponeModelImpl &&
+            other is _$OwnerCreateStadiumDataModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.sportId, sportId) || other.sportId == sportId) &&
             (identical(other.name, name) || other.name == name) &&
@@ -390,27 +390,26 @@ class _$CreateStadiumDataResponeModelImpl
       createdAt,
       updatedAt);
 
-  /// Create a copy of CreateStadiumDataResponeModel
+  /// Create a copy of OwnerCreateStadiumDataModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CreateStadiumDataResponeModelImplCopyWith<
-          _$CreateStadiumDataResponeModelImpl>
-      get copyWith => __$$CreateStadiumDataResponeModelImplCopyWithImpl<
-          _$CreateStadiumDataResponeModelImpl>(this, _$identity);
+  _$$OwnerCreateStadiumDataModelImplCopyWith<_$OwnerCreateStadiumDataModelImpl>
+      get copyWith => __$$OwnerCreateStadiumDataModelImplCopyWithImpl<
+          _$OwnerCreateStadiumDataModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CreateStadiumDataResponeModelImplToJson(
+    return _$$OwnerCreateStadiumDataModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _CreateStadiumDataResponeModel
-    implements CreateStadiumDataResponeModel {
-  factory _CreateStadiumDataResponeModel(
+abstract class _OwnerCreateStadiumDataModel
+    implements OwnerCreateStadiumDataModel {
+  factory _OwnerCreateStadiumDataModel(
           {required final int id,
           @JsonKey(name: 'sport_id') required final String sportId,
           required final String name,
@@ -423,10 +422,10 @@ abstract class _CreateStadiumDataResponeModel
           @JsonKey(name: 'user_id') required final int userId,
           @JsonKey(name: 'created_at') required final String createdAt,
           @JsonKey(name: 'updated_at') required final String updatedAt}) =
-      _$CreateStadiumDataResponeModelImpl;
+      _$OwnerCreateStadiumDataModelImpl;
 
-  factory _CreateStadiumDataResponeModel.fromJson(Map<String, dynamic> json) =
-      _$CreateStadiumDataResponeModelImpl.fromJson;
+  factory _OwnerCreateStadiumDataModel.fromJson(Map<String, dynamic> json) =
+      _$OwnerCreateStadiumDataModelImpl.fromJson;
 
   @override
   int get id;
@@ -460,11 +459,10 @@ abstract class _CreateStadiumDataResponeModel
   @JsonKey(name: 'updated_at')
   String get updatedAt;
 
-  /// Create a copy of CreateStadiumDataResponeModel
+  /// Create a copy of OwnerCreateStadiumDataModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CreateStadiumDataResponeModelImplCopyWith<
-          _$CreateStadiumDataResponeModelImpl>
+  _$$OwnerCreateStadiumDataModelImplCopyWith<_$OwnerCreateStadiumDataModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
