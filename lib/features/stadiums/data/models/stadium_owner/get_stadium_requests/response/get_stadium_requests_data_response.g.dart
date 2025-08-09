@@ -11,7 +11,7 @@ _$GetStadiumRequestsDataResponseImpl
         _$GetStadiumRequestsDataResponseImpl(
           id: (json['id'] as num?)?.toInt(),
           userId: (json['user_id'] as num).toInt(),
-          sportId: json['sport_id'] as String,
+          sportId: (json['sport_id'] as num).toInt(),
           name: json['name'] as String,
           location: json['location'] as String,
           description: json['description'] as String,
@@ -20,11 +20,18 @@ _$GetStadiumRequestsDataResponseImpl
               .toList(),
           length: json['Length'] as String,
           width: json['Width'] as String,
-          ownerNumber: json['owner_number'] as String,
+          ownerNumber: (json['owner_number'] as num).toInt(),
           status: json['status'] as String?,
           adminNotes: json['admin_notes'] as String?,
           createdAt: json['created_at'] as String?,
           updatedAt: json['updated_at'] as String?,
+          startTime: json['start_time'] as String,
+          endTime: json['end_time'] as String,
+          price: json['price'] as String,
+          deposit: json['deposit'] as String,
+          latitude: json['latitude'] as String,
+          longitude: json['longitude'] as String,
+          duration: (json['duration'] as num).toInt(),
         );
 
 Map<String, dynamic> _$$GetStadiumRequestsDataResponseImplToJson(
@@ -44,4 +51,11 @@ Map<String, dynamic> _$$GetStadiumRequestsDataResponseImplToJson(
       'admin_notes': instance.adminNotes,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
+      'start_time': instance.startTime,
+      'end_time': instance.endTime,
+      'price': instance.price,
+      'deposit': instance.deposit,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+      'duration': instance.duration,
     };

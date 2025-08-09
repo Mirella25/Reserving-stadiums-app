@@ -1,5 +1,6 @@
-
 // lib/features/home/presentation/pages/settings_page.dart
+
+// ignore_for_file: dead_code
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -48,9 +49,15 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _openMapPicker(BuildContext context) async {
+    LatLng? _selectedLatLng;
     final LatLng? selected = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => MapPickerPage()),
+      MaterialPageRoute(
+          builder: (_) => MapPickerPage(
+                latitude: _selectedLatLng?.latitude ?? 33.5138,
+                longitude: _selectedLatLng?.longitude ?? 36.2765,
+                title: 'اختر موقع الملعب',
+              )),
     );
     if (selected != null) {
       // هنا تحصل على الإحداثيات
@@ -87,4 +94,3 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-

@@ -9,7 +9,7 @@ import 'package:reserving_stadiums_app/shared/widgets/error_message.dart';
 import '../../bloc/stadium_owner/view_stadium_requests/stadium_requests_bloc.dart';
 import '../../widgets/stadium_owner/stadium_request_loading.dart';
 
-enum RequestStatus { pending, accepted, rejected }
+enum RequestStatus { pending, approved, rejected }
 
 class StadiumRequest {
   final String name;
@@ -39,9 +39,9 @@ class _ViewStadiumRequestsPageState extends State<ViewStadiumRequestsPage> {
     context.read<StadiumRequestsBloc>().add(LoadStadiumRequestsEvent());
   }
 
-  Color _statusColor(RequestStatus s) {
+  Color _statusBackgroundColor(RequestStatus s) {
     switch (s) {
-      case RequestStatus.accepted:
+      case RequestStatus.approved:
         return Colors.green.shade100;
       case RequestStatus.rejected:
         return Colors.red.shade100;
@@ -52,7 +52,7 @@ class _ViewStadiumRequestsPageState extends State<ViewStadiumRequestsPage> {
 
   IconData _statusIcon(RequestStatus s) {
     switch (s) {
-      case RequestStatus.accepted:
+      case RequestStatus.approved:
         return Icons.check_circle;
       case RequestStatus.rejected:
         return Icons.cancel;
@@ -61,14 +61,14 @@ class _ViewStadiumRequestsPageState extends State<ViewStadiumRequestsPage> {
     }
   }
 
-  String _statusLabel(RequestStatus s) {
+  Color _statusTextColor(RequestStatus s) {
     switch (s) {
-      case RequestStatus.accepted:
-        return 'مقبول';
+      case RequestStatus.approved:
+        return Colors.green.shade700;
       case RequestStatus.rejected:
-        return 'مرفوض';
+        return Colors.red.shade700;
       case RequestStatus.pending:
-        return 'قيد الانتظار';
+        return Colors.orange.shade700;
     }
   }
 
@@ -102,10 +102,11 @@ class _ViewStadiumRequestsPageState extends State<ViewStadiumRequestsPage> {
                 builder: (context, state) {
                   if (state.isLoading) {
                     return const StadiumRequestsLoading();
-                  } else if (state.errorMessage != null) {
+                  } else if (state.errorMessage != null &&
+                      state.errorMessage != "You have no asks submitted.") {
                     return ErrorMessage(message: state.errorMessage!);
                   }
-                  final list = state.stadiumEntity ?? [];
+                  final list = state.requests ?? [];
                   if (list.isEmpty) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -113,13 +114,10 @@ class _ViewStadiumRequestsPageState extends State<ViewStadiumRequestsPage> {
                         Center(
                           child: Lottie.asset(
                             'assets/lootie/Empty.json',
-                            width: 200.w,
-                            height: 200.h,
+                            width: 300.w,
+                            height: 300.h,
                             fit: BoxFit.contain,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
                         ),
                         Text(
                           'لا توجد طلبات حالياً',
@@ -135,6 +133,20 @@ class _ViewStadiumRequestsPageState extends State<ViewStadiumRequestsPage> {
                       itemCount: list.length,
                       itemBuilder: (context, index) {
                         final req = list[index];
+                        RequestStatus status;
+                        switch (req.statusRequest?.toLowerCase()) {
+                          case 'approved':
+                            status = RequestStatus.approved;
+                            break;
+
+                          case 'rejected':
+                            status = RequestStatus.rejected;
+                            break;
+
+                          case 'pending':
+                          default:
+                            status = RequestStatus.pending;
+                        }
                         return AnimationConfiguration.staggeredList(
                           position: index,
                           duration: const Duration(milliseconds: 500),
@@ -145,44 +157,84 @@ class _ViewStadiumRequestsPageState extends State<ViewStadiumRequestsPage> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
                                 ),
-                                shadowColor: AppColors.borderColor,
+                                shadowColor: _statusBackgroundColor(status),
                                 margin: const EdgeInsets.symmetric(vertical: 8),
-                                elevation: 5,
+                                elevation: 3,
                                 child: ListTile(
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 12, horizontal: 16),
                                   leading: CircleAvatar(
                                     radius: 24,
-                                    backgroundColor: _statusColor(
-                                        req.status as RequestStatus),
+                                    backgroundColor:
+                                        _statusBackgroundColor(status),
                                     child: Icon(
-                                      _statusIcon(req.status as RequestStatus),
-                                      color: Colors.white,
+                                      _statusIcon(status),
+                                      color: _statusTextColor(status),
                                       size: 28,
                                     ),
                                   ),
                                   title: Text(
                                     req.name,
                                     style: const TextStyle(
+                                        fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18),
                                   ),
-                                  subtitle: Text(
-                                    req.location,
-                                    style: const TextStyle(color: Colors.grey),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Expanded(
+                                            flex: 1,
+                                            child: Icon(
+                                              Icons.location_on,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 4,
+                                            child: Text(
+                                              req.location,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontFamily: 'Lora',
+                                                  color: Colors.grey),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'time: ${req.startTime} - ${req.endTime}',
+                                            style: const TextStyle(
+                                                fontFamily: 'Lora',
+                                                color: Colors.black87,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Text(
+                                        'price: ${req.price}',
+                                        style: const TextStyle(
+                                            fontFamily: 'Lora',
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
                                   ),
                                   trailing: Container(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 4, horizontal: 8),
-                                    decoration: BoxDecoration(
-                                      color: _statusColor(
-                                          req.status as RequestStatus),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
                                     child: Text(
-                                      _statusLabel(req.status as RequestStatus),
+                                      req.statusRequest!,
                                       style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
+                                        fontFamily: 'Poppins',
+                                        color: _statusTextColor(status),
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),

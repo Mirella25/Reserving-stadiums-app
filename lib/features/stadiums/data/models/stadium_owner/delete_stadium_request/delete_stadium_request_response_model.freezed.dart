@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_stadium_requests_response.dart';
+part of 'delete_stadium_request_response_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,56 +14,54 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-GetStadiumRequestsResponse _$GetStadiumRequestsResponseFromJson(
+DeleteStadiumRequestResponseModel _$DeleteStadiumRequestResponseModelFromJson(
     Map<String, dynamic> json) {
-  return _GetStadiumRequestsResponse.fromJson(json);
+  return _DeleteStadiumRequestResponseModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$GetStadiumRequestsResponse {
+mixin _$DeleteStadiumRequestResponseModel {
   bool get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'status_code')
   int get statusCode => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  List<GetStadiumRequestsDataResponse> get data =>
-      throw _privateConstructorUsedError;
 
-  /// Serializes this GetStadiumRequestsResponse to a JSON map.
+  /// Serializes this DeleteStadiumRequestResponseModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of GetStadiumRequestsResponse
+  /// Create a copy of DeleteStadiumRequestResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $GetStadiumRequestsResponseCopyWith<GetStadiumRequestsResponse>
+  $DeleteStadiumRequestResponseModelCopyWith<DeleteStadiumRequestResponseModel>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GetStadiumRequestsResponseCopyWith<$Res> {
-  factory $GetStadiumRequestsResponseCopyWith(GetStadiumRequestsResponse value,
-          $Res Function(GetStadiumRequestsResponse) then) =
-      _$GetStadiumRequestsResponseCopyWithImpl<$Res,
-          GetStadiumRequestsResponse>;
+abstract class $DeleteStadiumRequestResponseModelCopyWith<$Res> {
+  factory $DeleteStadiumRequestResponseModelCopyWith(
+          DeleteStadiumRequestResponseModel value,
+          $Res Function(DeleteStadiumRequestResponseModel) then) =
+      _$DeleteStadiumRequestResponseModelCopyWithImpl<$Res,
+          DeleteStadiumRequestResponseModel>;
   @useResult
   $Res call(
       {bool status,
       @JsonKey(name: 'status_code') int statusCode,
-      String? message,
-      List<GetStadiumRequestsDataResponse> data});
+      String? message});
 }
 
 /// @nodoc
-class _$GetStadiumRequestsResponseCopyWithImpl<$Res,
-        $Val extends GetStadiumRequestsResponse>
-    implements $GetStadiumRequestsResponseCopyWith<$Res> {
-  _$GetStadiumRequestsResponseCopyWithImpl(this._value, this._then);
+class _$DeleteStadiumRequestResponseModelCopyWithImpl<$Res,
+        $Val extends DeleteStadiumRequestResponseModel>
+    implements $DeleteStadiumRequestResponseModelCopyWith<$Res> {
+  _$DeleteStadiumRequestResponseModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GetStadiumRequestsResponse
+  /// Create a copy of DeleteStadiumRequestResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -71,7 +69,6 @@ class _$GetStadiumRequestsResponseCopyWithImpl<$Res,
     Object? status = null,
     Object? statusCode = null,
     Object? message = freezed,
-    Object? data = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -86,41 +83,36 @@ class _$GetStadiumRequestsResponseCopyWithImpl<$Res,
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as List<GetStadiumRequestsDataResponse>,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$GetStadiumRequestsResponseImplCopyWith<$Res>
-    implements $GetStadiumRequestsResponseCopyWith<$Res> {
-  factory _$$GetStadiumRequestsResponseImplCopyWith(
-          _$GetStadiumRequestsResponseImpl value,
-          $Res Function(_$GetStadiumRequestsResponseImpl) then) =
-      __$$GetStadiumRequestsResponseImplCopyWithImpl<$Res>;
+abstract class _$$DeleteStadiumRequestResponseModelImplCopyWith<$Res>
+    implements $DeleteStadiumRequestResponseModelCopyWith<$Res> {
+  factory _$$DeleteStadiumRequestResponseModelImplCopyWith(
+          _$DeleteStadiumRequestResponseModelImpl value,
+          $Res Function(_$DeleteStadiumRequestResponseModelImpl) then) =
+      __$$DeleteStadiumRequestResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {bool status,
       @JsonKey(name: 'status_code') int statusCode,
-      String? message,
-      List<GetStadiumRequestsDataResponse> data});
+      String? message});
 }
 
 /// @nodoc
-class __$$GetStadiumRequestsResponseImplCopyWithImpl<$Res>
-    extends _$GetStadiumRequestsResponseCopyWithImpl<$Res,
-        _$GetStadiumRequestsResponseImpl>
-    implements _$$GetStadiumRequestsResponseImplCopyWith<$Res> {
-  __$$GetStadiumRequestsResponseImplCopyWithImpl(
-      _$GetStadiumRequestsResponseImpl _value,
-      $Res Function(_$GetStadiumRequestsResponseImpl) _then)
+class __$$DeleteStadiumRequestResponseModelImplCopyWithImpl<$Res>
+    extends _$DeleteStadiumRequestResponseModelCopyWithImpl<$Res,
+        _$DeleteStadiumRequestResponseModelImpl>
+    implements _$$DeleteStadiumRequestResponseModelImplCopyWith<$Res> {
+  __$$DeleteStadiumRequestResponseModelImplCopyWithImpl(
+      _$DeleteStadiumRequestResponseModelImpl _value,
+      $Res Function(_$DeleteStadiumRequestResponseModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GetStadiumRequestsResponse
+  /// Create a copy of DeleteStadiumRequestResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -128,9 +120,8 @@ class __$$GetStadiumRequestsResponseImplCopyWithImpl<$Res>
     Object? status = null,
     Object? statusCode = null,
     Object? message = freezed,
-    Object? data = null,
   }) {
-    return _then(_$GetStadiumRequestsResponseImpl(
+    return _then(_$DeleteStadiumRequestResponseModelImpl(
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -143,29 +134,23 @@ class __$$GetStadiumRequestsResponseImplCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      data: null == data
-          ? _value._data
-          : data // ignore: cast_nullable_to_non_nullable
-              as List<GetStadiumRequestsDataResponse>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$GetStadiumRequestsResponseImpl
+class _$DeleteStadiumRequestResponseModelImpl
     with DiagnosticableTreeMixin
-    implements _GetStadiumRequestsResponse {
-  const _$GetStadiumRequestsResponseImpl(
+    implements _DeleteStadiumRequestResponseModel {
+  const _$DeleteStadiumRequestResponseModelImpl(
       {required this.status,
       @JsonKey(name: 'status_code') required this.statusCode,
-      this.message,
-      required final List<GetStadiumRequestsDataResponse> data})
-      : _data = data;
+      this.message});
 
-  factory _$GetStadiumRequestsResponseImpl.fromJson(
+  factory _$DeleteStadiumRequestResponseModelImpl.fromJson(
           Map<String, dynamic> json) =>
-      _$$GetStadiumRequestsResponseImplFromJson(json);
+      _$$DeleteStadiumRequestResponseModelImplFromJson(json);
 
   @override
   final bool status;
@@ -174,75 +159,65 @@ class _$GetStadiumRequestsResponseImpl
   final int statusCode;
   @override
   final String? message;
-  final List<GetStadiumRequestsDataResponse> _data;
-  @override
-  List<GetStadiumRequestsDataResponse> get data {
-    if (_data is EqualUnmodifiableListView) return _data;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_data);
-  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GetStadiumRequestsResponse(status: $status, statusCode: $statusCode, message: $message, data: $data)';
+    return 'DeleteStadiumRequestResponseModel(status: $status, statusCode: $statusCode, message: $message)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'GetStadiumRequestsResponse'))
+      ..add(DiagnosticsProperty('type', 'DeleteStadiumRequestResponseModel'))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('statusCode', statusCode))
-      ..add(DiagnosticsProperty('message', message))
-      ..add(DiagnosticsProperty('data', data));
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GetStadiumRequestsResponseImpl &&
+            other is _$DeleteStadiumRequestResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.statusCode, statusCode) ||
                 other.statusCode == statusCode) &&
-            (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality().equals(other._data, _data));
+            (identical(other.message, message) || other.message == message));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, status, statusCode, message,
-      const DeepCollectionEquality().hash(_data));
+  int get hashCode => Object.hash(runtimeType, status, statusCode, message);
 
-  /// Create a copy of GetStadiumRequestsResponse
+  /// Create a copy of DeleteStadiumRequestResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$GetStadiumRequestsResponseImplCopyWith<_$GetStadiumRequestsResponseImpl>
-      get copyWith => __$$GetStadiumRequestsResponseImplCopyWithImpl<
-          _$GetStadiumRequestsResponseImpl>(this, _$identity);
+  _$$DeleteStadiumRequestResponseModelImplCopyWith<
+          _$DeleteStadiumRequestResponseModelImpl>
+      get copyWith => __$$DeleteStadiumRequestResponseModelImplCopyWithImpl<
+          _$DeleteStadiumRequestResponseModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$GetStadiumRequestsResponseImplToJson(
+    return _$$DeleteStadiumRequestResponseModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _GetStadiumRequestsResponse
-    implements GetStadiumRequestsResponse {
-  const factory _GetStadiumRequestsResponse(
-          {required final bool status,
-          @JsonKey(name: 'status_code') required final int statusCode,
-          final String? message,
-          required final List<GetStadiumRequestsDataResponse> data}) =
-      _$GetStadiumRequestsResponseImpl;
+abstract class _DeleteStadiumRequestResponseModel
+    implements DeleteStadiumRequestResponseModel {
+  const factory _DeleteStadiumRequestResponseModel(
+      {required final bool status,
+      @JsonKey(name: 'status_code') required final int statusCode,
+      final String? message}) = _$DeleteStadiumRequestResponseModelImpl;
 
-  factory _GetStadiumRequestsResponse.fromJson(Map<String, dynamic> json) =
-      _$GetStadiumRequestsResponseImpl.fromJson;
+  factory _DeleteStadiumRequestResponseModel.fromJson(
+          Map<String, dynamic> json) =
+      _$DeleteStadiumRequestResponseModelImpl.fromJson;
 
   @override
   bool get status;
@@ -251,13 +226,12 @@ abstract class _GetStadiumRequestsResponse
   int get statusCode;
   @override
   String? get message;
-  @override
-  List<GetStadiumRequestsDataResponse> get data;
 
-  /// Create a copy of GetStadiumRequestsResponse
+  /// Create a copy of DeleteStadiumRequestResponseModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GetStadiumRequestsResponseImplCopyWith<_$GetStadiumRequestsResponseImpl>
+  _$$DeleteStadiumRequestResponseModelImplCopyWith<
+          _$DeleteStadiumRequestResponseModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

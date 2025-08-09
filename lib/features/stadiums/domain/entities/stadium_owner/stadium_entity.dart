@@ -1,18 +1,25 @@
 class StadiumEntity {
-  final String sportId;
+  final int sportId;
   final String name;
   final String location;
   final String description;
   final String length;
   final String width;
-  final String ownerNumber;
+  final int ownerNumber;
   final List<String>? photos;
   final int? id;
   final int? userId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final String? status;
+  final String? statusRequest;
   final String? adminNotes;
+  final String startTime;
+  final String endTime;
+  final String price;
+  final String deposit;
+  final int duration;
+  final String longitude;
+  final String latitude;
 
   StadiumEntity({
     required this.sportId,
@@ -27,7 +34,14 @@ class StadiumEntity {
     this.userId,
     this.createdAt,
     this.updatedAt,
-    this.status,
+    this.statusRequest,
     this.adminNotes,
+    required this.startTime,
+    required this.endTime,
+    required this.price,
+    required this.deposit,
+    required this.duration,
+    required this.latitude,
+    required this.longitude,
   });
 }

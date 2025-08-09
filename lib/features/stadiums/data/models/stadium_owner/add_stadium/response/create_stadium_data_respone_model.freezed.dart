@@ -23,7 +23,7 @@ CreateStadiumDataResponeModel _$CreateStadiumDataResponeModelFromJson(
 mixin _$CreateStadiumDataResponeModel {
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'sport_id')
-  String get sportId => throw _privateConstructorUsedError;
+  int get sportId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get location => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -32,7 +32,7 @@ mixin _$CreateStadiumDataResponeModel {
   @JsonKey(name: 'Width')
   String get width => throw _privateConstructorUsedError;
   @JsonKey(name: 'owner_number')
-  String get ownerNumber => throw _privateConstructorUsedError;
+  int get ownerNumber => throw _privateConstructorUsedError;
   List<String>? get photos => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   int get userId => throw _privateConstructorUsedError;
@@ -40,6 +40,15 @@ mixin _$CreateStadiumDataResponeModel {
   String get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   String get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'start_time')
+  String get startTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'end_time')
+  String get endTime => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String get deposit => throw _privateConstructorUsedError;
+  String get latitude => throw _privateConstructorUsedError;
+  String get longitude => throw _privateConstructorUsedError;
+  int get duration => throw _privateConstructorUsedError;
 
   /// Serializes this CreateStadiumDataResponeModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,17 +70,24 @@ abstract class $CreateStadiumDataResponeModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'sport_id') String sportId,
+      @JsonKey(name: 'sport_id') int sportId,
       String name,
       String location,
       String description,
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
-      @JsonKey(name: 'owner_number') String ownerNumber,
+      @JsonKey(name: 'owner_number') int ownerNumber,
       List<String>? photos,
       @JsonKey(name: 'user_id') int userId,
       @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt});
+      @JsonKey(name: 'updated_at') String updatedAt,
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
+      String price,
+      String deposit,
+      String latitude,
+      String longitude,
+      int duration});
 }
 
 /// @nodoc
@@ -102,6 +118,13 @@ class _$CreateStadiumDataResponeModelCopyWithImpl<$Res,
     Object? userId = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? price = null,
+    Object? deposit = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? duration = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -111,7 +134,7 @@ class _$CreateStadiumDataResponeModelCopyWithImpl<$Res,
       sportId: null == sportId
           ? _value.sportId
           : sportId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -135,7 +158,7 @@ class _$CreateStadiumDataResponeModelCopyWithImpl<$Res,
       ownerNumber: null == ownerNumber
           ? _value.ownerNumber
           : ownerNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       photos: freezed == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
@@ -152,6 +175,34 @@ class _$CreateStadiumDataResponeModelCopyWithImpl<$Res,
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      deposit: null == deposit
+          ? _value.deposit
+          : deposit // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -167,17 +218,24 @@ abstract class _$$CreateStadiumDataResponeModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'sport_id') String sportId,
+      @JsonKey(name: 'sport_id') int sportId,
       String name,
       String location,
       String description,
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
-      @JsonKey(name: 'owner_number') String ownerNumber,
+      @JsonKey(name: 'owner_number') int ownerNumber,
       List<String>? photos,
       @JsonKey(name: 'user_id') int userId,
       @JsonKey(name: 'created_at') String createdAt,
-      @JsonKey(name: 'updated_at') String updatedAt});
+      @JsonKey(name: 'updated_at') String updatedAt,
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
+      String price,
+      String deposit,
+      String latitude,
+      String longitude,
+      int duration});
 }
 
 /// @nodoc
@@ -207,6 +265,13 @@ class __$$CreateStadiumDataResponeModelImplCopyWithImpl<$Res>
     Object? userId = null,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? price = null,
+    Object? deposit = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? duration = null,
   }) {
     return _then(_$CreateStadiumDataResponeModelImpl(
       id: null == id
@@ -216,7 +281,7 @@ class __$$CreateStadiumDataResponeModelImplCopyWithImpl<$Res>
       sportId: null == sportId
           ? _value.sportId
           : sportId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -240,7 +305,7 @@ class __$$CreateStadiumDataResponeModelImplCopyWithImpl<$Res>
       ownerNumber: null == ownerNumber
           ? _value.ownerNumber
           : ownerNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       photos: freezed == photos
           ? _value._photos
           : photos // ignore: cast_nullable_to_non_nullable
@@ -257,6 +322,34 @@ class __$$CreateStadiumDataResponeModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      deposit: null == deposit
+          ? _value.deposit
+          : deposit // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -278,7 +371,14 @@ class _$CreateStadiumDataResponeModelImpl
       final List<String>? photos,
       @JsonKey(name: 'user_id') required this.userId,
       @JsonKey(name: 'created_at') required this.createdAt,
-      @JsonKey(name: 'updated_at') required this.updatedAt})
+      @JsonKey(name: 'updated_at') required this.updatedAt,
+      @JsonKey(name: 'start_time') required this.startTime,
+      @JsonKey(name: 'end_time') required this.endTime,
+      required this.price,
+      required this.deposit,
+      required this.latitude,
+      required this.longitude,
+      required this.duration})
       : _photos = photos;
 
   factory _$CreateStadiumDataResponeModelImpl.fromJson(
@@ -289,7 +389,7 @@ class _$CreateStadiumDataResponeModelImpl
   final int id;
   @override
   @JsonKey(name: 'sport_id')
-  final String sportId;
+  final int sportId;
   @override
   final String name;
   @override
@@ -304,7 +404,7 @@ class _$CreateStadiumDataResponeModelImpl
   final String width;
   @override
   @JsonKey(name: 'owner_number')
-  final String ownerNumber;
+  final int ownerNumber;
   final List<String>? _photos;
   @override
   List<String>? get photos {
@@ -324,10 +424,26 @@ class _$CreateStadiumDataResponeModelImpl
   @override
   @JsonKey(name: 'updated_at')
   final String updatedAt;
+  @override
+  @JsonKey(name: 'start_time')
+  final String startTime;
+  @override
+  @JsonKey(name: 'end_time')
+  final String endTime;
+  @override
+  final String price;
+  @override
+  final String deposit;
+  @override
+  final String latitude;
+  @override
+  final String longitude;
+  @override
+  final int duration;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CreateStadiumDataResponeModel(id: $id, sportId: $sportId, name: $name, location: $location, description: $description, length: $length, width: $width, ownerNumber: $ownerNumber, photos: $photos, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'CreateStadiumDataResponeModel(id: $id, sportId: $sportId, name: $name, location: $location, description: $description, length: $length, width: $width, ownerNumber: $ownerNumber, photos: $photos, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt, startTime: $startTime, endTime: $endTime, price: $price, deposit: $deposit, latitude: $latitude, longitude: $longitude, duration: $duration)';
   }
 
   @override
@@ -346,7 +462,14 @@ class _$CreateStadiumDataResponeModelImpl
       ..add(DiagnosticsProperty('photos', photos))
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt));
+      ..add(DiagnosticsProperty('updatedAt', updatedAt))
+      ..add(DiagnosticsProperty('startTime', startTime))
+      ..add(DiagnosticsProperty('endTime', endTime))
+      ..add(DiagnosticsProperty('price', price))
+      ..add(DiagnosticsProperty('deposit', deposit))
+      ..add(DiagnosticsProperty('latitude', latitude))
+      ..add(DiagnosticsProperty('longitude', longitude))
+      ..add(DiagnosticsProperty('duration', duration));
   }
 
   @override
@@ -370,25 +493,44 @@ class _$CreateStadiumDataResponeModelImpl
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.deposit, deposit) || other.deposit == deposit) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      sportId,
-      name,
-      location,
-      description,
-      length,
-      width,
-      ownerNumber,
-      const DeepCollectionEquality().hash(_photos),
-      userId,
-      createdAt,
-      updatedAt);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        sportId,
+        name,
+        location,
+        description,
+        length,
+        width,
+        ownerNumber,
+        const DeepCollectionEquality().hash(_photos),
+        userId,
+        createdAt,
+        updatedAt,
+        startTime,
+        endTime,
+        price,
+        deposit,
+        latitude,
+        longitude,
+        duration
+      ]);
 
   /// Create a copy of CreateStadiumDataResponeModel
   /// with the given fields replaced by the non-null parameter values.
@@ -411,19 +553,25 @@ class _$CreateStadiumDataResponeModelImpl
 abstract class _CreateStadiumDataResponeModel
     implements CreateStadiumDataResponeModel {
   factory _CreateStadiumDataResponeModel(
-          {required final int id,
-          @JsonKey(name: 'sport_id') required final String sportId,
-          required final String name,
-          required final String location,
-          required final String description,
-          @JsonKey(name: 'Length') required final String length,
-          @JsonKey(name: 'Width') required final String width,
-          @JsonKey(name: 'owner_number') required final String ownerNumber,
-          final List<String>? photos,
-          @JsonKey(name: 'user_id') required final int userId,
-          @JsonKey(name: 'created_at') required final String createdAt,
-          @JsonKey(name: 'updated_at') required final String updatedAt}) =
-      _$CreateStadiumDataResponeModelImpl;
+      {required final int id,
+      @JsonKey(name: 'sport_id') required final int sportId,
+      required final String name,
+      required final String location,
+      required final String description,
+      @JsonKey(name: 'Length') required final String length,
+      @JsonKey(name: 'Width') required final String width,
+      @JsonKey(name: 'owner_number') required final int ownerNumber,
+      final List<String>? photos,
+      @JsonKey(name: 'user_id') required final int userId,
+      @JsonKey(name: 'created_at') required final String createdAt,
+      @JsonKey(name: 'updated_at') required final String updatedAt,
+      @JsonKey(name: 'start_time') required final String startTime,
+      @JsonKey(name: 'end_time') required final String endTime,
+      required final String price,
+      required final String deposit,
+      required final String latitude,
+      required final String longitude,
+      required final int duration}) = _$CreateStadiumDataResponeModelImpl;
 
   factory _CreateStadiumDataResponeModel.fromJson(Map<String, dynamic> json) =
       _$CreateStadiumDataResponeModelImpl.fromJson;
@@ -432,7 +580,7 @@ abstract class _CreateStadiumDataResponeModel
   int get id;
   @override
   @JsonKey(name: 'sport_id')
-  String get sportId;
+  int get sportId;
   @override
   String get name;
   @override
@@ -447,7 +595,7 @@ abstract class _CreateStadiumDataResponeModel
   String get width;
   @override
   @JsonKey(name: 'owner_number')
-  String get ownerNumber;
+  int get ownerNumber;
   @override
   List<String>? get photos;
   @override
@@ -459,6 +607,22 @@ abstract class _CreateStadiumDataResponeModel
   @override
   @JsonKey(name: 'updated_at')
   String get updatedAt;
+  @override
+  @JsonKey(name: 'start_time')
+  String get startTime;
+  @override
+  @JsonKey(name: 'end_time')
+  String get endTime;
+  @override
+  String get price;
+  @override
+  String get deposit;
+  @override
+  String get latitude;
+  @override
+  String get longitude;
+  @override
+  int get duration;
 
   /// Create a copy of CreateStadiumDataResponeModel
   /// with the given fields replaced by the non-null parameter values.

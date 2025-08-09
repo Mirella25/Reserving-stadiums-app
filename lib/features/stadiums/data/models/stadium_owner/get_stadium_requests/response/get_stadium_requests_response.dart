@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 
 import 'get_stadium_requests_data_response.dart';
 
-
 part 'get_stadium_requests_response.freezed.dart';
 part 'get_stadium_requests_response.g.dart';
 
@@ -13,18 +12,8 @@ class GetStadiumRequestsResponse with _$GetStadiumRequestsResponse {
     required bool status,
     @JsonKey(name: 'status_code') required int statusCode,
     String? message,
-    required RequestsDataContainer data,
+    required List<GetStadiumRequestsDataResponse> data,
   }) = _GetStadiumRequestsResponse;
   factory GetStadiumRequestsResponse.fromJson(Map<String, dynamic> json) =>
       _$GetStadiumRequestsResponseFromJson(json);
-}
-
-@freezed
-class RequestsDataContainer with _$RequestsDataContainer {
-  const factory RequestsDataContainer({
-    @JsonKey(name: 'Asks') required List<GetStadiumRequestsDataResponse> asks,
-  }) = _RequestsDataContainer;
-
-  factory RequestsDataContainer.fromJson(Map<String, dynamic> json) =>
-      _$RequestsDataContainerFromJson(json);
 }

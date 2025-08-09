@@ -6,7 +6,6 @@ import '../../../domain/entities/stadium_owner/stadium_entity.dart';
 import '../../../domain/repositories/stadium_owner/stadium_repository.dart';
 import '../../datasources/stadium_owner/stadium_remote_datasource.dart';
 
-
 class StadiumRepositoryImpl extends StadiumRepository {
   final StadiumRemoteDataSource stadiumRemoteDataSource;
 

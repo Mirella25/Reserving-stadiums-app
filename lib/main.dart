@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
 import 'package:reserving_stadiums_app/core/localization/cubit_localization.dart';
 import 'package:reserving_stadiums_app/core/navigation/deep_link_handler.dart';
@@ -13,7 +14,6 @@ import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_pa
 import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner/stadium_owner_shell.dart';
 
 import 'package:reserving_stadiums_app/features/home/presentation/pages/player/player_home_page.dart';
-
 
 import 'package:reserving_stadiums_app/features/onboarding/presentation/pages/intro_screen.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
@@ -85,8 +85,7 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home:
-            FutureBuilder<List<dynamic>>(
+            home: FutureBuilder<List<dynamic>>(
               future: _getInitialStatus(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
