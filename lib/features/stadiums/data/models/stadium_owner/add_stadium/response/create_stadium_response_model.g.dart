@@ -1,25 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_stadium_requests_response.dart';
+part of 'create_stadium_response_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$GetStadiumRequestsResponseImpl _$$GetStadiumRequestsResponseImplFromJson(
+_$CreateStadiumResponseModelImpl _$$CreateStadiumResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$GetStadiumRequestsResponseImpl(
+    _$CreateStadiumResponseModelImpl(
       status: json['status'] as bool,
       statusCode: (json['status_code'] as num).toInt(),
       message: json['message'] as String?,
-      data: (json['data'] as List<dynamic>)
-          .map((e) => GetStadiumRequestsDataResponse.fromJson(
-              e as Map<String, dynamic>))
-          .toList(),
+      data: CreateStadiumDataResponeModel.fromJson(
+          json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$GetStadiumRequestsResponseImplToJson(
-        _$GetStadiumRequestsResponseImpl instance) =>
+Map<String, dynamic> _$$CreateStadiumResponseModelImplToJson(
+        _$CreateStadiumResponseModelImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
       'status_code': instance.statusCode,

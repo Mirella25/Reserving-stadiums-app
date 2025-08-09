@@ -9,10 +9,18 @@ import 'package:reserving_stadiums_app/features/home/presentation/pages/player/p
 import 'package:reserving_stadiums_app/features/profile/domain/entities/profile_entity.dart';
 import 'package:reserving_stadiums_app/features/profile/domain/usecases/create_profile_usecase.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:reserving_stadiums_app/features/profile/presentation/widgets/create_profile_shimmer.dart';
+import 'package:reserving_stadiums_app/features/sport/domain/entities/sport_entity.dart';
+import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
+import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_event.dart';
+import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_state.dart';
+import 'package:reserving_stadiums_app/features/stadiums/presentation/widgets/stadium_owner/add_stadium_loading.dart';
+import 'package:reserving_stadiums_app/features/stadiums/presentation/widgets/stadium_owner/choose_sport_dropdown_field.dart';
 import 'package:reserving_stadiums_app/shared/widgets/custom_text_field.dart';
 import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_photo_page.dart';
 import 'package:reserving_stadiums_app/shared/widgets/custom_dropdown_field.dart';
 import 'package:reserving_stadiums_app/shared/widgets/date_picker_dropdown.dart';
+import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
 
 import '../../../home/presentation/pages/player/player_home_page.dart';
 
@@ -37,7 +45,7 @@ class _CreateProfilePageState extends State<CreateProfileDataPage> {
   String? selectedRole;
   String? selectedGender;
   String? birthYMD;
-  String? selectedSport;
+  SportEntity? selectedSport;
 
   @override
   void dispose() {
@@ -56,351 +64,403 @@ class _CreateProfilePageState extends State<CreateProfileDataPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProfileBloc(getIt<CreateProfileUsecase>()),
-      child: Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(8.w),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Create profile",
-                        style: TextStyle(
-                          fontSize: 25.sp,
-                          fontFamily: 'Poppins',
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ProfileBloc(getIt<CreateProfileUsecase>()),
+          ),
+          BlocProvider(
+              create: (_) => getIt<SportBloc>()..add(LoadSportsEvent())),
+        ],
+        child: Scaffold(
+            body: SafeArea(
+                child: BlocConsumer<SportBloc, SportState>(
+                    listener: (context, state) {
+          if (state is SportError) {
+            Navigator.of(context).pop();
+            CustomSnackbar.show(context, message: state.message, isError: true);
+          }
+        }, builder: (context, sportState) {
+          if (sportState is SportLoading) {
+            return const CreateProfileShimmer();
+          }
+
+          // if (sportState is SportError) {
+          //   Navigator.of(context).pop();
+          //   CustomSnackbar.show(context,
+          //       message: sportState.message, isError: true);
+          // }
+
+          if (sportState is SportLoaded) {
+            final sports = sportState.sports;
+
+            return Padding(
+              padding: EdgeInsets.all(8.w),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Create profile",
+                          style: TextStyle(
+                            fontSize: 25.sp,
+                            fontFamily: 'Poppins',
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 20.h),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 14.w, vertical: 10.h),
+                        padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(12.r),
                         ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20.h),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 14.w, vertical: 10.h),
-                      padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned.fill(
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 60.h),
-                              child: Scrollbar(
-                                controller: _scrollController,
-                                thumbVisibility: true,
-                                thickness: 6.w,
-                                radius: Radius.circular(3.r),
-                                child: SingleChildScrollView(
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: Padding(
+                                padding: EdgeInsets.only(bottom: 60.h),
+                                child: Scrollbar(
                                   controller: _scrollController,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      SizedBox(height: 12.h),
-                                      Text(
-                                        "Profile data",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 22.sp,
-                                          fontFamily: 'Lora',
-                                          color: Colors.grey[700],
-                                          fontWeight: FontWeight.w100,
+                                  thumbVisibility: true,
+                                  thickness: 6.w,
+                                  radius: Radius.circular(3.r),
+                                  child: SingleChildScrollView(
+                                    controller: _scrollController,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        SizedBox(height: 12.h),
+                                        Text(
+                                          "Profile data",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 22.sp,
+                                            fontFamily: 'Lora',
+                                            color: Colors.grey[700],
+                                            fontWeight: FontWeight.w100,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 16.h),
-                                      CustomTextField(
-                                        icon: Icons.person,
-                                        hintText: "First Name",
-                                        controller: _firstNameController,
-                                        validator: (value) =>
-                                            Validators.combine([
-                                          Validators.required(),
-                                        ])(value),
-                                      ),
-                                      CustomTextField(
-                                        icon: Icons.person_outline,
-                                        hintText: "Last Name",
-                                        controller: _lastNameController,
-                                        validator: (value) =>
-                                            Validators.combine([
-                                          Validators.required(),
-                                        ])(value),
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Expanded(
-                                              flex: 1,
-                                              child: Icon(Icons.calendar_today,
-                                                  color: Colors.grey)),
-                                          Expanded(
-                                            flex: 4,
-                                            child: DatePickerDropdownField(
-                                              onDateChanged: (ymd) {
-                                                birthYMD = ymd;
-                                              },
+                                        SizedBox(height: 16.h),
+                                        CustomTextField(
+                                          icon: Icons.person,
+                                          hintText: "First Name",
+                                          controller: _firstNameController,
+                                          validator: (value) =>
+                                              Validators.combine([
+                                            Validators.required(),
+                                          ])(value),
+                                        ),
+                                        CustomTextField(
+                                          icon: Icons.person_outline,
+                                          hintText: "Last Name",
+                                          controller: _lastNameController,
+                                          validator: (value) =>
+                                              Validators.combine([
+                                            Validators.required(),
+                                          ])(value),
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Expanded(
+                                                flex: 1,
+                                                child: Icon(
+                                                    Icons.calendar_today,
+                                                    color: Colors.grey)),
+                                            Expanded(
+                                              flex: 4,
+                                              child: DatePickerDropdownField(
+                                                onDateChanged: (ymd) {
+                                                  birthYMD = ymd;
+                                                },
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      CustomTextField(
-                                        icon: Icons.location_on,
-                                        hintText: "Address",
-                                        controller: _addressController,
-                                        validator: (value) =>
-                                            Validators.combine([
-                                          Validators.required(),
-                                        ])(value),
-                                      ),
-                                      CustomTextField(
-                                        icon: Icons.phone,
-                                        hintText: "Phone Number",
-                                        controller: _phoneController,
-                                        keyboardType: TextInputType.phone,
-                                        validator: (value) =>
-                                            Validators.combine([
-                                          Validators.required(),
-                                        ])(value),
-                                      ),
-                                      CustomDropdownField(
-                                        icon: Icons.sports,
-                                        hintText: "Sport",
-                                        validator: (value) =>
-                                            Validators.combine([
-                                          Validators.required(),
-                                        ])(value),
-                                        itemList: const [
-                                          DropdownMenuItem(
-                                            value: "football",
-                                            child: Text("Football"),
-                                          ),
-                                          DropdownMenuItem(
-                                            value: "tennis",
-                                            child: Text("Tennis"),
-                                          ),
-                                          DropdownMenuItem(
-                                            value: "basketball",
-                                            child: Text("Basketball"),
-                                          ),
-                                        ],
-                                        onChanged: (value) {
-                                          if (value != null) {
-                                            setState(() {
-                                              selectedSport = value;
-                                            });
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                      CustomDropdownField(
-                                        icon: Icons.wc,
-                                        hintText: "Gender",
-                                        validator: (value) =>
-                                            Validators.combine([
-                                          Validators.required(),
-                                        ])(value),
-                                        itemList: const [
-                                          DropdownMenuItem(
-                                            value: "male",
-                                            child: Text("Male"),
-                                          ),
-                                          DropdownMenuItem(
-                                            value: "female",
-                                            child: Text("Female"),
-                                          ),
-                                        ],
-                                        onChanged: (value) {
-                                          if (value != null) {
-                                            setState(() {
-                                              selectedGender = value;
-                                            });
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                      CustomTextField(
-                                        icon: Icons.height,
-                                        hintText: "Height (cm)",
-                                        controller: _heightController,
-                                        validator: (value) =>
-                                            Validators.combine([
-                                          Validators.required(),
-                                        ])(value),
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      CustomTextField(
-                                        icon: Icons.fitness_center,
-                                        hintText: "Weight (kg)",
-                                        controller: _weightController,
-                                        validator: (value) =>
-                                            Validators.combine([
-                                          Validators.required(),
-                                        ])(value),
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      CustomTextField(
-                                        icon: Icons.sports_soccer,
-                                        hintText: "Positions Played",
-                                        controller: _positionsController,
-                                        validator: (value) =>
-                                            Validators.combine([
-                                          Validators.required(),
-                                        ])(value),
-                                      ),
-                                      CustomTextField(
-                                        icon: Icons.work,
-                                        hintText: "Years of Experience",
-                                        controller: _experienceController,
-                                        validator: (value) =>
-                                            Validators.combine([
-                                          Validators.required(),
-                                        ])(value),
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                      SizedBox(height: 20.h),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 16.w,
-                            right: 16.w,
-                            bottom: 60.h,
-                            child: IgnorePointer(
-                              child: Container(
-                                height: 40.h,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Colors.transparent,
-                                      Colors.grey[200]!,
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16.w, vertical: 8.h),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.grey,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 24.w,
-                                          vertical: 14.h,
+                                          ],
                                         ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20.r),
+                                        CustomTextField(
+                                          icon: Icons.location_on,
+                                          hintText: "Address",
+                                          controller: _addressController,
+                                          validator: (value) =>
+                                              Validators.combine([
+                                            Validators.required(),
+                                          ])(value),
                                         ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                            builder: (_) => const HomePage(),
-                                          ),
-                                        );
-                                      },
-                                      child: Text(
-                                        "Skip",
-                                        style: TextStyle(
-                                          fontSize: 16.sp,
-                                          color: Colors.white,
-                                          fontFamily: 'Montserrat',
+                                        CustomTextField(
+                                          icon: Icons.phone,
+                                          hintText: "Phone Number",
+                                          controller: _phoneController,
+                                          keyboardType: TextInputType.phone,
+                                          validator: (value) =>
+                                              Validators.combine([
+                                            Validators.required(),
+                                          ])(value),
                                         ),
-                                      ),
+                                        // CustomDropdownField(
+                                        //   icon: Icons.sports,
+                                        //   hintText: "Sport",
+                                        //   validator: (value) =>
+                                        //       Validators.combine([
+                                        //     Validators.required(),
+                                        //   ])(value),
+                                        //   itemList: const [
+                                        //     DropdownMenuItem(
+                                        //       value: "football",
+                                        //       child: Text("Football"),
+                                        //     ),
+                                        //     DropdownMenuItem(
+                                        //       value: "tennis",
+                                        //       child: Text("Tennis"),
+                                        //     ),
+                                        //     DropdownMenuItem(
+                                        //       value: "basketball",
+                                        //       child: Text("Basketball"),
+                                        //     ),
+                                        //   ],
+                                        //   onChanged: (value) {
+                                        //     if (value != null) {
+                                        //       setState(() {
+                                        //         selectedSport = value;
+                                        //       });
+                                        //     }
+                                        //     return null;
+                                        //   },
+                                        // ),
+                                        ChooseSportDropdownField(
+                                          onChanged: (value) {
+                                            if (value != null) {
+                                              setState(() {
+                                                selectedSport = value;
+                                              });
+                                            }
+                                            return null;
+                                          },
+                                          items: sports.map((sport) {
+                                            return DropdownMenuItem<
+                                                SportEntity>(
+                                              value: sport,
+                                              child: Text(sport.name),
+                                            );
+                                          }).toList(),
+                                        ),
+                                        CustomDropdownField(
+                                          icon: Icons.wc,
+                                          hintText: "Gender",
+                                          validator: (value) =>
+                                              Validators.combine([
+                                            Validators.required(),
+                                          ])(value),
+                                          itemList: const [
+                                            DropdownMenuItem(
+                                              value: "male",
+                                              child: Text("Male"),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: "female",
+                                              child: Text("Female"),
+                                            ),
+                                          ],
+                                          onChanged: (value) {
+                                            if (value != null) {
+                                              setState(() {
+                                                selectedGender = value;
+                                              });
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        CustomTextField(
+                                          icon: Icons.height,
+                                          hintText: "Height (cm)",
+                                          controller: _heightController,
+                                          validator: (value) =>
+                                              Validators.combine([
+                                            Validators.required(),
+                                          ])(value),
+                                          keyboardType: TextInputType.number,
+                                        ),
+                                        CustomTextField(
+                                          icon: Icons.fitness_center,
+                                          hintText: "Weight (kg)",
+                                          controller: _weightController,
+                                          validator: (value) =>
+                                              Validators.combine([
+                                            Validators.required(),
+                                          ])(value),
+                                          keyboardType: TextInputType.number,
+                                        ),
+                                        CustomTextField(
+                                          icon: Icons.sports_soccer,
+                                          hintText: "Positions Played",
+                                          controller: _positionsController,
+                                          validator: (value) =>
+                                              Validators.combine([
+                                            Validators.required(),
+                                          ])(value),
+                                        ),
+                                        CustomTextField(
+                                          icon: Icons.work,
+                                          hintText: "Years of Experience",
+                                          controller: _experienceController,
+                                          validator: (value) =>
+                                              Validators.combine([
+                                            Validators.required(),
+                                          ])(value),
+                                          keyboardType: TextInputType.number,
+                                        ),
+                                        SizedBox(height: 20.h),
+                                      ],
                                     ),
                                   ),
-                                  SizedBox(width: 16.w),
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: AppColors.primaryColor,
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 24.w,
-                                          vertical: 14.h,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              left: 16.w,
+                              right: 16.w,
+                              bottom: 60.h,
+                              child: IgnorePointer(
+                                child: Container(
+                                  height: 40.h,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Colors.transparent,
+                                        Colors.grey[200]!,
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w, vertical: 8.h),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.grey,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 24.w,
+                                            vertical: 14.h,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20.r),
+                                          ),
                                         ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20.r),
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        final entity = ProfileEntity(
-                                          firstName:
-                                              _firstNameController.text.trim(),
-                                          lastName:
-                                              _lastNameController.text.trim(),
-                                          birthdate: birthYMD,
-                                          address:
-                                              _addressController.text.trim(),
-                                          phoneNumber:
-                                              _phoneController.text.trim(),
-                                          mine: selectedRole,
-                                          gender: selectedGender,
-                                          yearsOfExperience:
-                                              _experienceController.text.trim(),
-                                          positionsPlayed:
-                                              _positionsController.text.trim(),
-                                          sport: selectedSport,
-                                          height: _heightController.text.trim(),
-                                          weight: _weightController.text.trim(),
-                                        );
-                                        if (_formKey.currentState!.validate()) {
-                                          Navigator.of(context).push(
+                                        onPressed: () {
+                                          Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
-                                              builder: (_) => BlocProvider(
-                                                  create: (_) => ProfileBloc(getIt<
-                                                      CreateProfileUsecase>()),
-                                                  child: CreateProfilePhotoPage(
-                                                    profileEntity: entity,
-                                                  )),
+                                              builder: (_) => const HomePage(),
                                             ),
                                           );
-                                        }
-                                      },
-                                      child: Text(
-                                        "Next",
-                                        style: TextStyle(
-                                          fontSize: 16.sp,
-                                          color: Colors.white,
-                                          fontFamily: 'Montserrat',
+                                        },
+                                        child: Text(
+                                          "Skip",
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                            color: Colors.white,
+                                            fontFamily: 'Montserrat',
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(width: 16.w),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              AppColors.primaryColor,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 24.w,
+                                            vertical: 14.h,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20.r),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          final entity = ProfileEntity(
+                                            firstName: _firstNameController.text
+                                                .trim(),
+                                            lastName:
+                                                _lastNameController.text.trim(),
+                                            birthdate: birthYMD,
+                                            address:
+                                                _addressController.text.trim(),
+                                            phoneNumber:
+                                                _phoneController.text.trim(),
+                                            mine: selectedRole,
+                                            gender: selectedGender,
+                                            yearsOfExperience:
+                                                _experienceController.text
+                                                    .trim(),
+                                            positionsPlayed:
+                                                _positionsController.text
+                                                    .trim(),
+                                            sport: selectedSport!.id.toString(),
+                                            height:
+                                                _heightController.text.trim(),
+                                            weight:
+                                                _weightController.text.trim(),
+                                          );
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (_) => BlocProvider(
+                                                    create: (_) => ProfileBloc(
+                                                        getIt<
+                                                            CreateProfileUsecase>()),
+                                                    child:
+                                                        CreateProfilePhotoPage(
+                                                      profileEntity: entity,
+                                                    )),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        child: Text(
+                                          "Next",
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                            color: Colors.white,
+                                            fontFamily: 'Montserrat',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
-    );
+            );
+          }
+          return const SizedBox.shrink();
+        }))));
   }
 }

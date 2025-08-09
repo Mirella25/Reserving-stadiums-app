@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
 import 'package:reserving_stadiums_app/core/utils/validators.dart';
@@ -11,15 +12,18 @@ import 'package:reserving_stadiums_app/features/sport/domain/entities/sport_enti
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_event.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_state.dart';
+import 'package:reserving_stadiums_app/features/stadiums/domain/entities/stadium_owner/stadium_entity.dart';
+import 'package:reserving_stadiums_app/features/stadiums/domain/usecases/stadium_owner/create_stadium_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadiums/domain/usecases/stadium_owner/delete_stadium_request_usecase.dart';
+import 'package:reserving_stadiums_app/features/stadiums/presentation/bloc/stadium_owner/add_stadium/stadium_bloc.dart';
 
 import 'package:reserving_stadiums_app/shared/widgets/custom_text_field.dart';
 import 'package:reserving_stadiums_app/shared/widgets/loading.dart';
+import 'package:reserving_stadiums_app/shared/widgets/map_picker_page.dart';
 import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
 
 import '../../../../home/presentation/widgets/stadium_owner/stadium_owner_shell.dart';
-import '../../../domain/entities/stadium_owner/stadium_entity.dart';
-import '../../../domain/usecases/stadium_owner/create_stadium_usecase.dart';
-import '../../bloc/stadium_owner/add_stadium/stadium_bloc.dart';
+
 import '../../widgets/stadium_owner/add_stadium_loading.dart';
 import '../../widgets/stadium_owner/choose_sport_dropdown_field.dart';
 
@@ -40,10 +44,20 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
   final _lengthCtrl = TextEditingController();
   final _widthCtrl = TextEditingController();
   final _ownerCtrl = TextEditingController();
+  final _priceCtrl = TextEditingController();
+  final _depositCtrl = TextEditingController();
+  final _durationCtrl = TextEditingController();
+  final _startTimeCtrl = TextEditingController();
+  final _endTimeCtrl = TextEditingController();
   final List<File> _photos = [];
   final ImagePicker _picker = ImagePicker();
 
   SportEntity? selectedSport;
+  TimeOfDay? _startTime;
+  TimeOfDay? _endTime;
+  double? _selectedLat;
+  double? _selectedLng;
+  String? address;
 
   Future<void> _pickPhoto() async {
     final picked = await _picker.pickImage(source: ImageSource.gallery);
@@ -70,6 +84,37 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
     );
   }
 
+  String _formatDisplayTime(TimeOfDay t) =>
+      MaterialLocalizations.of(context).formatTimeOfDay(t);
+
+  String _formatBackendTime(TimeOfDay t) =>
+      '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+
+  Future<void> _pickTime({required bool isStart}) async {
+    final initial = isStart
+        ? (_startTime ?? TimeOfDay.now())
+        : (_endTime ?? TimeOfDay.now());
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: initial,
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+        child: child!,
+      ),
+    );
+    if (picked != null) {
+      setState(() {
+        if (isStart) {
+          _startTime = picked;
+          _startTimeCtrl.text = _formatDisplayTime(picked);
+        } else {
+          _endTime = picked;
+          _endTimeCtrl.text = _formatDisplayTime(picked);
+        }
+      });
+    }
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -86,7 +131,9 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => StadiumBloc(getIt<CreateStadiumUsecase>())),
+        BlocProvider(
+            create: (_) => StadiumBloc(getIt<CreateStadiumUsecase>(),
+                getIt<DeleteStadiumRequestUsecase>())),
         BlocProvider(create: (_) => getIt<SportBloc>()..add(LoadSportsEvent())),
       ],
       child: Scaffold(
@@ -203,13 +250,112 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                                 validator:
                                                     Validators.required(),
                                               ),
-                                              CustomTextField(
-                                                icon: Icons.location_on,
-                                                hintText: "Location",
-                                                controller: _locationCtrl,
-                                                validator:
-                                                    Validators.required(),
-                                              ),
+                                              // CustomTextField(
+                                              //   icon: Icons.location_on,
+                                              //   hintText: "Location",
+                                              //   controller: _locationCtrl,
+                                              //   validator:
+                                              //       Validators.required(),
+                                              // ),
+                                              Row(children: [
+                                                const Expanded(
+                                                  flex: 1,
+                                                  child: Icon(
+                                                    Icons.location_on,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                    flex: 4,
+                                                    child: Padding(
+                                                        padding:
+                                                            EdgeInsets.all(8.w),
+                                                        child: TextFormField(
+                                                          controller:
+                                                              _locationCtrl,
+                                                          readOnly: true,
+                                                          onTap: () async {
+                                                            final selected =
+                                                                await Navigator.push<
+                                                                    Map<String,
+                                                                        dynamic>>(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder: (_) =>
+                                                                    const MapPickerPage(
+                                                                  latitude:
+                                                                      33.5138, // افتراضي أو استخدم قيمة حالية
+                                                                  longitude:
+                                                                      36.2765,
+                                                                  title:
+                                                                      'اختر موقع الملعب',
+                                                                ),
+                                                              ),
+                                                            );
+
+                                                            if (selected !=
+                                                                null) {
+                                                              setState(() {
+                                                                _selectedLat =
+                                                                    selected[
+                                                                        'latitude'];
+                                                                _selectedLng =
+                                                                    selected[
+                                                                        'longitude'];
+                                                                address = selected[
+                                                                    'address'];
+                                                                _locationCtrl
+                                                                        .text =
+                                                                    address
+                                                                        .toString();
+                                                              });
+                                                              // لو بدك تسجّل بالـ console:
+                                                              print(
+                                                                  'المستخدم اختار: $_selectedLat, $_selectedLng,$address');
+                                                            }
+                                                          },
+                                                          validator: Validators
+                                                              .required(),
+                                                          decoration:
+                                                              const InputDecoration(
+                                                            hintStyle:
+                                                                TextStyle(
+                                                              color:
+                                                                  Colors.grey,
+                                                              fontFamily:
+                                                                  'Lora',
+                                                            ),
+                                                            hintText:
+                                                                'Location',
+                                                            enabledBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide: BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          209,
+                                                                          208,
+                                                                          208)),
+                                                            ),
+                                                            suffixIcon: Icon(
+                                                              Icons
+                                                                  .arrow_drop_down,
+                                                              color:
+                                                                  Colors.grey,
+                                                            ),
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide: BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          209,
+                                                                          208,
+                                                                          208)),
+                                                            ),
+                                                          ),
+                                                        ))),
+                                              ]),
                                               CustomTextField(
                                                 icon: Icons.phone,
                                                 hintText: "Owner Number",
@@ -254,6 +400,173 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                                 keyboardType:
                                                     TextInputType.number,
                                               ),
+                                              Row(
+                                                children: [
+                                                  const Expanded(
+                                                    flex: 1,
+                                                    child: Icon(
+                                                      Icons.timer,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 4,
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 12,
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.w),
+                                                            child:
+                                                                TextFormField(
+                                                              controller:
+                                                                  _startTimeCtrl,
+                                                              readOnly: true,
+                                                              onTap: () =>
+                                                                  _pickTime(
+                                                                      isStart:
+                                                                          true),
+                                                              validator:
+                                                                  Validators
+                                                                      .required(),
+                                                              decoration:
+                                                                  const InputDecoration(
+                                                                hintStyle:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  fontFamily:
+                                                                      'Lora',
+                                                                ),
+                                                                hintText:
+                                                                    'Start time',
+                                                                enabledBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          209,
+                                                                          208,
+                                                                          208)),
+                                                                ),
+                                                                suffixIcon:
+                                                                    Icon(
+                                                                  Icons
+                                                                      .arrow_drop_down,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                                focusedBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          209,
+                                                                          208,
+                                                                          208)),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const Expanded(
+                                                          flex: 1,
+                                                          child: SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          flex: 12,
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.w),
+                                                            child:
+                                                                TextFormField(
+                                                              controller:
+                                                                  _endTimeCtrl,
+                                                              readOnly: true,
+                                                              onTap: () =>
+                                                                  _pickTime(
+                                                                      isStart:
+                                                                          false),
+                                                              validator:
+                                                                  Validators
+                                                                      .required(),
+                                                              decoration:
+                                                                  const InputDecoration(
+                                                                hintStyle:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                  fontFamily:
+                                                                      'Lora',
+                                                                ),
+                                                                hintText:
+                                                                    'End time',
+                                                                enabledBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          209,
+                                                                          208,
+                                                                          208)),
+                                                                ),
+                                                                suffixIcon:
+                                                                    Icon(
+                                                                  Icons
+                                                                      .arrow_drop_down,
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                                focusedBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide: BorderSide(
+                                                                      color: Color.fromARGB(
+                                                                          255,
+                                                                          209,
+                                                                          208,
+                                                                          208)),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              CustomTextField(
+                                                icon: Icons.price_change,
+                                                hintText: "Price",
+                                                controller: _priceCtrl,
+                                                validator:
+                                                    Validators.required(),
+                                                keyboardType:
+                                                    TextInputType.number,
+                                              ),
+                                              CustomTextField(
+                                                icon: Icons.price_change,
+                                                hintText: "Deposit",
+                                                controller: _depositCtrl,
+                                                validator:
+                                                    Validators.required(),
+                                                keyboardType:
+                                                    TextInputType.number,
+                                              ),
+                                              CustomTextField(
+                                                icon: Icons.timelapse,
+                                                hintText: "Duration",
+                                                controller: _durationCtrl,
+                                                validator:
+                                                    Validators.required(),
+                                                keyboardType:
+                                                    TextInputType.number,
+                                              ),
                                               CustomTextField(
                                                 icon: Icons.description,
                                                 hintText: "Description",
@@ -261,6 +574,60 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                                 validator:
                                                     Validators.required(),
                                               ),
+                                              // Padding(
+                                              //   padding: EdgeInsetsGeometry.all(
+                                              //       18.w),
+                                              //   child: GestureDetector(
+                                              //     onTap: () async {
+                                              //       final selected =
+                                              //           await Navigator.push<
+                                              //               Map<String,
+                                              //                   dynamic>>(
+                                              //         context,
+                                              //         MaterialPageRoute(
+                                              //           builder: (_) =>
+                                              //               const MapPickerPage(
+                                              //             latitude:
+                                              //                 33.5138, // افتراضي أو استخدم قيمة حالية
+                                              //             longitude: 36.2765,
+                                              //             title:
+                                              //                 'اختر موقع الملعب',
+                                              //           ),
+                                              //         ),
+                                              //       );
+
+                                              //       if (selected != null) {
+                                              //         setState(() {
+                                              //           _selectedLat = selected[
+                                              //               'latitude'];
+                                              //           _selectedLng = selected[
+                                              //               'longitude'];
+                                              //           address =
+                                              //               selected['address'];
+                                              //         });
+                                              //         // لو بدك تسجّل بالـ console:
+                                              //         print(
+                                              //             'المستخدم اختار: $_selectedLat, $_selectedLng,$address');
+                                              //       }
+                                              //     },
+                                              //     child: const Row(
+                                              //       children: [
+                                              //         Icon(
+                                              //           Icons.map,
+                                              //           color: Colors.red,
+                                              //         ),
+                                              //         SizedBox(
+                                              //           width: 5,
+                                              //         ),
+                                              //         Text(
+                                              //           "Pick stadium location",
+                                              //           style: TextStyle(
+                                              //               color: Colors.red),
+                                              //         )
+                                              //       ],
+                                              //     ),
+                                              //   ),
+                                              // ),
                                               Padding(
                                                 padding: EdgeInsets.all(8.w),
                                                 child: Wrap(
@@ -383,16 +750,30 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             final entity = StadiumEntity(
-                                              sportId:
-                                                  selectedSport!.id.toString(),
+                                              sportId: selectedSport!.id,
                                               name: _nameCtrl.text,
                                               location: _locationCtrl.text,
                                               description:
                                                   _descriptionCtrl.text,
                                               length: _lengthCtrl.text,
                                               width: _widthCtrl.text,
-                                              ownerNumber: _ownerCtrl.text,
+                                              ownerNumber: int.tryParse(
+                                                      _ownerCtrl.text) ??
+                                                  0,
+                                              latitude: _selectedLat!
+                                                  .toStringAsFixed(6),
+                                              longitude: _selectedLng!
+                                                  .toStringAsFixed(6),
                                               photos: [],
+                                              deposit: _depositCtrl.text,
+                                              price: _priceCtrl.text,
+                                              duration: int.tryParse(
+                                                      _durationCtrl.text) ??
+                                                  0,
+                                              startTime: _formatBackendTime(
+                                                  _startTime!),
+                                              endTime:
+                                                  _formatBackendTime(_endTime!),
                                             );
 
                                             context.read<StadiumBloc>().add(

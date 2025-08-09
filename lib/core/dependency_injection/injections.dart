@@ -16,6 +16,8 @@ import 'package:reserving_stadiums_app/features/sport/data/repositories/sport_re
 import 'package:reserving_stadiums_app/features/sport/domain/repositories/sport_repository.dart';
 import 'package:reserving_stadiums_app/features/sport/domain/usecases/get_sports_usecase.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
+import '../../features/stadiums/domain/usecases/stadium_owner/delete_stadium_request_usecase.dart';
+
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/booking/data/datasources/stadium_booking_remote_datasource.dart';
 import '../../features/booking/data/repo_impl/booking_repo_impl.dart';
@@ -120,9 +122,12 @@ Future<void> setupDependencies() async {
       stadiumRemoteDataSource: getIt<StadiumRemoteDataSource>()));
   getIt.registerLazySingleton<CreateStadiumUsecase>(() =>
       CreateStadiumUsecase(stadiumRepository: getIt<StadiumRepository>()));
+  getIt.registerLazySingleton<DeleteStadiumRequestUsecase>(() =>
+      DeleteStadiumRequestUsecase(
+          stadiumRepository: getIt<StadiumRepository>()));
   getIt.registerFactory<SportBloc>(() => SportBloc(getIt<GetSportsUsecase>()));
-  getIt.registerFactory<StadiumBloc>(
-      () => StadiumBloc(getIt<CreateStadiumUsecase>()));
+  getIt.registerFactory<StadiumBloc>(() => StadiumBloc(
+      getIt<CreateStadiumUsecase>(), getIt<DeleteStadiumRequestUsecase>()));
   getIt.registerLazySingleton<GetStadiumRequestsUsecase>(() =>
       GetStadiumRequestsUsecase(stadiumRepository: getIt<StadiumRepository>()));
   getIt.registerFactory(

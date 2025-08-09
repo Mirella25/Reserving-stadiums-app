@@ -3,10 +3,8 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:reserving_stadiums_app/core/result/result.dart';
-
-import '../../../../domain/entities/stadium_owner/stadium_entity.dart';
-import '../../../../domain/usecases/stadium_owner/get_stadium_requests_usecase.dart';
-
+import 'package:reserving_stadiums_app/features/stadiums/domain/entities/stadium_owner/stadium_entity.dart';
+import 'package:reserving_stadiums_app/features/stadiums/domain/usecases/stadium_owner/get_stadium_requests_usecase.dart';
 
 part 'stadium_requests_event.dart';
 part 'stadium_requests_state.dart';
@@ -32,7 +30,7 @@ class StadiumRequestsBloc
     if (result is Success<List<StadiumEntity>>) {
       emit(state.copyWith(
         isLoading: false,
-        stadiumEntity: result.data,
+        requests: result.data,
       ));
     } else if (result is Error<List<StadiumEntity>>) {
       emit(state.copyWith(

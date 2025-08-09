@@ -22,4 +22,9 @@ class StadiumRepositoryImpl extends StadiumRepository {
   Future<Result<List<StadiumEntity>>> getStadiumRequests() async {
     return await stadiumRemoteDataSource.getStadiumRequests();
   }
+
+  @override
+  Future<Result<void>> deleteStadiumRequest(int id) async {
+    return await stadiumRemoteDataSource.deleteStadiumRequest(id);
+  }
 }

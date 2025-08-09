@@ -25,7 +25,7 @@ mixin _$GetStadiumRequestsDataResponse {
   @JsonKey(name: 'user_id')
   int get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'sport_id')
-  String get sportId => throw _privateConstructorUsedError;
+  int get sportId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get location => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -35,7 +35,7 @@ mixin _$GetStadiumRequestsDataResponse {
   @JsonKey(name: 'Width')
   String get width => throw _privateConstructorUsedError;
   @JsonKey(name: 'owner_number')
-  String get ownerNumber => throw _privateConstructorUsedError;
+  int get ownerNumber => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'admin_notes')
   String? get adminNotes => throw _privateConstructorUsedError;
@@ -43,6 +43,15 @@ mixin _$GetStadiumRequestsDataResponse {
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'start_time')
+  String get startTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'end_time')
+  String get endTime => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
+  String get deposit => throw _privateConstructorUsedError;
+  String get latitude => throw _privateConstructorUsedError;
+  String get longitude => throw _privateConstructorUsedError;
+  int get duration => throw _privateConstructorUsedError;
 
   /// Serializes this GetStadiumRequestsDataResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -65,18 +74,25 @@ abstract class $GetStadiumRequestsDataResponseCopyWith<$Res> {
   $Res call(
       {int? id,
       @JsonKey(name: 'user_id') int userId,
-      @JsonKey(name: 'sport_id') String sportId,
+      @JsonKey(name: 'sport_id') int sportId,
       String name,
       String location,
       String description,
       List<String>? photos,
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
-      @JsonKey(name: 'owner_number') String ownerNumber,
+      @JsonKey(name: 'owner_number') int ownerNumber,
       String? status,
       @JsonKey(name: 'admin_notes') String? adminNotes,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
+      String price,
+      String deposit,
+      String latitude,
+      String longitude,
+      int duration});
 }
 
 /// @nodoc
@@ -109,6 +125,13 @@ class _$GetStadiumRequestsDataResponseCopyWithImpl<$Res,
     Object? adminNotes = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? price = null,
+    Object? deposit = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? duration = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -122,7 +145,7 @@ class _$GetStadiumRequestsDataResponseCopyWithImpl<$Res,
       sportId: null == sportId
           ? _value.sportId
           : sportId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -150,7 +173,7 @@ class _$GetStadiumRequestsDataResponseCopyWithImpl<$Res,
       ownerNumber: null == ownerNumber
           ? _value.ownerNumber
           : ownerNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -167,6 +190,34 @@ class _$GetStadiumRequestsDataResponseCopyWithImpl<$Res,
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      deposit: null == deposit
+          ? _value.deposit
+          : deposit // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -183,18 +234,25 @@ abstract class _$$GetStadiumRequestsDataResponseImplCopyWith<$Res>
   $Res call(
       {int? id,
       @JsonKey(name: 'user_id') int userId,
-      @JsonKey(name: 'sport_id') String sportId,
+      @JsonKey(name: 'sport_id') int sportId,
       String name,
       String location,
       String description,
       List<String>? photos,
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
-      @JsonKey(name: 'owner_number') String ownerNumber,
+      @JsonKey(name: 'owner_number') int ownerNumber,
       String? status,
       @JsonKey(name: 'admin_notes') String? adminNotes,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
+      String price,
+      String deposit,
+      String latitude,
+      String longitude,
+      int duration});
 }
 
 /// @nodoc
@@ -226,6 +284,13 @@ class __$$GetStadiumRequestsDataResponseImplCopyWithImpl<$Res>
     Object? adminNotes = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? price = null,
+    Object? deposit = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? duration = null,
   }) {
     return _then(_$GetStadiumRequestsDataResponseImpl(
       id: freezed == id
@@ -239,7 +304,7 @@ class __$$GetStadiumRequestsDataResponseImplCopyWithImpl<$Res>
       sportId: null == sportId
           ? _value.sportId
           : sportId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -267,7 +332,7 @@ class __$$GetStadiumRequestsDataResponseImplCopyWithImpl<$Res>
       ownerNumber: null == ownerNumber
           ? _value.ownerNumber
           : ownerNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -284,6 +349,34 @@ class __$$GetStadiumRequestsDataResponseImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String,
+      deposit: null == deposit
+          ? _value.deposit
+          : deposit // ignore: cast_nullable_to_non_nullable
+              as String,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as String,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -307,7 +400,14 @@ class _$GetStadiumRequestsDataResponseImpl
       this.status,
       @JsonKey(name: 'admin_notes') this.adminNotes,
       @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'updated_at') this.updatedAt})
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      @JsonKey(name: 'start_time') required this.startTime,
+      @JsonKey(name: 'end_time') required this.endTime,
+      required this.price,
+      required this.deposit,
+      required this.latitude,
+      required this.longitude,
+      required this.duration})
       : _photos = photos;
 
   factory _$GetStadiumRequestsDataResponseImpl.fromJson(
@@ -321,7 +421,7 @@ class _$GetStadiumRequestsDataResponseImpl
   final int userId;
   @override
   @JsonKey(name: 'sport_id')
-  final String sportId;
+  final int sportId;
   @override
   final String name;
   @override
@@ -346,7 +446,7 @@ class _$GetStadiumRequestsDataResponseImpl
   final String width;
   @override
   @JsonKey(name: 'owner_number')
-  final String ownerNumber;
+  final int ownerNumber;
   @override
   final String? status;
   @override
@@ -358,10 +458,26 @@ class _$GetStadiumRequestsDataResponseImpl
   @override
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
+  @override
+  @JsonKey(name: 'start_time')
+  final String startTime;
+  @override
+  @JsonKey(name: 'end_time')
+  final String endTime;
+  @override
+  final String price;
+  @override
+  final String deposit;
+  @override
+  final String latitude;
+  @override
+  final String longitude;
+  @override
+  final int duration;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GetStadiumRequestsDataResponse(id: $id, userId: $userId, sportId: $sportId, name: $name, location: $location, description: $description, photos: $photos, length: $length, width: $width, ownerNumber: $ownerNumber, status: $status, adminNotes: $adminNotes, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'GetStadiumRequestsDataResponse(id: $id, userId: $userId, sportId: $sportId, name: $name, location: $location, description: $description, photos: $photos, length: $length, width: $width, ownerNumber: $ownerNumber, status: $status, adminNotes: $adminNotes, createdAt: $createdAt, updatedAt: $updatedAt, startTime: $startTime, endTime: $endTime, price: $price, deposit: $deposit, latitude: $latitude, longitude: $longitude, duration: $duration)';
   }
 
   @override
@@ -382,7 +498,14 @@ class _$GetStadiumRequestsDataResponseImpl
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('adminNotes', adminNotes))
       ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt));
+      ..add(DiagnosticsProperty('updatedAt', updatedAt))
+      ..add(DiagnosticsProperty('startTime', startTime))
+      ..add(DiagnosticsProperty('endTime', endTime))
+      ..add(DiagnosticsProperty('price', price))
+      ..add(DiagnosticsProperty('deposit', deposit))
+      ..add(DiagnosticsProperty('latitude', latitude))
+      ..add(DiagnosticsProperty('longitude', longitude))
+      ..add(DiagnosticsProperty('duration', duration));
   }
 
   @override
@@ -409,27 +532,46 @@ class _$GetStadiumRequestsDataResponseImpl
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.deposit, deposit) || other.deposit == deposit) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      userId,
-      sportId,
-      name,
-      location,
-      description,
-      const DeepCollectionEquality().hash(_photos),
-      length,
-      width,
-      ownerNumber,
-      status,
-      adminNotes,
-      createdAt,
-      updatedAt);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        userId,
+        sportId,
+        name,
+        location,
+        description,
+        const DeepCollectionEquality().hash(_photos),
+        length,
+        width,
+        ownerNumber,
+        status,
+        adminNotes,
+        createdAt,
+        updatedAt,
+        startTime,
+        endTime,
+        price,
+        deposit,
+        latitude,
+        longitude,
+        duration
+      ]);
 
   /// Create a copy of GetStadiumRequestsDataResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -452,21 +594,27 @@ class _$GetStadiumRequestsDataResponseImpl
 abstract class _GetStadiumRequestsDataResponse
     implements GetStadiumRequestsDataResponse {
   const factory _GetStadiumRequestsDataResponse(
-          {final int? id,
-          @JsonKey(name: 'user_id') required final int userId,
-          @JsonKey(name: 'sport_id') required final String sportId,
-          required final String name,
-          required final String location,
-          required final String description,
-          final List<String>? photos,
-          @JsonKey(name: 'Length') required final String length,
-          @JsonKey(name: 'Width') required final String width,
-          @JsonKey(name: 'owner_number') required final String ownerNumber,
-          final String? status,
-          @JsonKey(name: 'admin_notes') final String? adminNotes,
-          @JsonKey(name: 'created_at') final String? createdAt,
-          @JsonKey(name: 'updated_at') final String? updatedAt}) =
-      _$GetStadiumRequestsDataResponseImpl;
+      {final int? id,
+      @JsonKey(name: 'user_id') required final int userId,
+      @JsonKey(name: 'sport_id') required final int sportId,
+      required final String name,
+      required final String location,
+      required final String description,
+      final List<String>? photos,
+      @JsonKey(name: 'Length') required final String length,
+      @JsonKey(name: 'Width') required final String width,
+      @JsonKey(name: 'owner_number') required final int ownerNumber,
+      final String? status,
+      @JsonKey(name: 'admin_notes') final String? adminNotes,
+      @JsonKey(name: 'created_at') final String? createdAt,
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      @JsonKey(name: 'start_time') required final String startTime,
+      @JsonKey(name: 'end_time') required final String endTime,
+      required final String price,
+      required final String deposit,
+      required final String latitude,
+      required final String longitude,
+      required final int duration}) = _$GetStadiumRequestsDataResponseImpl;
 
   factory _GetStadiumRequestsDataResponse.fromJson(Map<String, dynamic> json) =
       _$GetStadiumRequestsDataResponseImpl.fromJson;
@@ -478,7 +626,7 @@ abstract class _GetStadiumRequestsDataResponse
   int get userId;
   @override
   @JsonKey(name: 'sport_id')
-  String get sportId;
+  int get sportId;
   @override
   String get name;
   @override
@@ -495,7 +643,7 @@ abstract class _GetStadiumRequestsDataResponse
   String get width;
   @override
   @JsonKey(name: 'owner_number')
-  String get ownerNumber;
+  int get ownerNumber;
   @override
   String? get status;
   @override
@@ -507,6 +655,22 @@ abstract class _GetStadiumRequestsDataResponse
   @override
   @JsonKey(name: 'updated_at')
   String? get updatedAt;
+  @override
+  @JsonKey(name: 'start_time')
+  String get startTime;
+  @override
+  @JsonKey(name: 'end_time')
+  String get endTime;
+  @override
+  String get price;
+  @override
+  String get deposit;
+  @override
+  String get latitude;
+  @override
+  String get longitude;
+  @override
+  int get duration;
 
   /// Create a copy of GetStadiumRequestsDataResponse
   /// with the given fields replaced by the non-null parameter values.

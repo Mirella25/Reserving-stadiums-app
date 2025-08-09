@@ -12,3 +12,8 @@ class CreateStadiumSubmitted extends StadiumEvent {
     this.photosFiles,
   });
 }
+
+class DeleteStadiumRequestSubmitted extends StadiumEvent {
+  final int id;
+  DeleteStadiumRequestSubmitted({required this.id});
+}
