@@ -86,49 +86,49 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: HomePage()
-            // FutureBuilder<List<dynamic>>(
-            //   future: _getInitialStatus(),
-            //   builder: (context, snapshot) {
-            //     if (snapshot.connectionState == ConnectionState.waiting) {
-            //       return const SplashScreen();
-            //     }
-            //
-            //     final seenIntro = snapshot.data?[0] ?? false;
-            //     final token = snapshot.data?[1] as String?;
-            //     final isVerified = snapshot.data?[2] ?? false;
-            //     final role = snapshot.data?[3] as String?;
-            //
-            //     if (!seenIntro) return const IntroScreen();
-            //
-            //     if (token != null && token.isNotEmpty) {
-            //       if (!isVerified) {
-            //         return const WaitingVerificationPage();
-            //       }
-            //
-            //       if (role == 'stadium_owner') {
-            //         return const StadiumOwnerShell();
-            //       } else {
-            //         return const HomePage();
-            //       }
-            //       // if (isVerified == true) {
-            //       //   return const HomePage();
-            //       // } else {
-            //       //   return const WaitingVerificationPage();
-            //       // }
-            //     }
-            //
-            //     // ما في توكن
-            //     return BlocProvider(
-            //       create: (_) => LoginBloc(
-            //         getIt<LoginUseCase>(),
-            //         getIt<GoogleLoginUseCase>(),
-            //         getIt<AuthLocalDataSource>(),
-            //       ),
-            //       child: const LoginPage(),
-            //     );
-            //   },
-            // ),
+            home:
+            FutureBuilder<List<dynamic>>(
+              future: _getInitialStatus(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SplashScreen();
+                }
+
+                final seenIntro = snapshot.data?[0] ?? false;
+                final token = snapshot.data?[1] as String?;
+                final isVerified = snapshot.data?[2] ?? false;
+                final role = snapshot.data?[3] as String?;
+
+                if (!seenIntro) return const IntroScreen();
+
+                if (token != null && token.isNotEmpty) {
+                  if (!isVerified) {
+                    return const WaitingVerificationPage();
+                  }
+
+                  if (role == 'stadium_owner') {
+                    return const StadiumOwnerShell();
+                  } else {
+                    return const HomePage();
+                  }
+                  // if (isVerified == true) {
+                  //   return const HomePage();
+                  // } else {
+                  //   return const WaitingVerificationPage();
+                  // }
+                }
+
+                // ما في توكن
+                return BlocProvider(
+                  create: (_) => LoginBloc(
+                    getIt<LoginUseCase>(),
+                    getIt<GoogleLoginUseCase>(),
+                    getIt<AuthLocalDataSource>(),
+                  ),
+                  child: const LoginPage(),
+                );
+              },
+            ),
           ),
         );
       },

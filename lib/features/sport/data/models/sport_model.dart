@@ -10,7 +10,7 @@ part 'sport_model.g.dart';
 @freezed
 class SportModel with _$SportModel {
   const factory SportModel({
-    required int id,
+    @JsonKey(fromJson: _toInt) required int id,
     required String name,
     @JsonKey(name: 'photo') required String photoUrl,
     @JsonKey(name: 'created_at') String? createdAt,
@@ -19,7 +19,11 @@ class SportModel with _$SportModel {
   factory SportModel.fromJson(Map<String, dynamic> json) =>
       _$SportModelFromJson(json);
 }
-
+int _toInt(Object? v) {
+  if (v == null) return 0;
+  if (v is int) return v;
+  return int.tryParse(v.toString()) ?? 0;
+}
 extension SportModelX on SportModel {
   SportEntity toEntity() => SportEntity(
         id: id,

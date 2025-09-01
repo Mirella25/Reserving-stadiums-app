@@ -13,14 +13,14 @@ class DioClient {
       headers: {
         'Accept': 'application/json',
       },
-      // خلّي Dio يرمي خطأ للستاتس >= 400
+     
       validateStatus: (code) => code != null && code < 400,
     ),
   );
 
   Future<Result<T>> callApi<T>({
     required String endpoint,
-    required T Function(Map<String, dynamic> json) fromJson, // 👈 نمرّر كامل الـ JSON
+    required T Function(Map<String, dynamic> json) fromJson,
     dynamic data,
     Map<String, dynamic>? query,
     String method = 'POST',

@@ -23,6 +23,8 @@ import 'package:reserving_stadiums_app/shared/widgets/date_picker_dropdown.dart'
 import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
 
 import '../../../home/presentation/pages/player/player_home_page.dart';
+import '../../domain/repositories/profile_repository.dart';
+import '../../domain/usecases/get_profile_details_usecase.dart';
 
 class CreateProfileDataPage extends StatefulWidget {
   const CreateProfileDataPage({super.key});
@@ -67,8 +69,12 @@ class _CreateProfilePageState extends State<CreateProfileDataPage> {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => ProfileBloc(getIt<CreateProfileUsecase>()),
+            create: (context) => ProfileBloc(
+              repository: getIt<ProfileRepository>(),
+              getDetailsUsecase: getIt<GetProfileDetailsUsecase>(),
+            ),
           ),
+
           BlocProvider(
               create: (_) => getIt<SportBloc>()..add(LoadSportsEvent())),
         ],
@@ -426,13 +432,12 @@ class _CreateProfilePageState extends State<CreateProfileDataPage> {
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
                                                 builder: (_) => BlocProvider(
-                                                    create: (_) => ProfileBloc(
-                                                        getIt<
-                                                            CreateProfileUsecase>()),
-                                                    child:
-                                                        CreateProfilePhotoPage(
-                                                      profileEntity: entity,
-                                                    )),
+                                                  create: (context) => ProfileBloc(
+                                                    repository: getIt<ProfileRepository>(),
+                                                    getDetailsUsecase: getIt<GetProfileDetailsUsecase>(),
+                                                  ),
+                                                ),
+
                                               ),
                                             );
                                           }

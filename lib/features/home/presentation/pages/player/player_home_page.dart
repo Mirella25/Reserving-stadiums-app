@@ -1,33 +1,41 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:animations/animations.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
+
+import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/widgets/player/home_appbar.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/widgets/player/home_player_tile.dart';
+import 'package:reserving_stadiums_app/features/home/presentation/widgets/player/shimmer_player_stadiums.dart';
+
+import 'package:reserving_stadiums_app/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:reserving_stadiums_app/features/profile/presentation/pages/show_profile.dart';
+
+import 'package:reserving_stadiums_app/features/stadiums/presentation/bloc/player/stadiums_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadiums/presentation/bloc/player/stadiums_event.dart';
+import 'package:reserving_stadiums_app/features/stadiums/presentation/pages/player/stadiums_page.dart';
 import 'package:reserving_stadiums_app/features/home/presentation/pages/player/player_bookings.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:animations/animations.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
-import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
-import 'package:reserving_stadiums_app/features/profile/presentation/pages/profile_data_page.dart';
-import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_strings.dart';
-import '../../../../../core/dependency_injection/injections.dart';
-import '../../../../../leagues/league_page.dart';
 import '../../../../auth/data/datasources/auth_local_datasource.dart';
-import '../../../../profile/presentation/pages/show_profile.dart';
-import '../../../../stadiums/presentation/bloc/player/stadiums_bloc.dart';
-import '../../../../stadiums/presentation/bloc/player/stadiums_event.dart';
-import '../../../../stadiums/presentation/pages/player/stadiums_page.dart';
-import '../../widgets/player/home_appbar.dart';
-import '../../widgets/player/home_player_tile.dart';
-import '../../widgets/player/shimmer_player_stadiums.dart';
+import '../../../../leagues/domain/usecases/get_leagues_usecase.dart';
+import '../../../../leagues/domain/usecases/request_join_league_usecase.dart';
+import '../../../../leagues/presentation/bloc/leagues_bloc.dart';
+import '../../../../leagues/presentation/bloc/leagues_event.dart';
+import '../../../../leagues/presentation/pages/league_page.dart';
+import '../../../../teams/presentation/pages/create_team_page.dart';
+import '../../../../teams/presentation/pages/teams_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  /// اختياري: تمرير الـ id مباشرة من الراوتر إن رغبت
+  final int? initialProfileId;
+  const HomePage({super.key, this.initialProfileId});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -36,49 +44,72 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int index = 0;
   bool isLoading = true;
-
-  final screens = <Widget>[
-    const Placeholder(),
-    BlocProvider(
-      create: (context) => getIt<StadiumsBloc>()..add(GetAllStadiumsEvent()),
-      child: const StadiumsPage(),
-    ),
-    const PlayerBookings(),
-     LeaguesPage(),
-    const ProfilePage( profile: {
-      "first_name": "Sharbel",
-      "last_name": "al Mhanna",
-      "birthdate": "1990-01-01",
-      "address": "123 Street",
-      "phone_number": 123456789,
-      "avatar": "avatars/sample.jpg",
-      "gender": "male",
-      "nationality": "Syrian",
-      "height": 180,
-      "weight": 75,
-      "emergency_contact_information": "911",
-      "injuries": "None",
-      "positions_played": "Forward",
-      "notable_achievements": "MVP 2020",
-      "years_of_experience": 5,
-      "previous_teams": "Team A, Team B",
-      "extra_notes": "Very professional player",
-    },),
-  ];
+  int? _profileId;            // الـ id الفعّال
+  bool _loadingProfileId = true;
+  int? _userId; // جديد
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 800), () {
-      if (mounted) {
-        setState(() => isLoading = false);
-      }
+    _loadProfileId();
+
+  }
+  Future<void> _loadProfileId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final cachedProfileId = prefs.getInt('profile_id');
+
+    // جيب userId من AuthLocalDataSource
+    final userId = await getIt<AuthLocalDataSource>().getCachedUserId();
+
+    await Future.delayed(const Duration(milliseconds: 400));
+    if (!mounted) return;
+    setState(() {
+      _profileId = cachedProfileId;
+      _userId = userId;            // ✅
+      _loadingProfileId = false;
+      isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    if (_loadingProfileId) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final screens = <Widget>[
+      const Placeholder(),
+      BlocProvider(
+        create: (context) => getIt<StadiumsBloc>()..add(GetAllStadiumsEvent()),
+        child: const StadiumsPage(),
+      ),
+      const TeamsPage(), // ✅ صارت صفحة عرض الفرق كاملة
+      BlocProvider(
+        create: (_) => LeaguesBloc(
+            getIt<GetLeaguesUseCase>(),
+            getIt<RequestJoinLeagueUseCase>()
+        )..add(const FetchLeagues()),
+        child: const LeaguesPage(),
+      ),
+      _buildProfileScreen(),
+    ];
+
+
+    return MultiBlocProvider(
+providers: [
+  BlocProvider(
+    create: (_) => getIt<StadiumsBloc>()..add(GetAllStadiumsEvent()),
+  ),
+  BlocProvider(
+    create: (_) => getIt<LeaguesBloc>()..add(const FetchLeagues()),
+  ),
+  BlocProvider(
+    create: (_) => getIt<ProfileBloc>(),
+  ),
+],
+  child: Scaffold(
       appBar: buildHomeAppBar(context),
       body: PageTransitionSwitcher(
         duration: const Duration(milliseconds: 250),
@@ -101,22 +132,40 @@ class _HomePageState extends State<HomePage> {
           CurvedNavigationBarItem(
               child: Icon(Icons.sports_soccer, size: 30, color: Colors.grey)),
           CurvedNavigationBarItem(
-              child: Icon(Icons.book, size: 30, color: Colors.grey)),
+              child: Icon(Icons.groups, size: 30, color: Colors.grey)),
           CurvedNavigationBarItem(
               child: Icon(Icons.emoji_events, size: 30, color: Colors.grey)),
           CurvedNavigationBarItem(
               child: Icon(Icons.person, size: 30, color: Colors.grey)),
         ],
       ),
+    ),
+);
+  }
+
+  /// ==== بروفايل ====
+  Widget _buildProfileScreen() {
+    if (_profileId == null || _profileId == 0) {
+      return const Center(child: Text("Please create your profile first"));
+    }
+    return BlocProvider(
+      create: (_) => getIt<ProfileBloc>(),
+      child: ProfilePage(
+        profileId: _profileId!,
+        storageBaseUrl: "${AppConstants.mediaBaseUrl}/storage/",
+        canEdit: true,
+      ),
     );
   }
 
+  /// ==== الهوم ====
   Widget _buildHomeBody() {
     return SingleChildScrollView(
       padding: EdgeInsets.all(16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Search
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -140,11 +189,13 @@ class _HomePageState extends State<HomePage> {
                 EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
               ),
               onChanged: (value) {
-                // Handle search
+                // TODO: Handle search
               },
             ),
           ),
           SizedBox(height: 20.h),
+
+          // Section title
           Padding(
             padding: EdgeInsets.symmetric(vertical: 12.h),
             child: Column(
@@ -166,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                           Shadow(
                             color: Colors.black.withOpacity(0.15),
                             blurRadius: 2,
-                            offset: Offset(1, 1),
+                            offset: const Offset(1, 1),
                           ),
                         ],
                       ),
@@ -182,6 +233,8 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+
+          // Quick actions
           GridView.count(
             crossAxisCount: 2,
             childAspectRatio: 1.1,
@@ -207,13 +260,16 @@ class _HomePageState extends State<HomePage> {
                 "assets/images/golden-trophy-with-confetti-green-background_1142157-52744.jpg",
               ),
               HomeTile(
-                label: 'My bookings',
+                label: 'Teams',
                 onTap: () => setState(() => index = 2),
-                backgroundImage: "assets/images/istockphoto-538012183-612x612.jpg",
+                backgroundImage:
+                "assets/images/istockphoto-538012183-612x612.jpg",
               ),
             ],
           ),
           SizedBox(height: 24.h),
+
+          // Stadiums around you
           Text(
             "Stadiums around you",
             style: TextStyle(
@@ -225,7 +281,7 @@ class _HomePageState extends State<HomePage> {
                 Shadow(
                   color: Colors.black.withOpacity(0.15),
                   blurRadius: 4,
-                  offset: Offset(1, 1),
+                  offset: const Offset(1, 1),
                 ),
               ],
             ),
@@ -242,11 +298,12 @@ class _HomePageState extends State<HomePage> {
                 BoxShadow(
                   color: AppColors.primaryColor.withOpacity(0.4),
                   blurRadius: 6,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
           ),
+
           SizedBox(
             height: 180.h,
             child: isLoading
@@ -272,8 +329,9 @@ class _HomePageState extends State<HomePage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.r),
                       border: Border.all(
-                          color: AppColors.borderColor.withOpacity(0.4),
-                          width: 1.2.w),
+                        color: AppColors.borderColor.withOpacity(0.4),
+                        width: 1.2.w,
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.06),

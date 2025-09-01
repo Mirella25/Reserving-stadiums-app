@@ -134,7 +134,7 @@ class StadiumCard extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (_) => BlocProvider(
                             create: (_) => getIt<FacilitiesBloc>()..add(LoadFacilitiesEvent(stadium.id)),
-                            child: StadiumDetailsPage(stadium: stadium.toDetailsEntity()),
+                            child:  StadiumDetailsPage(stadium: stadium), // stadium: StadiumEntity
                           ),
                         ),
                       );

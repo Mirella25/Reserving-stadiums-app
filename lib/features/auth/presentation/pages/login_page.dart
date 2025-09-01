@@ -24,9 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../main.dart';
 import '../../../../shared/widgets/loading.dart';
 import '../../../../shared/widgets/snackbar.dart';
-
 import '../../../home/presentation/pages/player/player_home_page.dart';
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -51,8 +49,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => LoginBloc(getIt<LoginUseCase>(),
-          getIt<GoogleLoginUseCase>(), getIt<AuthLocalDataSource>()),
+      create: (_) =>
+          LoginBloc(getIt<LoginUseCase>(), getIt<GoogleLoginUseCase>(), getIt<AuthLocalDataSource>()),
       child: Scaffold(
         body: SafeArea(
           child: Padding(
@@ -82,8 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: AppLocalizations.of(context)!.email,
                       controller: emailController,
                       validator: (value) => Validators.combine([
-                        Validators.required(
-                            message: 'الرجاء إدخال البريد الإلكتروني'),
+                        Validators.required(message: 'الرجاء إدخال البريد الإلكتروني'),
                         Validators.email()
                       ])(value),
                     ),
@@ -102,9 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                           suffixIcon: state.isPasswordObscured
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
-                          onSuffixTap: () => context
-                              .read<LoginBloc>()
-                              .add(TogglePasswordVisibility()),
+                          onSuffixTap: () => context.read<LoginBloc>().add(TogglePasswordVisibility()),
                         );
                       },
                     ),
@@ -114,9 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: InkWell(
                         onTap: () => Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => const ForgetPasswordPage(),
-                          ),
+                          MaterialPageRoute(builder: (context) => const ForgetPasswordPage()),
                         ),
                         child: Text(
                           AppLocalizations.of(context)!.forgotPassword,
@@ -130,97 +123,102 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: 30.h),
+
                     BlocConsumer<LoginBloc, LoginState>(
                       listener: (context, state) async {
+                        final nav = navigatorKey.currentState;
+                        final safeCtx = navigatorKey.currentContext ?? context;
+
+                        // خُذ مرجع البلوك هنا (قبل أي await/تنقل)
+                        final loginBlocRef = context.read<LoginBloc>();
+
                         if (state.isLoading) {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (_) => const CustomLoadingPage(),
-                          );
+                          if (ModalRoute.of(safeCtx)?.isCurrent ?? true) {
+                            showDialog(
+                              context: safeCtx,
+                              barrierDismissible: false,
+                              builder: (_) => const CustomLoadingPage(),
+                            );
+                          }
                         }
 
                         if (state.errorMessage != null) {
-                          Navigator.of(context).pop();
-
-                          if (state.errorMessage!
-                              .toLowerCase()
-                              .contains("not verified")) {
-                            final prefs = await SharedPreferences.getInstance();
-                            await prefs.setString(
-                                'email', emailController.text.trim());
-                            print(
-                                '📥 Saved email for resend: ${emailController.text.trim()}');
-
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      const WaitingVerificationPage()),
-                            );
-                          } else {
-                            CustomSnackbar.show(context,
-                                message: state.errorMessage!, isError: true);
+                          if (Navigator.of(safeCtx).canPop()) {
+                            Navigator.of(safeCtx).pop();
                           }
+                          final msg = state.errorMessage!.toLowerCase();
+
+                          if (msg.contains('not verified')) {
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setString('email', emailController.text.trim());
+
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              nav?.pushAndRemoveUntil(
+                                MaterialPageRoute(builder: (_) => const WaitingVerificationPage()),
+                                    (route) => false,
+                              );
+                            });
+                          } else {
+                            CustomSnackbar.show(safeCtx, message: state.errorMessage!, isError: true);
+                          }
+                          return;
                         }
 
                         if (state.loginEntity != null) {
-                          Navigator.of(context).pop();
+                          if (Navigator.of(safeCtx).canPop()) {
+                            Navigator.of(safeCtx).pop();
+                          }
+
+                          final login = state.loginEntity!;
                           final prefs = await SharedPreferences.getInstance();
+                          await prefs.setString('email', login.user.email);
+                          await prefs.setString('role', login.roles.first);
+                          await prefs.setString('token', login.token);
 
-                          await prefs.setString(
-                              'email', state.loginEntity!.user.email);
-                          print(
-                              "📩 Saved email for resend: ${state.loginEntity!.user.email}");
+                          final pid = login.profileId;
+                          if (pid != null && pid != 0) {
+                            await prefs.setInt('profile_id', pid);
+                          }
 
-                          if (state.loginEntity!.user.emailVerifiedAt == null) {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      const WaitingVerificationPage()),
-                              (route) => false,
-                            );
+                          if (login.user.emailVerifiedAt == null) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              nav?.pushAndRemoveUntil(
+                                MaterialPageRoute(builder: (_) => const WaitingVerificationPage()),
+                                    (route) => false,
+                              );
+                            });
                             return;
                           }
 
-                          await prefs.setString(
-                              'role', state.loginEntity!.roles.first);
+                          CustomSnackbar.show(safeCtx, message: 'Login Success!', isError: false);
+                          await Future.delayed(const Duration(milliseconds: 2000));
 
-                          await prefs.setString(
-                              'token', state.loginEntity!.token);
-                          CustomSnackbar.show(navigatorKey.currentContext!,
-                              message: 'Login Success!', isError: false);
+                          final role = login.roles.first;
 
-                          await Future.delayed(
-                              const Duration(milliseconds: 2000));
-
-                          final role = state.loginEntity!.roles.first;
-
-                          if (state.loginEntity!.profileId == 0 &&
-                              role == "player") {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      const CreateProfileDataPage()),
-                              (route) => false,
-                            );
-                          } else if (role == "stadium_owner") {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const StadiumOwnerShell()),
-                              (route) => false,
-                            );
-                          } else {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const HomePage()),
-                              (route) => false,
-                            );
-                          }
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            if ((pid ?? 0) == 0 && role == "player") {
+                              nav?.pushAndRemoveUntil(
+                                MaterialPageRoute(builder: (_) => const CreateProfileDataPage()),
+                                    (route) => false,
+                              );
+                            } else if (role == "stadium_owner") {
+                              nav?.pushAndRemoveUntil(
+                                MaterialPageRoute(builder: (_) => const StadiumOwnerShell()),
+                                    (route) => false,
+                              );
+                            } else {
+                              // ✅ لا تستخدم context.read داخل builder
+                              nav?.pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (_) => BlocProvider.value(
+                                    value: loginBlocRef,
+                                    child: const HomePage(),
+                                  ),
+                                ),
+                                    (route) => false,
+                              );
+                            }
+                          });
                         }
                       },
                       builder: (context, state) {
@@ -230,24 +228,24 @@ class _LoginPageState extends State<LoginPage> {
                             if (formKey.currentState!.validate()) {
                               final email = emailController.text.trim();
                               final password = passwordController.text.trim();
-                              context.read<LoginBloc>().add(
-                                    LoginSubmitted(
-                                        email: email, password: password),
-                                  );
+                              context
+                                  .read<LoginBloc>()
+                                  .add(LoginSubmitted(email: email, password: password));
                             }
                           },
                         );
                       },
                     ),
+
+
+
                     SizedBox(height: 20.h),
+
+                    // Register
                     RichText(
                       text: TextSpan(
                         text: AppLocalizations.of(context)!.newToLogistics,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'Lora',
-                          fontSize: 14.sp,
-                        ),
+                        style: TextStyle(color: Colors.grey, fontFamily: 'Lora', fontSize: 14.sp),
                         children: [
                           WidgetSpan(
                             alignment: PlaceholderAlignment.baseline,
@@ -255,9 +253,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: InkWell(
                               onTap: () => Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (_) => const RegisterPage(),
-                                ),
+                                MaterialPageRoute(builder: (_) => const RegisterPage()),
                               ),
                               child: Text(
                                 AppLocalizations.of(context)!.register,
@@ -274,67 +270,68 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(height: 20.h),
-                    Builder(builder: (context) {
-                      return ElevatedButton(
-                        onPressed: () async {
-                          try {
-                            final googleSignIn = GoogleSignIn(
-                              scopes: [
-                                'email',
-                                'https://www.googleapis.com/auth/userinfo.profile'
-                              ],
-                              serverClientId:
-                                  '266284559474-445vihh4cn3jh508puopf1sd28l9snto.apps.googleusercontent.com',
-                            );
 
-                            final googleUser = await googleSignIn.signIn();
-                            if (googleUser != null) {
-                              final googleAuth =
-                                  await googleUser.authentication;
+                    // Google login
+                    Builder(
+                      builder: (context) {
+                        return ElevatedButton(
+                          onPressed: () async {
+                            // ✅ خُذ المراجع قبل أي await
+                            final loginBloc = context.read<LoginBloc>();
+                            final safeCtx = navigatorKey.currentContext ?? context;
+
+                            try {
+                              final googleSignIn = GoogleSignIn(
+                                scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
+                                serverClientId: '266284559474-445vihh4cn3jh508puopf1sd28l9snto.apps.googleusercontent.com',
+                              );
+
+                              // ✅ عمليات async بدون استخدام context بعدها مباشرة
+                              final googleUser = await googleSignIn.signIn();
+                              if (googleUser == null) return;
+
+                              final googleAuth = await googleUser.authentication;
                               final idToken = googleAuth.idToken;
 
-                              if (idToken != null) {
-                                print('✅ ID Token received: $idToken');
-                                context.read<LoginBloc>().add(
-                                      GoogleLoginSubmitted(idToken: idToken),
-                                    );
+                              if (idToken == null) {
+                                CustomSnackbar.show(safeCtx, message: 'تعذّر الحصول على رمز Google.', isError: true);
+                                return;
                               }
+
+                              // ✅ إرسال الحدث عبر المرجع المسبق
+                              loginBloc.add(GoogleLoginSubmitted(idToken: idToken));
+                            } catch (e) {
+                              CustomSnackbar.show(safeCtx, message: 'Google Sign-In فشل: $e', isError: true);
                             }
-                          } catch (e) {
-                            debugPrint('Google Login Error: $e');
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(vertical: 12.h),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                            side:
-                                const BorderSide(color: AppColors.primaryColor),
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                              side: const BorderSide(color: AppColors.primaryColor),
+                            ),
+                            elevation: 2,
                           ),
-                          elevation: 2,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/google_icon.png',
-                              height: 24.h,
-                              width: 24.h,
-                            ),
-                            SizedBox(width: 10.w),
-                            Text(
-                              "${AppLocalizations.of(context)!.loginwithgoogle}",
-                              style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/images/google_icon.png', height: 24.h, width: 24.h),
+                              SizedBox(width: 10.w),
+                              Text(
+                                AppLocalizations.of(context)!.loginwithgoogle,
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    })
+                            ],
+                          ),
+                        );
+
+                      },
+                    ),
                   ],
                 ),
               ),

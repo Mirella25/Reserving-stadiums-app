@@ -194,11 +194,12 @@ class _CreateProfilePhotoPageState extends State<CreateProfilePhotoPage> {
                                             ),
                                             onPressed: () {
                                               Navigator.of(context)
-                                                  .pushReplacement(
+                                                  .pushAndRemoveUntil(
                                                 MaterialPageRoute(
                                                   builder: (_) =>
                                                       const HomePage(),
                                                 ),
+                                                (route) => false,
                                               );
                                             },
                                             child: Text(
@@ -228,11 +229,12 @@ class _CreateProfilePhotoPageState extends State<CreateProfilePhotoPage> {
                                             ),
                                             onPressed: () {
                                               context.read<ProfileBloc>().add(
-                                                    CreateProfileSubmitted(
-                                                        profileEntity: widget
-                                                            .profileEntity,
-                                                        avatarFile: image),
-                                                  );
+                                                CreateProfileSubmitted(
+                                                  profile: widget.profileEntity,
+                                                  avatarFile: image,
+                                                ),
+                                              );
+
                                             },
                                             child: Text(
                                               "Finish",

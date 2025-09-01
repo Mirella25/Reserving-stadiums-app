@@ -54,4 +54,5 @@ class AuthRepositoryImpl implements AuthRepository {
       ResetPasswordSubmitRequest request) {
     return remote.resetPassword(request);
   }
+
 }

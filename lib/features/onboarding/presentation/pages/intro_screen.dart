@@ -78,6 +78,13 @@ class _IntroScreenState extends State<IntroScreen> {
             top: 40.h,
             right: 20.w,
             child: ElevatedButton(
+              style: ButtonStyle(    backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // إذا بدك زوايا مدوّرة
+                  ),
+                ),),
               onPressed: () {
                 final cubit = context.read<LanguageCubit>();
                 final current = Localizations.localeOf(context).languageCode;

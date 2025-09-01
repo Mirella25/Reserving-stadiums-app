@@ -27,7 +27,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginSubmitted>(_onLoginSubmitted);
     on<GoogleLoginSubmitted>(_onGoogleLoginSubmitted);
   }
-
   Future<void> _onLoginSubmitted(
       LoginSubmitted event, Emitter<LoginState> emit) async {
     emit(state.copyWith(isLoading: true, errorMessage: null, isSuccess: false));
@@ -38,21 +37,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final loginEntity = result.data;
       final isVerified = loginEntity.user.emailVerifiedAt != null;
 
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('email', loginEntity.user.email); // ✅ خزن الإيميل دائمًا
+      // ✅ خزن عبر AuthLocalDataSource (يوحّد المفاتيح: access_token, user_id, is_verified, role...)
+      await localDataSource.cacheToken(loginEntity.token);
+      await localDataSource.cacheUserId(loginEntity.user.id);
+      await localDataSource.cacheIsVerified(isVerified);
 
-      if (!isVerified) {
-        emit(state.copyWith(
-          isLoading: false,
-          isSuccess: false,
-          errorMessage: 'Email is not verified',
-        ));
-        return;
+      // (اختياري) خزن profileId إذا موجود
+      if (loginEntity.profileId != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setInt('profile_id', loginEntity.profileId!);
       }
-
-      // ✅ إذا تم التحقق، خزن التوكين والبيانات
-      await prefs.setString('token', loginEntity.token);
-      await prefs.setBool('is_verified', true);
 
       emit(state.copyWith(
         isLoading: false,
@@ -63,6 +57,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(state.copyWith(
         isLoading: false,
         errorMessage: result.e.toString(),
+        isSuccess: false,
+      ));
+    } else if (result is ConnectionError<LoginEntity>) {
+      emit(state.copyWith(
+        isLoading: false,
+        errorMessage: 'Connection error',
         isSuccess: false,
       ));
     }
@@ -78,9 +78,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final loginEntity = result.data;
       final isVerified = loginEntity.user.emailVerifiedAt != null;
 
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('email', loginEntity.user.email); // ✅ خزن الإيميل
-
       if (!isVerified) {
         emit(state.copyWith(
           isLoading: false,
@@ -90,8 +87,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         return;
       }
 
-      await prefs.setString('token', loginEntity.token);
-      await prefs.setBool('is_verified', true);
+      // ✅ نفس التوحيد
+      await localDataSource.cacheToken(loginEntity.token);
+      await localDataSource.cacheUserId(loginEntity.user.id);
+      await localDataSource.cacheIsVerified(true);
 
       emit(state.copyWith(
         isLoading: false,
@@ -104,7 +103,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         errorMessage: result.e.toString(),
         isSuccess: false,
       ));
-      print("❌ Google login failed. Error: ${result.e}");
+    } else if (result is ConnectionError<LoginEntity>) {
+      emit(state.copyWith(
+        isLoading: false,
+        errorMessage: 'Connection error',
+        isSuccess: false,
+      ));
     }
   }
+
 }

@@ -8,7 +8,7 @@ part of 'sport_model.dart';
 
 _$SportModelImpl _$$SportModelImplFromJson(Map<String, dynamic> json) =>
     _$SportModelImpl(
-      id: (json['id'] as num).toInt(),
+      id: _toInt(json['id']),
       name: json['name'] as String,
       photoUrl: json['photo'] as String,
       createdAt: json['created_at'] as String?,

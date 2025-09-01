@@ -16,6 +16,16 @@ import 'package:reserving_stadiums_app/features/sport/data/repositories/sport_re
 import 'package:reserving_stadiums_app/features/sport/domain/repositories/sport_repository.dart';
 import 'package:reserving_stadiums_app/features/sport/domain/usecases/get_sports_usecase.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
+import '../../features/leagues/data/datasources/leagues_remote_datasources.dart';
+import '../../features/leagues/data/repo_impl/leagues_repo_impl.dart';
+import '../../features/leagues/domain/repositories/leagues_repository.dart';
+import '../../features/leagues/domain/usecases/get_league_teams_usecase.dart';
+import '../../features/leagues/domain/usecases/get_leagues_usecase.dart';
+import '../../features/leagues/domain/usecases/request_join_league_usecase.dart';
+import '../../features/leagues/presentation/bloc/league_teams_bloc/league_teams_bloc.dart';
+import '../../features/leagues/presentation/bloc/leagues_bloc.dart';
+import '../../features/profile/domain/usecases/get_profile_details_usecase.dart';
+import '../../features/profile/presentation/bloc/profile_bloc.dart';
 import '../../features/stadiums/domain/usecases/stadium_owner/delete_stadium_request_usecase.dart';
 
 import '../../features/auth/data/datasources/auth_remote_datasource.dart';
@@ -42,6 +52,17 @@ import '../../features/stadiums/domain/usecases/stadium_owner/get_stadium_reques
 import '../../features/stadiums/presentation/bloc/player/stadiums_bloc.dart';
 import '../../features/stadiums/presentation/bloc/stadium_owner/add_stadium/stadium_bloc.dart';
 import '../../features/stadiums/presentation/bloc/stadium_owner/view_stadium_requests/stadium_requests_bloc.dart';
+import '../../features/teams/data/datasources/team_remote_datasource.dart';
+import '../../features/teams/data/repo_impl/team_repository_impl.dart';
+import '../../features/teams/domain/repositories/team_repository.dart';
+import '../../features/teams/domain/usecases/GetAllTeams_usecase.dart';
+import '../../features/teams/domain/usecases/create_team.dart';
+import '../../features/teams/domain/usecases/delete_team_usecase.dart';
+import '../../features/teams/domain/usecases/getTeamDetails_usecase.dart';
+import '../../features/teams/domain/usecases/update_team_usecase.dart';
+import '../../features/teams/presentation/bloc/create_team_bloc/team_create_bloc.dart';
+import '../../features/teams/presentation/bloc/get_all_teams_bloc/teams_bloc.dart';
+import '../../features/teams/presentation/bloc/get_team_details_bloc/team_details_bloc.dart';
 import '../constants/app_strings.dart';
 import '../network/api_client.dart';
 
@@ -169,6 +190,98 @@ Future<void> setupDependencies() async {
           () => GetStadiumTimesUseCase(getIt<BookingRepository>()));
 
   getIt.registerFactory(() => BookingTimesBloc(getIt<GetStadiumTimesUseCase>()));
+
+  // ✅ Profile (تكملة)
+  getIt.registerLazySingleton<GetProfileDetailsUsecase>(
+        () => GetProfileDetailsUsecase(getIt<ProfileRepository>()),
+  );
+
+  // إذا كان الـ ProfileBloc يأخذ repository + getDetailsUsecase
+  getIt.registerFactory<ProfileBloc>(
+        () => ProfileBloc(
+      repository: getIt<ProfileRepository>(),
+      getDetailsUsecase: getIt<GetProfileDetailsUsecase>(),
+    ),
+  );
+  getIt.registerLazySingleton<LeaguesRemoteDataSource>(() =>
+      LeaguesRemoteDataSourceImpl(
+        dioClient: getIt<DioClient>(),
+        local: getIt<AuthLocalDataSource>(),
+      ),
+  );
+// Repo
+  getIt.registerLazySingleton<LeaguesRepository>(
+        () => LeaguesRepositoryImpl(getIt<LeaguesRemoteDataSource>()),
+  );
+// UseCase
+  getIt.registerLazySingleton<GetLeaguesUseCase>(
+        () => GetLeaguesUseCase(getIt<LeaguesRepository>()),
+  );
+// Bloc
+  getIt.registerLazySingleton<RequestJoinLeagueUseCase>(
+        () => RequestJoinLeagueUseCase(getIt<LeaguesRepository>()),
+  );
+  getIt.registerFactory(() => LeaguesBloc(
+    getIt<GetLeaguesUseCase>(),
+    getIt<RequestJoinLeagueUseCase>(),
+  ));
+  // لو كنت عامل نسخة من ProfileBloc تأخذ createProfileUsecase + getDetailsUsecase
+  // استخدم التسجيل التالي بدلاً من السابق:
+  // getIt.registerFactory<ProfileBloc>(
+  //   () => ProfileBloc(
+  //     createProfileUsecase: getIt<CreateProfileUsecase>(),
+  //     getDetailsUsecase: getIt<GetProfileDetailsUsecase>(),
+  //   ),
+  // );
+
+  // Teams
+  getIt.registerLazySingleton<TeamRemoteDatasource>(
+        () => TeamRemoteDatasourceImpl(
+      dioClient: getIt(),
+      local: getIt(), // AuthLocalDataSource مسجّل عندك قبل
+    ),
+  );
+
+  getIt.registerLazySingleton<TeamRepository>(
+        () => TeamRepositoryImpl(remote: getIt()),
+  );
+
+  getIt.registerFactory<CreateTeamUseCase>(
+        () => CreateTeamUseCase(getIt()),
+  );
+
+  getIt.registerFactory<TeamCreateBloc>(
+        () => TeamCreateBloc(getIt()),
+  );
+  getIt.registerFactory<GetAllTeamsUseCase>(() => GetAllTeamsUseCase(getIt()));
+  getIt.registerFactory<TeamsBloc>(() => TeamsBloc(getIt(), getIt()));
+  getIt.registerLazySingleton<GetTeamDetailsUsecase>(
+        () => GetTeamDetailsUsecase(getIt()),
+  );
+
+  getIt.registerFactory<TeamDetailsBloc>(
+        () => TeamDetailsBloc(
+      getDetailsUC: getIt<GetTeamDetailsUsecase>(),
+      updateUC: getIt<UpdateTeamUsecase>(),
+      deleteUC: getIt<DeleteTeamUsecase>(),
+    ),
+  );
+  getIt.registerLazySingleton<UpdateTeamUsecase>(
+        () => UpdateTeamUsecase(getIt<TeamRepository>()),
+  );
+  getIt.registerLazySingleton<DeleteTeamUsecase>(
+        () => DeleteTeamUsecase(getIt<TeamRepository>()),
+  );
+  // UseCase جديد
+  getIt.registerLazySingleton<GetLeagueTeamsUseCase>(
+        () => GetLeagueTeamsUseCase(getIt<LeaguesRepository>()),
+  );
+
+  // Bloc
+  getIt.registerFactory<LeagueTeamsBloc>(
+        () => LeagueTeamsBloc(getIt<GetLeagueTeamsUseCase>()),
+  );
+
 
 
 }

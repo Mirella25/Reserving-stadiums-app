@@ -20,6 +20,7 @@ SportModel _$SportModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SportModel {
+  @JsonKey(fromJson: _toInt)
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'photo')
@@ -46,7 +47,7 @@ abstract class $SportModelCopyWith<$Res> {
       _$SportModelCopyWithImpl<$Res, SportModel>;
   @useResult
   $Res call(
-      {int id,
+      {@JsonKey(fromJson: _toInt) int id,
       String name,
       @JsonKey(name: 'photo') String photoUrl,
       @JsonKey(name: 'created_at') String? createdAt,
@@ -108,7 +109,7 @@ abstract class _$$SportModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {@JsonKey(fromJson: _toInt) int id,
       String name,
       @JsonKey(name: 'photo') String photoUrl,
       @JsonKey(name: 'created_at') String? createdAt,
@@ -163,7 +164,7 @@ class __$$SportModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SportModelImpl with DiagnosticableTreeMixin implements _SportModel {
   const _$SportModelImpl(
-      {required this.id,
+      {@JsonKey(fromJson: _toInt) required this.id,
       required this.name,
       @JsonKey(name: 'photo') required this.photoUrl,
       @JsonKey(name: 'created_at') this.createdAt,
@@ -173,6 +174,7 @@ class _$SportModelImpl with DiagnosticableTreeMixin implements _SportModel {
       _$$SportModelImplFromJson(json);
 
   @override
+  @JsonKey(fromJson: _toInt)
   final int id;
   @override
   final String name;
@@ -241,7 +243,7 @@ class _$SportModelImpl with DiagnosticableTreeMixin implements _SportModel {
 
 abstract class _SportModel implements SportModel {
   const factory _SportModel(
-      {required final int id,
+      {@JsonKey(fromJson: _toInt) required final int id,
       required final String name,
       @JsonKey(name: 'photo') required final String photoUrl,
       @JsonKey(name: 'created_at') final String? createdAt,
@@ -251,6 +253,7 @@ abstract class _SportModel implements SportModel {
       _$SportModelImpl.fromJson;
 
   @override
+  @JsonKey(fromJson: _toInt)
   int get id;
   @override
   String get name;

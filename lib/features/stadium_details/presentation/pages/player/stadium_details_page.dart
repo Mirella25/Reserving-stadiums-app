@@ -13,13 +13,14 @@ import 'package:reserving_stadiums_app/features/stadium_details/presentation/pag
 import '../../../../../core/dependency_injection/injections.dart';
 import '../../../../booking/presentation/bloc/booking_times_bloc.dart';
 import '../../../../booking/presentation/pages/booking_page.dart';
+import '../../../../stadiums/domain/entities/player/stadium_entity.dart';
 import '../../../../stadiums/presentation/widgets/player/facility_shimmer.dart';
 import '../../../domain/entities/player/stadium_details_entity.dart';
 import '../../bloc/player/facilities_bloc/facilities_bloc.dart';
 import '../../bloc/player/facilities_bloc/facilities_state.dart';
 
 class StadiumDetailsPage extends StatefulWidget {
-  final StadiumDetailsEntity stadium;
+  final StadiumEntity stadium; // 👈
 
   const StadiumDetailsPage({super.key, required this.stadium});
 
