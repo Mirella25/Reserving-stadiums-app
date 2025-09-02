@@ -2,7 +2,6 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../core/constants/app_colors.dart';
@@ -12,8 +11,6 @@ import '../../../../../core/localization/cubit_localization.dart';
 import '../../../../../shared/widgets/snackbar.dart';
 import '../../../../auth/data/datasources/auth_local_datasource.dart';
 import '../../../../auth/presentation/pages/login_page.dart';
-
-
 
 AppBar buildHomeAppBar(BuildContext context) {
   final currentLang = Localizations.localeOf(context).languageCode;
@@ -42,7 +39,7 @@ AppBar buildHomeAppBar(BuildContext context) {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (_) => const LoginPage()),
-            (route) => false,
+        (route) => false,
       );
     } catch (e) {
       CustomSnackbar.show(
@@ -64,7 +61,9 @@ AppBar buildHomeAppBar(BuildContext context) {
         // زر تغيير اللغة
         IconButton(
           onPressed: () {
-            context.read<LanguageCubit>().changeLanguage(isArabic ? 'en' : 'ar');
+            context
+                .read<LanguageCubit>()
+                .changeLanguage(isArabic ? 'en' : 'ar');
           },
           icon: const Icon(Icons.language, color: AppColors.primaryColor),
         ),
@@ -93,7 +92,6 @@ AppBar buildHomeAppBar(BuildContext context) {
         IconButton(
           onPressed: () {
             _logout(context);
-
           },
           icon: const Icon(Icons.delete, color: AppColors.primaryColor),
         ),
