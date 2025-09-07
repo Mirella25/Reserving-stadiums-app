@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+
+import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
 import 'package:reserving_stadiums_app/core/localization/cubit_localization.dart';
 import 'package:reserving_stadiums_app/core/navigation/deep_link_handler.dart';
@@ -11,31 +14,55 @@ import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local
 import 'package:reserving_stadiums_app/features/auth/presentation/pages/login_page.dart';
 
 import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner/stadium_owner_shell.dart';
-
 import 'package:reserving_stadiums_app/features/home/presentation/pages/player/player_home_page.dart';
 
-
 import 'package:reserving_stadiums_app/features/onboarding/presentation/pages/intro_screen.dart';
+import 'package:reserving_stadiums_app/features/payment/domain/usecases/create_onboarding_link.dart';
+import 'package:reserving_stadiums_app/features/payment/domain/usecases/create_payment_intent.dart';
+import 'package:reserving_stadiums_app/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:reserving_stadiums_app/l10n/app_localizations.dart';
 import 'package:reserving_stadiums_app/shared/widgets/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'core/constants/app_strings.dart';
 import 'features/auth/domain/usecases/google_login_usecase.dart';
 import 'features/auth/domain/usecases/login_usecase.dart';
 import 'features/auth/presentation/bloc/login/bloc/login_bloc.dart';
-
 import 'features/auth/presentation/pages/verification_page.dart';
-import 'features/home/presentation/pages/player/player_home_page.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await setupDependencies();
 
+  // ✅ Stripe initialization (publishable key من .env)
+  Stripe.publishableKey = AppConstants.stripePublishableKey;
+  await Stripe.instance.applySettings();
+
+  // ✅ صاحب الملعب بيحتاج هالـ bloc/usecases (onboarding + payouts)
+  final createPaymentIntent = getIt<CreatePaymentIntent>();
+  final createOnboardingLink = getIt<CreateOnboardingLink>();
+
   runApp(
-    BlocProvider(
-      create: (_) => LanguageCubit()..loadSavedLanguage(),
-      child: DeepLinkHandler(child: const MyApp()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<LanguageCubit>(
+          create: (_) => LanguageCubit()..loadSavedLanguage(),
+        ),
+        BlocProvider<PaymentBloc>(
+          create: (_) => PaymentBloc(
+            createPaymentIntent: createPaymentIntent,
+            createOnboardingLink: createOnboardingLink,
+          ),
+        ),
+        // ⚠️ PaymentBloc تبع اللاعب (booking) ما لازم ينسجل هون،
+        // رح نستخدمه داخل PaymentBottomSheet.show فقط.
+      ],
+      child: const DeepLinkHandler(
+        child: MyApp(),
+      ),
     ),
   );
 }
@@ -43,18 +70,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // Future<bool> _hasSeenIntro() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   return prefs.getBool('seen_intro') ?? false;
-  // }
-  //
-  //
-  // Future<bool> _hasVerifiedToken() async {
-  //   final authLocal = getIt<AuthLocalDataSource>();
-  //   final token = await authLocal.getCachedToken();
-  //   final isVerified = await authLocal.getIsVerified();
-  //   return token != null && token.isNotEmpty && isVerified == true;
-  // }
   Future<List<dynamic>> _getInitialStatus() async {
     final prefs = await SharedPreferences.getInstance();
     final seenIntro = prefs.getBool('seen_intro') ?? false;
@@ -63,6 +78,7 @@ class MyApp extends StatelessWidget {
     final token = await authLocal.getCachedToken();
     final isVerified = await authLocal.getIsVerified();
     final role = await authLocal.getCachedRole();
+
     return [seenIntro, token, isVerified, role];
   }
 
@@ -75,6 +91,29 @@ class MyApp extends StatelessWidget {
           minTextAdapt: true,
           splitScreenMode: true,
           builder: (_, __) => MaterialApp(
+            theme: ThemeData(
+              useMaterial3: true,
+              datePickerTheme: DatePickerThemeData(
+                backgroundColor: Colors.white,
+                headerBackgroundColor: AppColors.primaryColor,
+                headerForegroundColor: Colors.white,
+                surfaceTintColor: AppColors.primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              timePickerTheme: const TimePickerThemeData(
+                dialBackgroundColor: Colors.white,
+                dialHandColor: AppColors.primaryColor,
+                hourMinuteShape: CircleBorder(),
+                hourMinuteTextColor: AppColors.primaryColor,
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.primaryColor,
+                ),
+              ),
+            ),
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             title: 'Stadium Booking App',
@@ -86,8 +125,7 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home:
-            FutureBuilder<List<dynamic>>(
+            home: FutureBuilder<List<dynamic>>(
               future: _getInitialStatus(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -102,23 +140,15 @@ class MyApp extends StatelessWidget {
                 if (!seenIntro) return const IntroScreen();
 
                 if (token != null && token.isNotEmpty) {
-                  if (!isVerified) {
-                    return const WaitingVerificationPage();
-                  }
+                  if (!isVerified) return const WaitingVerificationPage();
 
                   if (role == 'stadium_owner') {
                     return const StadiumOwnerShell();
                   } else {
                     return const HomePage();
                   }
-                  // if (isVerified == true) {
-                  //   return const HomePage();
-                  // } else {
-                  //   return const WaitingVerificationPage();
-                  // }
                 }
 
-                // ما في توكن
                 return BlocProvider(
                   create: (_) => LoginBloc(
                     getIt<LoginUseCase>(),

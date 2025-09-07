@@ -18,11 +18,11 @@ _$CreateStadiumRequestModelImpl _$$CreateStadiumRequestModelImplFromJson(
       ownerNumber: (json['owner_number'] as num).toInt(),
       startTime: json['start_time'] as String,
       endTime: json['end_time'] as String,
-      price: json['price'] as String,
-      deposit: json['deposit'] as String,
+      price: (json['price'] as num).toDouble(),
+      deposit: (json['deposit'] as num).toDouble(),
       duration: (json['duration'] as num).toInt(),
-      latitude: json['latitude'] as String,
-      longitude: json['longitude'] as String,
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
     );
 
 Map<String, dynamic> _$$CreateStadiumRequestModelImplToJson(

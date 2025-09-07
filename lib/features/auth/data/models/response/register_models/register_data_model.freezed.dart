@@ -21,6 +21,8 @@ RegisterDataModel _$RegisterDataModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RegisterDataModel {
   String get role => throw _privateConstructorUsedError;
+  @JsonKey(name: 'onboarding_url', fromJson: _toNullableString)
+  String? get onboardingUrl => throw _privateConstructorUsedError;
 
   /// Serializes this RegisterDataModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +40,10 @@ abstract class $RegisterDataModelCopyWith<$Res> {
           RegisterDataModel value, $Res Function(RegisterDataModel) then) =
       _$RegisterDataModelCopyWithImpl<$Res, RegisterDataModel>;
   @useResult
-  $Res call({String role});
+  $Res call(
+      {String role,
+      @JsonKey(name: 'onboarding_url', fromJson: _toNullableString)
+      String? onboardingUrl});
 }
 
 /// @nodoc
@@ -57,12 +62,17 @@ class _$RegisterDataModelCopyWithImpl<$Res, $Val extends RegisterDataModel>
   @override
   $Res call({
     Object? role = null,
+    Object? onboardingUrl = freezed,
   }) {
     return _then(_value.copyWith(
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      onboardingUrl: freezed == onboardingUrl
+          ? _value.onboardingUrl
+          : onboardingUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -75,7 +85,10 @@ abstract class _$$RegisterDataModelImplCopyWith<$Res>
       __$$RegisterDataModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String role});
+  $Res call(
+      {String role,
+      @JsonKey(name: 'onboarding_url', fromJson: _toNullableString)
+      String? onboardingUrl});
 }
 
 /// @nodoc
@@ -92,12 +105,17 @@ class __$$RegisterDataModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? role = null,
+    Object? onboardingUrl = freezed,
   }) {
     return _then(_$RegisterDataModelImpl(
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as String,
+      onboardingUrl: freezed == onboardingUrl
+          ? _value.onboardingUrl
+          : onboardingUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -105,17 +123,23 @@ class __$$RegisterDataModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$RegisterDataModelImpl implements _RegisterDataModel {
-  const _$RegisterDataModelImpl({required this.role});
+  const _$RegisterDataModelImpl(
+      {required this.role,
+      @JsonKey(name: 'onboarding_url', fromJson: _toNullableString)
+      this.onboardingUrl});
 
   factory _$RegisterDataModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RegisterDataModelImplFromJson(json);
 
   @override
   final String role;
+  @override
+  @JsonKey(name: 'onboarding_url', fromJson: _toNullableString)
+  final String? onboardingUrl;
 
   @override
   String toString() {
-    return 'RegisterDataModel(role: $role)';
+    return 'RegisterDataModel(role: $role, onboardingUrl: $onboardingUrl)';
   }
 
   @override
@@ -123,12 +147,14 @@ class _$RegisterDataModelImpl implements _RegisterDataModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RegisterDataModelImpl &&
-            (identical(other.role, role) || other.role == role));
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.onboardingUrl, onboardingUrl) ||
+                other.onboardingUrl == onboardingUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, role);
+  int get hashCode => Object.hash(runtimeType, role, onboardingUrl);
 
   /// Create a copy of RegisterDataModel
   /// with the given fields replaced by the non-null parameter values.
@@ -148,14 +174,19 @@ class _$RegisterDataModelImpl implements _RegisterDataModel {
 }
 
 abstract class _RegisterDataModel implements RegisterDataModel {
-  const factory _RegisterDataModel({required final String role}) =
-      _$RegisterDataModelImpl;
+  const factory _RegisterDataModel(
+      {required final String role,
+      @JsonKey(name: 'onboarding_url', fromJson: _toNullableString)
+      final String? onboardingUrl}) = _$RegisterDataModelImpl;
 
   factory _RegisterDataModel.fromJson(Map<String, dynamic> json) =
       _$RegisterDataModelImpl.fromJson;
 
   @override
   String get role;
+  @override
+  @JsonKey(name: 'onboarding_url', fromJson: _toNullableString)
+  String? get onboardingUrl;
 
   /// Create a copy of RegisterDataModel
   /// with the given fields replaced by the non-null parameter values.

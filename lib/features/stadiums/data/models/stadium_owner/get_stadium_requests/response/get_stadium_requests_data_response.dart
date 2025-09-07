@@ -15,7 +15,7 @@ class GetStadiumRequestsDataResponse with _$GetStadiumRequestsDataResponse {
     required String name,
     required String location,
     required String description,
-    List<String>? photos,
+    List<dynamic>? photos,
     @JsonKey(name: 'Length') required String length,
     @JsonKey(name: 'Width') required String width,
     @JsonKey(name: 'owner_number') required int ownerNumber,
@@ -25,10 +25,10 @@ class GetStadiumRequestsDataResponse with _$GetStadiumRequestsDataResponse {
     @JsonKey(name: 'updated_at') String? updatedAt,
     @JsonKey(name: 'start_time') required String startTime,
     @JsonKey(name: 'end_time') required String endTime,
-    required String price,
-    required String deposit,
-    required String latitude,
-    required String longitude,
+    required double price,
+    required double deposit,
+    required double latitude,
+    required double longitude,
     required int duration,
   }) = _GetStadiumRequestsDataResponse;
   factory GetStadiumRequestsDataResponse.fromJson(Map<String, dynamic> json) =>

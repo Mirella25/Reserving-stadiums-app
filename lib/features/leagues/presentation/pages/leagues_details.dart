@@ -155,6 +155,7 @@ class LeagueDetailsPage extends StatelessWidget {
                                   ],
                                   child: StadiumDetailsPage(
                                     stadium: league.stadium!,
+
                                   ),
                                 ),
                               ),

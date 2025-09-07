@@ -28,7 +28,14 @@ mixin _$StadiumModel {
   String get name => throw _privateConstructorUsedError;
   String get location => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  List<String>? get photos => throw _privateConstructorUsedError;
+  @JsonKey(name: 'price')
+  num get stadiumPrice =>
+      throw _privateConstructorUsedError; // ✅ required + map
+  @JsonKey(name: 'deposit')
+  num get stadiumDeposit =>
+      throw _privateConstructorUsedError; // ✅ required + map
+  List<String> get photos =>
+      throw _privateConstructorUsedError; // ✅ default بدل nullable
   @JsonKey(name: 'Length')
   String get length => throw _privateConstructorUsedError;
   @JsonKey(name: 'Width')
@@ -63,7 +70,9 @@ abstract class $StadiumModelCopyWith<$Res> {
       String name,
       String location,
       String description,
-      List<String>? photos,
+      @JsonKey(name: 'price') num stadiumPrice,
+      @JsonKey(name: 'deposit') num stadiumDeposit,
+      List<String> photos,
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
       @JsonKey(name: 'owner_number') int ownerNumber,
@@ -92,7 +101,9 @@ class _$StadiumModelCopyWithImpl<$Res, $Val extends StadiumModel>
     Object? name = null,
     Object? location = null,
     Object? description = null,
-    Object? photos = freezed,
+    Object? stadiumPrice = null,
+    Object? stadiumDeposit = null,
+    Object? photos = null,
     Object? length = null,
     Object? width = null,
     Object? ownerNumber = null,
@@ -124,10 +135,18 @@ class _$StadiumModelCopyWithImpl<$Res, $Val extends StadiumModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      photos: freezed == photos
+      stadiumPrice: null == stadiumPrice
+          ? _value.stadiumPrice
+          : stadiumPrice // ignore: cast_nullable_to_non_nullable
+              as num,
+      stadiumDeposit: null == stadiumDeposit
+          ? _value.stadiumDeposit
+          : stadiumDeposit // ignore: cast_nullable_to_non_nullable
+              as num,
+      photos: null == photos
           ? _value.photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String>,
       length: null == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
@@ -167,7 +186,9 @@ abstract class _$$StadiumModelImplCopyWith<$Res>
       String name,
       String location,
       String description,
-      List<String>? photos,
+      @JsonKey(name: 'price') num stadiumPrice,
+      @JsonKey(name: 'deposit') num stadiumDeposit,
+      List<String> photos,
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
       @JsonKey(name: 'owner_number') int ownerNumber,
@@ -194,7 +215,9 @@ class __$$StadiumModelImplCopyWithImpl<$Res>
     Object? name = null,
     Object? location = null,
     Object? description = null,
-    Object? photos = freezed,
+    Object? stadiumPrice = null,
+    Object? stadiumDeposit = null,
+    Object? photos = null,
     Object? length = null,
     Object? width = null,
     Object? ownerNumber = null,
@@ -226,10 +249,18 @@ class __$$StadiumModelImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      photos: freezed == photos
+      stadiumPrice: null == stadiumPrice
+          ? _value.stadiumPrice
+          : stadiumPrice // ignore: cast_nullable_to_non_nullable
+              as num,
+      stadiumDeposit: null == stadiumDeposit
+          ? _value.stadiumDeposit
+          : stadiumDeposit // ignore: cast_nullable_to_non_nullable
+              as num,
+      photos: null == photos
           ? _value._photos
           : photos // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String>,
       length: null == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
@@ -264,7 +295,9 @@ class _$StadiumModelImpl implements _StadiumModel {
       required this.name,
       required this.location,
       required this.description,
-      final List<String>? photos,
+      @JsonKey(name: 'price') required this.stadiumPrice,
+      @JsonKey(name: 'deposit') required this.stadiumDeposit,
+      final List<String> photos = const <String>[],
       @JsonKey(name: 'Length') required this.length,
       @JsonKey(name: 'Width') required this.width,
       @JsonKey(name: 'owner_number') required this.ownerNumber,
@@ -289,16 +322,25 @@ class _$StadiumModelImpl implements _StadiumModel {
   final String location;
   @override
   final String description;
-  final List<String>? _photos;
   @override
-  List<String>? get photos {
-    final value = _photos;
-    if (value == null) return null;
+  @JsonKey(name: 'price')
+  final num stadiumPrice;
+// ✅ required + map
+  @override
+  @JsonKey(name: 'deposit')
+  final num stadiumDeposit;
+// ✅ required + map
+  final List<String> _photos;
+// ✅ required + map
+  @override
+  @JsonKey()
+  List<String> get photos {
     if (_photos is EqualUnmodifiableListView) return _photos;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_photos);
   }
 
+// ✅ default بدل nullable
   @override
   @JsonKey(name: 'Length')
   final String length;
@@ -317,7 +359,7 @@ class _$StadiumModelImpl implements _StadiumModel {
 
   @override
   String toString() {
-    return 'StadiumModel(id: $id, userId: $userId, sportId: $sportId, name: $name, location: $location, description: $description, photos: $photos, length: $length, width: $width, ownerNumber: $ownerNumber, latitude: $latitude, longitude: $longitude)';
+    return 'StadiumModel(id: $id, userId: $userId, sportId: $sportId, name: $name, location: $location, description: $description, stadiumPrice: $stadiumPrice, stadiumDeposit: $stadiumDeposit, photos: $photos, length: $length, width: $width, ownerNumber: $ownerNumber, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
@@ -333,6 +375,10 @@ class _$StadiumModelImpl implements _StadiumModel {
                 other.location == location) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.stadiumPrice, stadiumPrice) ||
+                other.stadiumPrice == stadiumPrice) &&
+            (identical(other.stadiumDeposit, stadiumDeposit) ||
+                other.stadiumDeposit == stadiumDeposit) &&
             const DeepCollectionEquality().equals(other._photos, _photos) &&
             (identical(other.length, length) || other.length == length) &&
             (identical(other.width, width) || other.width == width) &&
@@ -354,6 +400,8 @@ class _$StadiumModelImpl implements _StadiumModel {
       name,
       location,
       description,
+      stadiumPrice,
+      stadiumDeposit,
       const DeepCollectionEquality().hash(_photos),
       length,
       width,
@@ -385,7 +433,9 @@ abstract class _StadiumModel implements StadiumModel {
           required final String name,
           required final String location,
           required final String description,
-          final List<String>? photos,
+          @JsonKey(name: 'price') required final num stadiumPrice,
+          @JsonKey(name: 'deposit') required final num stadiumDeposit,
+          final List<String> photos,
           @JsonKey(name: 'Length') required final String length,
           @JsonKey(name: 'Width') required final String width,
           @JsonKey(name: 'owner_number') required final int ownerNumber,
@@ -411,7 +461,13 @@ abstract class _StadiumModel implements StadiumModel {
   @override
   String get description;
   @override
-  List<String>? get photos;
+  @JsonKey(name: 'price')
+  num get stadiumPrice; // ✅ required + map
+  @override
+  @JsonKey(name: 'deposit')
+  num get stadiumDeposit; // ✅ required + map
+  @override
+  List<String> get photos; // ✅ default بدل nullable
   @override
   @JsonKey(name: 'Length')
   String get length;

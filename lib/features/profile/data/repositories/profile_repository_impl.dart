@@ -7,6 +7,8 @@ import 'package:reserving_stadiums_app/features/profile/domain/entities/profile_
 import 'package:reserving_stadiums_app/features/profile/domain/entities/profile_entity.dart';
 import 'package:reserving_stadiums_app/features/profile/domain/repositories/profile_repository.dart';
 
+import '../../domain/entities/profile_brief_entity.dart';
+
 class ProfileRepositoryImpl extends ProfileRepository {
   final ProfileRemoteDataSource profileRemoteDataSource;
 
@@ -27,6 +29,9 @@ class ProfileRepositoryImpl extends ProfileRepository {
   Future<Result<ProfileDetailsEntity>> updateProfile(int id, ProfileUpdateRequest req) =>
       profileRemoteDataSource.updateProfile(id, req);
 
-
+  @override
+  Future<Result<List<ProfileBriefEntity>>> getAllProfiles({int page = 1, int perPage = 30}) {
+    return profileRemoteDataSource.getAllProfiles(page: page, perPage: perPage);
+  }
 
 }

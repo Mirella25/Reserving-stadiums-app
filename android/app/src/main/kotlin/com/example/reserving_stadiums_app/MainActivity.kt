@@ -1,5 +1,5 @@
-package com.example.reserving_stadiums_app
+package com.example.reserving_stadiums_app  // <-- عدّل حسب باكدجك الحقيقي
 
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MainActivity: FlutterActivity()
+class MainActivity : FlutterFragmentActivity()

@@ -17,6 +17,8 @@ class StadiumDetailsModel with _$StadiumDetailsModel {
     @JsonKey(name: 'Length') required String length,
     @JsonKey(name: 'Width') required String width,
     @JsonKey(name: 'owner_number') required int ownerNumber,
+    required num price,    // ⬅️ جديد
+    required num deposit,  // ⬅️ جديد
     @JsonKey(fromJson: _toDouble) required double latitude,
     @JsonKey(fromJson: _toDouble) required double longitude,
   }) = _StadiumDetailsModel;
@@ -35,6 +37,8 @@ double _toDouble(dynamic value) {
 extension StadiumDetailsModelMapper on StadiumDetailsModel {
   StadiumDetailsEntity toEntity() {
     return StadiumDetailsEntity(
+      price: price,       // ⬅️ جديد
+      deposit: deposit,   // ⬅️ جديد
       id: id,
       userId: userId,
       sportId: sportId,

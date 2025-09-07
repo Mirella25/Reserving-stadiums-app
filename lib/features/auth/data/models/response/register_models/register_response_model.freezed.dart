@@ -21,11 +21,9 @@ RegisterResponseModel _$RegisterResponseModelFromJson(
 
 /// @nodoc
 mixin _$RegisterResponseModel {
-  @JsonKey(required: true)
   bool get status => throw _privateConstructorUsedError;
-  @JsonKey(name: 'status_code')
-  int get statusCode => throw _privateConstructorUsedError;
-  String? get message => throw _privateConstructorUsedError;
+  String get message =>
+      throw _privateConstructorUsedError; // لو حاب تخلّيها non-null غيرها لـ required RegisterDataModel data
   RegisterDataModel get data => throw _privateConstructorUsedError;
 
   /// Serializes this RegisterResponseModel to a JSON map.
@@ -44,11 +42,7 @@ abstract class $RegisterResponseModelCopyWith<$Res> {
           $Res Function(RegisterResponseModel) then) =
       _$RegisterResponseModelCopyWithImpl<$Res, RegisterResponseModel>;
   @useResult
-  $Res call(
-      {@JsonKey(required: true) bool status,
-      @JsonKey(name: 'status_code') int statusCode,
-      String? message,
-      RegisterDataModel data});
+  $Res call({bool status, String message, RegisterDataModel data});
 
   $RegisterDataModelCopyWith<$Res> get data;
 }
@@ -70,8 +64,7 @@ class _$RegisterResponseModelCopyWithImpl<$Res,
   @override
   $Res call({
     Object? status = null,
-    Object? statusCode = null,
-    Object? message = freezed,
+    Object? message = null,
     Object? data = null,
   }) {
     return _then(_value.copyWith(
@@ -79,14 +72,10 @@ class _$RegisterResponseModelCopyWithImpl<$Res,
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as bool,
-      statusCode: null == statusCode
-          ? _value.statusCode
-          : statusCode // ignore: cast_nullable_to_non_nullable
-              as int,
-      message: freezed == message
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -114,11 +103,7 @@ abstract class _$$RegisterResponseModelImplCopyWith<$Res>
       __$$RegisterResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(required: true) bool status,
-      @JsonKey(name: 'status_code') int statusCode,
-      String? message,
-      RegisterDataModel data});
+  $Res call({bool status, String message, RegisterDataModel data});
 
   @override
   $RegisterDataModelCopyWith<$Res> get data;
@@ -139,8 +124,7 @@ class __$$RegisterResponseModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? statusCode = null,
-    Object? message = freezed,
+    Object? message = null,
     Object? data = null,
   }) {
     return _then(_$RegisterResponseModelImpl(
@@ -148,14 +132,10 @@ class __$$RegisterResponseModelImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as bool,
-      statusCode: null == statusCode
-          ? _value.statusCode
-          : statusCode // ignore: cast_nullable_to_non_nullable
-              as int,
-      message: freezed == message
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -168,28 +148,22 @@ class __$$RegisterResponseModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RegisterResponseModelImpl implements _RegisterResponseModel {
   const _$RegisterResponseModelImpl(
-      {@JsonKey(required: true) required this.status,
-      @JsonKey(name: 'status_code') required this.statusCode,
-      this.message,
-      required this.data});
+      {required this.status, required this.message, required this.data});
 
   factory _$RegisterResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RegisterResponseModelImplFromJson(json);
 
   @override
-  @JsonKey(required: true)
   final bool status;
   @override
-  @JsonKey(name: 'status_code')
-  final int statusCode;
-  @override
-  final String? message;
+  final String message;
+// لو حاب تخلّيها non-null غيرها لـ required RegisterDataModel data
   @override
   final RegisterDataModel data;
 
   @override
   String toString() {
-    return 'RegisterResponseModel(status: $status, statusCode: $statusCode, message: $message, data: $data)';
+    return 'RegisterResponseModel(status: $status, message: $message, data: $data)';
   }
 
   @override
@@ -198,16 +172,13 @@ class _$RegisterResponseModelImpl implements _RegisterResponseModel {
         (other.runtimeType == runtimeType &&
             other is _$RegisterResponseModelImpl &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.statusCode, statusCode) ||
-                other.statusCode == statusCode) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.data, data) || other.data == data));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, status, statusCode, message, data);
+  int get hashCode => Object.hash(runtimeType, status, message, data);
 
   /// Create a copy of RegisterResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -228,22 +199,18 @@ class _$RegisterResponseModelImpl implements _RegisterResponseModel {
 
 abstract class _RegisterResponseModel implements RegisterResponseModel {
   const factory _RegisterResponseModel(
-      {@JsonKey(required: true) required final bool status,
-      @JsonKey(name: 'status_code') required final int statusCode,
-      final String? message,
+      {required final bool status,
+      required final String message,
       required final RegisterDataModel data}) = _$RegisterResponseModelImpl;
 
   factory _RegisterResponseModel.fromJson(Map<String, dynamic> json) =
       _$RegisterResponseModelImpl.fromJson;
 
   @override
-  @JsonKey(required: true)
   bool get status;
   @override
-  @JsonKey(name: 'status_code')
-  int get statusCode;
-  @override
-  String? get message;
+  String
+      get message; // لو حاب تخلّيها non-null غيرها لـ required RegisterDataModel data
   @override
   RegisterDataModel get data;
 

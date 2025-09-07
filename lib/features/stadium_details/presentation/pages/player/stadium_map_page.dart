@@ -30,7 +30,8 @@ class StadiumMapPage extends StatelessWidget {
         ),
         children: [
           TileLayer(
-            urlTemplate: "https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.png?key=naSITYHrkPVKGw8Ak6ku",
+            urlTemplate: "https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=naSITYHrkPVKGw8Ak6ku",
+
             userAgentPackageName: 'com.example.stadium_booking',
           ),
           MarkerLayer(

@@ -6,7 +6,9 @@ import 'package:reserving_stadiums_app/features/auth/data/datasources/auth_local
 import 'package:reserving_stadiums_app/features/profile/data/models/response/create_profile/create_profile_data_model.dart';
 import 'package:reserving_stadiums_app/features/profile/data/models/response/create_profile/create_profile_response_model.dart';
 import '../../../../core/network/api_client.dart';
+import '../../domain/entities/profile_brief_entity.dart';
 import '../../domain/entities/profile_details_entity.dart';
+import '../models/profile_brief_model.dart';
 import '../models/profile_model.dart';
 import '../models/request/create_profile_request_model.dart';
 
@@ -22,6 +24,7 @@ abstract class ProfileRemoteDataSource {
     required int profileId,
   });
   Future<Result<ProfileDetailsEntity>> updateProfile(int id, ProfileUpdateRequest req); // ✅ جديد
+  Future<Result<List<ProfileBriefEntity>>> getAllProfiles({int page, int perPage});
 
 }
 
@@ -116,6 +119,23 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         final prof = (data is Map && data['profile'] is Map) ? data['profile'] : data;
         return ProfileModel.fromJson(Map<String, dynamic>.from(prof as Map))
             .toDetailsEntity();
+      },
+    );
+  }
+
+  @override
+  Future<Result<List<ProfileBriefEntity>>> getAllProfiles({int page = 1, int perPage = 30}) async {
+    return dioClient.callApi<List<ProfileBriefEntity>>(
+      endpoint: 'profile/viewall',
+      method: 'GET',
+      requiresAuth: true,
+      token: await local.getCachedToken(),
+      query: {'page': page, 'per_page': perPage},
+      fromJson: (json) {
+        final list = (json['data']?['profiles'] as List)
+            .map((e) => ProfileBriefModel.fromJson(Map<String, dynamic>.from(e)).toEntity())
+            .toList();
+        return list;
       },
     );
   }

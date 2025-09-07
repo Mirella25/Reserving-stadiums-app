@@ -12,6 +12,7 @@ import 'package:reserving_stadiums_app/features/stadium_details/presentation/pag
 
 import '../../../../../core/dependency_injection/injections.dart';
 import '../../../../booking/presentation/bloc/booking_times_bloc.dart';
+import '../../../../booking/presentation/bloc/confirm_booking_cubit.dart';
 import '../../../../booking/presentation/pages/booking_page.dart';
 import '../../../../stadiums/domain/entities/player/stadium_entity.dart';
 import '../../../../stadiums/presentation/widgets/player/facility_shimmer.dart';
@@ -228,12 +229,25 @@ class _StadiumDetailsPageState extends State<StadiumDetailsPage> {
         padding: EdgeInsets.all(16.r),
         child: ElevatedButton(
           onPressed: () {
+            final id = widget.stadium.id; // 👈 هذا هو الـ stadiumId الصحيح
+            final price = widget.stadium.stadiumPrice;
+            final deposit= widget.stadium.stadiumDeposit;
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => BlocProvider(
-                  create: (_) => getIt<BookingTimesBloc>(),
-                  child: BookingPage(stadiumId: s.id),
+                builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<ConfirmBookingCubit>(
+                      create: (_) => getIt<ConfirmBookingCubit>(),
+                    ),
+                    BlocProvider<BookingTimesBloc>(
+                      create: (_) => getIt<BookingTimesBloc>(),
+                    ),
+                  ],
+                  child: BookingPage(stadiumId: id,
+                  stadiumPrice: price,
+                    stadiumDeposit: deposit,
+                  ),
                 ),
               ),
             );
@@ -241,9 +255,7 @@ class _StadiumDetailsPageState extends State<StadiumDetailsPage> {
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryColor,
             padding: EdgeInsets.symmetric(vertical: 14.h),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14.r),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
           ),
           child: Text(
             'Book Now',

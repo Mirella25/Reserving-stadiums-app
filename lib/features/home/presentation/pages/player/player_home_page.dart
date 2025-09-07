@@ -202,24 +202,29 @@ providers: [
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.explore,
-                        color: AppColors.primaryColor, size: 24.sp),
+                    Icon(Icons.explore, color: AppColors.primaryColor, size: 24.sp),
                     SizedBox(width: 8.w),
-                    Text(
-                      "?What do you want to do today",
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                        fontFamily: 'Montserrat',
-                        shadows: [
-                          Shadow(
-                            color: Colors.black.withOpacity(0.15),
-                            blurRadius: 2,
-                            offset: const Offset(1, 1),
-                          ),
-                        ],
+                    Expanded(
+                      child: Text(
+                        "What do you want to do today?",
+                        textDirection: TextDirection.ltr,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                          fontFamily: 'Montserrat',
+                          shadows: [
+                            Shadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 2,
+                              offset: const Offset(1, 1),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -233,6 +238,7 @@ providers: [
               ],
             ),
           ),
+
 
           // Quick actions
           GridView.count(

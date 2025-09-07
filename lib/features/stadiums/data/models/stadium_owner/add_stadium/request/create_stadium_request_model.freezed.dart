@@ -36,11 +36,11 @@ mixin _$CreateStadiumRequestModel {
   String get startTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_time')
   String get endTime => throw _privateConstructorUsedError;
-  String get price => throw _privateConstructorUsedError;
-  String get deposit => throw _privateConstructorUsedError;
+  double get price => throw _privateConstructorUsedError;
+  double get deposit => throw _privateConstructorUsedError;
   int get duration => throw _privateConstructorUsedError;
-  String get latitude => throw _privateConstructorUsedError;
-  String get longitude => throw _privateConstructorUsedError;
+  double get latitude => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
 
   /// Serializes this CreateStadiumRequestModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -68,11 +68,11 @@ abstract class $CreateStadiumRequestModelCopyWith<$Res> {
       @JsonKey(name: 'owner_number') int ownerNumber,
       @JsonKey(name: 'start_time') String startTime,
       @JsonKey(name: 'end_time') String endTime,
-      String price,
-      String deposit,
+      double price,
+      double deposit,
       int duration,
-      String latitude,
-      String longitude});
+      double latitude,
+      double longitude});
 }
 
 /// @nodoc
@@ -146,11 +146,11 @@ class _$CreateStadiumRequestModelCopyWithImpl<$Res,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       deposit: null == deposit
           ? _value.deposit
           : deposit // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -158,11 +158,11 @@ class _$CreateStadiumRequestModelCopyWithImpl<$Res,
       latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       longitude: null == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
     ) as $Val);
   }
 }
@@ -186,11 +186,11 @@ abstract class _$$CreateStadiumRequestModelImplCopyWith<$Res>
       @JsonKey(name: 'owner_number') int ownerNumber,
       @JsonKey(name: 'start_time') String startTime,
       @JsonKey(name: 'end_time') String endTime,
-      String price,
-      String deposit,
+      double price,
+      double deposit,
       int duration,
-      String latitude,
-      String longitude});
+      double latitude,
+      double longitude});
 }
 
 /// @nodoc
@@ -263,11 +263,11 @@ class __$$CreateStadiumRequestModelImplCopyWithImpl<$Res>
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       deposit: null == deposit
           ? _value.deposit
           : deposit // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -275,11 +275,11 @@ class __$$CreateStadiumRequestModelImplCopyWithImpl<$Res>
       latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       longitude: null == longitude
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
     ));
   }
 }
@@ -331,15 +331,15 @@ class _$CreateStadiumRequestModelImpl implements _CreateStadiumRequestModel {
   @JsonKey(name: 'end_time')
   final String endTime;
   @override
-  final String price;
+  final double price;
   @override
-  final String deposit;
+  final double deposit;
   @override
   final int duration;
   @override
-  final String latitude;
+  final double latitude;
   @override
-  final String longitude;
+  final double longitude;
 
   @override
   String toString() {
@@ -421,11 +421,11 @@ abstract class _CreateStadiumRequestModel implements CreateStadiumRequestModel {
       @JsonKey(name: 'owner_number') required final int ownerNumber,
       @JsonKey(name: 'start_time') required final String startTime,
       @JsonKey(name: 'end_time') required final String endTime,
-      required final String price,
-      required final String deposit,
+      required final double price,
+      required final double deposit,
       required final int duration,
-      required final String latitude,
-      required final String longitude}) = _$CreateStadiumRequestModelImpl;
+      required final double latitude,
+      required final double longitude}) = _$CreateStadiumRequestModelImpl;
 
   factory _CreateStadiumRequestModel.fromJson(Map<String, dynamic> json) =
       _$CreateStadiumRequestModelImpl.fromJson;
@@ -455,15 +455,15 @@ abstract class _CreateStadiumRequestModel implements CreateStadiumRequestModel {
   @JsonKey(name: 'end_time')
   String get endTime;
   @override
-  String get price;
+  double get price;
   @override
-  String get deposit;
+  double get deposit;
   @override
   int get duration;
   @override
-  String get latitude;
+  double get latitude;
   @override
-  String get longitude;
+  double get longitude;
 
   /// Create a copy of CreateStadiumRequestModel
   /// with the given fields replaced by the non-null parameter values.

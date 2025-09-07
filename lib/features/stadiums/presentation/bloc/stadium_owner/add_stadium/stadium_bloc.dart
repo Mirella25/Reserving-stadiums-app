@@ -58,16 +58,12 @@ class StadiumBloc extends Bloc<StadiumEvent, StadiumState> {
         await deleteStadiumRequestUsecase.execute(event.id);
 
     if (result is Success<void>) {
-      emit(state.copyWith(
-        isDeleting: false,
-        isSuccess: true,
-      ));
-      add(LoadStadiumRequestsEvent() as StadiumEvent);
-    } else if (result is Error<StadiumEntity>) {
-      emit(state.copyWith(
-        isDeleting: false,
-        errorMessage: result.e.toString(),
-      ));
+      emit(state.copyWith(isDeleting: false, deleteSuccess: true));
+    } else if (result is Error) {
+      emit(
+          state.copyWith(isDeleting: false, errorMessage: result.e.toString()));
+    } else {
+      emit(state.copyWith(isDeleting: false, errorMessage: 'Unknown error'));
     }
   }
 }

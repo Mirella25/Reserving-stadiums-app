@@ -17,18 +17,16 @@ _$CreateStadiumDataResponeModelImpl
           length: json['Length'] as String,
           width: json['Width'] as String,
           ownerNumber: (json['owner_number'] as num).toInt(),
-          photos: (json['photos'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList(),
+          photos: json['photos'] as List<dynamic>?,
           userId: (json['user_id'] as num).toInt(),
           createdAt: json['created_at'] as String,
           updatedAt: json['updated_at'] as String,
           startTime: json['start_time'] as String,
           endTime: json['end_time'] as String,
-          price: json['price'] as String,
-          deposit: json['deposit'] as String,
-          latitude: json['latitude'] as String,
-          longitude: json['longitude'] as String,
+          price: (json['price'] as num).toDouble(),
+          deposit: (json['deposit'] as num).toDouble(),
+          latitude: (json['latitude'] as num).toDouble(),
+          longitude: (json['longitude'] as num).toDouble(),
           duration: (json['duration'] as num).toInt(),
         );
 

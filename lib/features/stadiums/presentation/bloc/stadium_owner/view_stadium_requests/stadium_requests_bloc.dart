@@ -35,6 +35,7 @@ class StadiumRequestsBloc
     } else if (result is Error<List<StadiumEntity>>) {
       emit(state.copyWith(
         isLoading: false,
+        requests: [],
         errorMessage: result.e.toString(),
       ));
     }

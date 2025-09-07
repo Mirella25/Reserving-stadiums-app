@@ -13,7 +13,11 @@ class StadiumModel with _$StadiumModel {
     required String name,
     required String location,
     required String description,
-    List<String>? photos,
+
+    @JsonKey(name: 'price')    required num stadiumPrice,   // ✅ required + map
+    @JsonKey(name: 'deposit')  required num stadiumDeposit, // ✅ required + map
+
+    @Default(<String>[]) List<String> photos,               // ✅ default بدل nullable
     @JsonKey(name: 'Length') required String length,
     @JsonKey(name: 'Width') required String width,
     @JsonKey(name: 'owner_number') required int ownerNumber,
@@ -33,20 +37,20 @@ double _toDouble(dynamic value) {
 }
 
 extension StadiumModelMapper on StadiumModel {
-  StadiumEntity toEntity() {
-    return StadiumEntity(
-      id: id,
-      userId: userId,
-      sportId: sportId,
-      name: name,
-      location: location,
-      description: description,
-      photos: photos ?? [],
-      length: length,
-      width: width,
-      ownerNumber: ownerNumber,
-      latitude: latitude,
-      longitude: longitude,
-    );
-  }
+  StadiumEntity toEntity() => StadiumEntity(
+    id: id,
+    userId: userId,
+    sportId: sportId,
+    name: name,
+    location: location,
+    description: description,
+    photos: photos,
+    length: length,
+    width: width,
+    ownerNumber: ownerNumber,
+    latitude: latitude,
+    longitude: longitude,
+    stadiumDeposit: stadiumDeposit,
+    stadiumPrice: stadiumPrice,
+  );
 }

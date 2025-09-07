@@ -1,10 +1,14 @@
 import 'package:reserving_stadiums_app/core/network/api_client.dart';
 import '../../../../core/result/result.dart';
+import '../../domain/entities/booking_entity.dart';
+import '../models/request/create_booking_request.dart';
+import '../models/response/booking_response_model.dart';
 import '../models/response/stadium_time_model.dart';
 import '../../domain/entities/stadium_time_entity.dart';
 
 abstract class BookingRemoteDataSource {
   Future<Result<List<StadiumTimeEntity>>> getStadiumSlots(int stadiumId);
+  Future<Result<BookingEntity>> createBooking(CreateBookingRequest req);
 }
 
 class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
@@ -40,5 +44,27 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
     } else {
       return  Error(e: 'Unexpected error');
     }
+  }
+
+
+  @override
+  Future<Result<BookingEntity>> createBooking(CreateBookingRequest req) async {
+    final res = await dioClient.callApi<BookingResponseModel>(
+      endpoint: '/Booking/create',
+      method: 'POST',
+      data: req.toJson(),
+      fromJson: (json) => BookingResponseModel.fromJson(
+        (json['data'] ?? {}) as Map<String, dynamic>,
+      ),
+    );
+
+    if (res is Success<BookingResponseModel>) {
+      return Success<BookingEntity>(data: res.data.toEntity());
+    } else if (res is ConnectionError<BookingResponseModel>) {
+      return ConnectionError<BookingEntity>();
+    } else if (res is Error<BookingResponseModel>) {
+      return Error<BookingEntity>(e: res.e);
+    }
+    return Error<BookingEntity>(e: 'Unexpected error');
   }
 }

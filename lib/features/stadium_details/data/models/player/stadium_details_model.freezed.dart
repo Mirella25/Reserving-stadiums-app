@@ -35,6 +35,8 @@ mixin _$StadiumDetailsModel {
   String get width => throw _privateConstructorUsedError;
   @JsonKey(name: 'owner_number')
   int get ownerNumber => throw _privateConstructorUsedError;
+  num get price => throw _privateConstructorUsedError; // ⬅️ جديد
+  num get deposit => throw _privateConstructorUsedError; // ⬅️ جديد
   @JsonKey(fromJson: _toDouble)
   double get latitude => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _toDouble)
@@ -67,6 +69,8 @@ abstract class $StadiumDetailsModelCopyWith<$Res> {
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
       @JsonKey(name: 'owner_number') int ownerNumber,
+      num price,
+      num deposit,
       @JsonKey(fromJson: _toDouble) double latitude,
       @JsonKey(fromJson: _toDouble) double longitude});
 }
@@ -96,6 +100,8 @@ class _$StadiumDetailsModelCopyWithImpl<$Res, $Val extends StadiumDetailsModel>
     Object? length = null,
     Object? width = null,
     Object? ownerNumber = null,
+    Object? price = null,
+    Object? deposit = null,
     Object? latitude = null,
     Object? longitude = null,
   }) {
@@ -140,6 +146,14 @@ class _$StadiumDetailsModelCopyWithImpl<$Res, $Val extends StadiumDetailsModel>
           ? _value.ownerNumber
           : ownerNumber // ignore: cast_nullable_to_non_nullable
               as int,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as num,
+      deposit: null == deposit
+          ? _value.deposit
+          : deposit // ignore: cast_nullable_to_non_nullable
+              as num,
       latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -171,6 +185,8 @@ abstract class _$$StadiumDetailsModelImplCopyWith<$Res>
       @JsonKey(name: 'Length') String length,
       @JsonKey(name: 'Width') String width,
       @JsonKey(name: 'owner_number') int ownerNumber,
+      num price,
+      num deposit,
       @JsonKey(fromJson: _toDouble) double latitude,
       @JsonKey(fromJson: _toDouble) double longitude});
 }
@@ -198,6 +214,8 @@ class __$$StadiumDetailsModelImplCopyWithImpl<$Res>
     Object? length = null,
     Object? width = null,
     Object? ownerNumber = null,
+    Object? price = null,
+    Object? deposit = null,
     Object? latitude = null,
     Object? longitude = null,
   }) {
@@ -242,6 +260,14 @@ class __$$StadiumDetailsModelImplCopyWithImpl<$Res>
           ? _value.ownerNumber
           : ownerNumber // ignore: cast_nullable_to_non_nullable
               as int,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as num,
+      deposit: null == deposit
+          ? _value.deposit
+          : deposit // ignore: cast_nullable_to_non_nullable
+              as num,
       latitude: null == latitude
           ? _value.latitude
           : latitude // ignore: cast_nullable_to_non_nullable
@@ -268,6 +294,8 @@ class _$StadiumDetailsModelImpl implements _StadiumDetailsModel {
       @JsonKey(name: 'Length') required this.length,
       @JsonKey(name: 'Width') required this.width,
       @JsonKey(name: 'owner_number') required this.ownerNumber,
+      required this.price,
+      required this.deposit,
       @JsonKey(fromJson: _toDouble) required this.latitude,
       @JsonKey(fromJson: _toDouble) required this.longitude})
       : _photos = photos;
@@ -309,6 +337,12 @@ class _$StadiumDetailsModelImpl implements _StadiumDetailsModel {
   @JsonKey(name: 'owner_number')
   final int ownerNumber;
   @override
+  final num price;
+// ⬅️ جديد
+  @override
+  final num deposit;
+// ⬅️ جديد
+  @override
   @JsonKey(fromJson: _toDouble)
   final double latitude;
   @override
@@ -317,7 +351,7 @@ class _$StadiumDetailsModelImpl implements _StadiumDetailsModel {
 
   @override
   String toString() {
-    return 'StadiumDetailsModel(id: $id, userId: $userId, sportId: $sportId, name: $name, location: $location, description: $description, photos: $photos, length: $length, width: $width, ownerNumber: $ownerNumber, latitude: $latitude, longitude: $longitude)';
+    return 'StadiumDetailsModel(id: $id, userId: $userId, sportId: $sportId, name: $name, location: $location, description: $description, photos: $photos, length: $length, width: $width, ownerNumber: $ownerNumber, price: $price, deposit: $deposit, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
@@ -338,6 +372,8 @@ class _$StadiumDetailsModelImpl implements _StadiumDetailsModel {
             (identical(other.width, width) || other.width == width) &&
             (identical(other.ownerNumber, ownerNumber) ||
                 other.ownerNumber == ownerNumber) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.deposit, deposit) || other.deposit == deposit) &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
@@ -358,6 +394,8 @@ class _$StadiumDetailsModelImpl implements _StadiumDetailsModel {
       length,
       width,
       ownerNumber,
+      price,
+      deposit,
       latitude,
       longitude);
 
@@ -390,6 +428,8 @@ abstract class _StadiumDetailsModel implements StadiumDetailsModel {
           @JsonKey(name: 'Length') required final String length,
           @JsonKey(name: 'Width') required final String width,
           @JsonKey(name: 'owner_number') required final int ownerNumber,
+          required final num price,
+          required final num deposit,
           @JsonKey(fromJson: _toDouble) required final double latitude,
           @JsonKey(fromJson: _toDouble) required final double longitude}) =
       _$StadiumDetailsModelImpl;
@@ -422,6 +462,10 @@ abstract class _StadiumDetailsModel implements StadiumDetailsModel {
   @override
   @JsonKey(name: 'owner_number')
   int get ownerNumber;
+  @override
+  num get price; // ⬅️ جديد
+  @override
+  num get deposit; // ⬅️ جديد
   @override
   @JsonKey(fromJson: _toDouble)
   double get latitude;

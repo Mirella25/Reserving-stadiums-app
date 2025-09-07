@@ -1,0 +1,634 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'update_stadium_data_response_model.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+
+UpdateStadiumDataResponseModel _$UpdateStadiumDataResponseModelFromJson(
+    Map<String, dynamic> json) {
+  return _UpdateStadiumDataResponseModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UpdateStadiumDataResponseModel {
+  int get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sport_id')
+  int get sportId => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get location => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  @JsonKey(name: 'Length')
+  String get length => throw _privateConstructorUsedError;
+  @JsonKey(name: 'Width')
+  String get width => throw _privateConstructorUsedError;
+  @JsonKey(name: 'owner_number')
+  int get ownerNumber => throw _privateConstructorUsedError;
+  List<dynamic>? get photos => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_id')
+  int get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  String get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
+  String get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'start_time')
+  String get startTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'end_time')
+  String get endTime => throw _privateConstructorUsedError;
+  double get price => throw _privateConstructorUsedError;
+  double get deposit => throw _privateConstructorUsedError;
+  double get latitude => throw _privateConstructorUsedError;
+  double get longitude => throw _privateConstructorUsedError;
+  int get duration => throw _privateConstructorUsedError;
+
+  /// Serializes this UpdateStadiumDataResponseModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of UpdateStadiumDataResponseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $UpdateStadiumDataResponseModelCopyWith<UpdateStadiumDataResponseModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpdateStadiumDataResponseModelCopyWith<$Res> {
+  factory $UpdateStadiumDataResponseModelCopyWith(
+          UpdateStadiumDataResponseModel value,
+          $Res Function(UpdateStadiumDataResponseModel) then) =
+      _$UpdateStadiumDataResponseModelCopyWithImpl<$Res,
+          UpdateStadiumDataResponseModel>;
+  @useResult
+  $Res call(
+      {int id,
+      @JsonKey(name: 'sport_id') int sportId,
+      String name,
+      String location,
+      String description,
+      @JsonKey(name: 'Length') String length,
+      @JsonKey(name: 'Width') String width,
+      @JsonKey(name: 'owner_number') int ownerNumber,
+      List<dynamic>? photos,
+      @JsonKey(name: 'user_id') int userId,
+      @JsonKey(name: 'created_at') String createdAt,
+      @JsonKey(name: 'updated_at') String updatedAt,
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
+      double price,
+      double deposit,
+      double latitude,
+      double longitude,
+      int duration});
+}
+
+/// @nodoc
+class _$UpdateStadiumDataResponseModelCopyWithImpl<$Res,
+        $Val extends UpdateStadiumDataResponseModel>
+    implements $UpdateStadiumDataResponseModelCopyWith<$Res> {
+  _$UpdateStadiumDataResponseModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of UpdateStadiumDataResponseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? sportId = null,
+    Object? name = null,
+    Object? location = null,
+    Object? description = null,
+    Object? length = null,
+    Object? width = null,
+    Object? ownerNumber = null,
+    Object? photos = freezed,
+    Object? userId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? price = null,
+    Object? deposit = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? duration = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      sportId: null == sportId
+          ? _value.sportId
+          : sportId // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      length: null == length
+          ? _value.length
+          : length // ignore: cast_nullable_to_non_nullable
+              as String,
+      width: null == width
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerNumber: null == ownerNumber
+          ? _value.ownerNumber
+          : ownerNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      photos: freezed == photos
+          ? _value.photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      deposit: null == deposit
+          ? _value.deposit
+          : deposit // ignore: cast_nullable_to_non_nullable
+              as double,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UpdateStadiumDataResponseModelImplCopyWith<$Res>
+    implements $UpdateStadiumDataResponseModelCopyWith<$Res> {
+  factory _$$UpdateStadiumDataResponseModelImplCopyWith(
+          _$UpdateStadiumDataResponseModelImpl value,
+          $Res Function(_$UpdateStadiumDataResponseModelImpl) then) =
+      __$$UpdateStadiumDataResponseModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      @JsonKey(name: 'sport_id') int sportId,
+      String name,
+      String location,
+      String description,
+      @JsonKey(name: 'Length') String length,
+      @JsonKey(name: 'Width') String width,
+      @JsonKey(name: 'owner_number') int ownerNumber,
+      List<dynamic>? photos,
+      @JsonKey(name: 'user_id') int userId,
+      @JsonKey(name: 'created_at') String createdAt,
+      @JsonKey(name: 'updated_at') String updatedAt,
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
+      double price,
+      double deposit,
+      double latitude,
+      double longitude,
+      int duration});
+}
+
+/// @nodoc
+class __$$UpdateStadiumDataResponseModelImplCopyWithImpl<$Res>
+    extends _$UpdateStadiumDataResponseModelCopyWithImpl<$Res,
+        _$UpdateStadiumDataResponseModelImpl>
+    implements _$$UpdateStadiumDataResponseModelImplCopyWith<$Res> {
+  __$$UpdateStadiumDataResponseModelImplCopyWithImpl(
+      _$UpdateStadiumDataResponseModelImpl _value,
+      $Res Function(_$UpdateStadiumDataResponseModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of UpdateStadiumDataResponseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? sportId = null,
+    Object? name = null,
+    Object? location = null,
+    Object? description = null,
+    Object? length = null,
+    Object? width = null,
+    Object? ownerNumber = null,
+    Object? photos = freezed,
+    Object? userId = null,
+    Object? createdAt = null,
+    Object? updatedAt = null,
+    Object? startTime = null,
+    Object? endTime = null,
+    Object? price = null,
+    Object? deposit = null,
+    Object? latitude = null,
+    Object? longitude = null,
+    Object? duration = null,
+  }) {
+    return _then(_$UpdateStadiumDataResponseModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      sportId: null == sportId
+          ? _value.sportId
+          : sportId // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      location: null == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      length: null == length
+          ? _value.length
+          : length // ignore: cast_nullable_to_non_nullable
+              as String,
+      width: null == width
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerNumber: null == ownerNumber
+          ? _value.ownerNumber
+          : ownerNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      photos: freezed == photos
+          ? _value._photos
+          : photos // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>?,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      startTime: null == startTime
+          ? _value.startTime
+          : startTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      endTime: null == endTime
+          ? _value.endTime
+          : endTime // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      deposit: null == deposit
+          ? _value.deposit
+          : deposit // ignore: cast_nullable_to_non_nullable
+              as double,
+      latitude: null == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      longitude: null == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UpdateStadiumDataResponseModelImpl
+    with DiagnosticableTreeMixin
+    implements _UpdateStadiumDataResponseModel {
+  const _$UpdateStadiumDataResponseModelImpl(
+      {required this.id,
+      @JsonKey(name: 'sport_id') required this.sportId,
+      required this.name,
+      required this.location,
+      required this.description,
+      @JsonKey(name: 'Length') required this.length,
+      @JsonKey(name: 'Width') required this.width,
+      @JsonKey(name: 'owner_number') required this.ownerNumber,
+      final List<dynamic>? photos,
+      @JsonKey(name: 'user_id') required this.userId,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'updated_at') required this.updatedAt,
+      @JsonKey(name: 'start_time') required this.startTime,
+      @JsonKey(name: 'end_time') required this.endTime,
+      required this.price,
+      required this.deposit,
+      required this.latitude,
+      required this.longitude,
+      required this.duration})
+      : _photos = photos;
+
+  factory _$UpdateStadiumDataResponseModelImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$UpdateStadiumDataResponseModelImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  @JsonKey(name: 'sport_id')
+  final int sportId;
+  @override
+  final String name;
+  @override
+  final String location;
+  @override
+  final String description;
+  @override
+  @JsonKey(name: 'Length')
+  final String length;
+  @override
+  @JsonKey(name: 'Width')
+  final String width;
+  @override
+  @JsonKey(name: 'owner_number')
+  final int ownerNumber;
+  final List<dynamic>? _photos;
+  @override
+  List<dynamic>? get photos {
+    final value = _photos;
+    if (value == null) return null;
+    if (_photos is EqualUnmodifiableListView) return _photos;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey(name: 'user_id')
+  final int userId;
+  @override
+  @JsonKey(name: 'created_at')
+  final String createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  final String updatedAt;
+  @override
+  @JsonKey(name: 'start_time')
+  final String startTime;
+  @override
+  @JsonKey(name: 'end_time')
+  final String endTime;
+  @override
+  final double price;
+  @override
+  final double deposit;
+  @override
+  final double latitude;
+  @override
+  final double longitude;
+  @override
+  final int duration;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UpdateStadiumDataResponseModel(id: $id, sportId: $sportId, name: $name, location: $location, description: $description, length: $length, width: $width, ownerNumber: $ownerNumber, photos: $photos, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt, startTime: $startTime, endTime: $endTime, price: $price, deposit: $deposit, latitude: $latitude, longitude: $longitude, duration: $duration)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UpdateStadiumDataResponseModel'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('sportId', sportId))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('location', location))
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('length', length))
+      ..add(DiagnosticsProperty('width', width))
+      ..add(DiagnosticsProperty('ownerNumber', ownerNumber))
+      ..add(DiagnosticsProperty('photos', photos))
+      ..add(DiagnosticsProperty('userId', userId))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('updatedAt', updatedAt))
+      ..add(DiagnosticsProperty('startTime', startTime))
+      ..add(DiagnosticsProperty('endTime', endTime))
+      ..add(DiagnosticsProperty('price', price))
+      ..add(DiagnosticsProperty('deposit', deposit))
+      ..add(DiagnosticsProperty('latitude', latitude))
+      ..add(DiagnosticsProperty('longitude', longitude))
+      ..add(DiagnosticsProperty('duration', duration));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpdateStadiumDataResponseModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.sportId, sportId) || other.sportId == sportId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.length, length) || other.length == length) &&
+            (identical(other.width, width) || other.width == width) &&
+            (identical(other.ownerNumber, ownerNumber) ||
+                other.ownerNumber == ownerNumber) &&
+            const DeepCollectionEquality().equals(other._photos, _photos) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.startTime, startTime) ||
+                other.startTime == startTime) &&
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.deposit, deposit) || other.deposit == deposit) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.duration, duration) ||
+                other.duration == duration));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        sportId,
+        name,
+        location,
+        description,
+        length,
+        width,
+        ownerNumber,
+        const DeepCollectionEquality().hash(_photos),
+        userId,
+        createdAt,
+        updatedAt,
+        startTime,
+        endTime,
+        price,
+        deposit,
+        latitude,
+        longitude,
+        duration
+      ]);
+
+  /// Create a copy of UpdateStadiumDataResponseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpdateStadiumDataResponseModelImplCopyWith<
+          _$UpdateStadiumDataResponseModelImpl>
+      get copyWith => __$$UpdateStadiumDataResponseModelImplCopyWithImpl<
+          _$UpdateStadiumDataResponseModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UpdateStadiumDataResponseModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UpdateStadiumDataResponseModel
+    implements UpdateStadiumDataResponseModel {
+  const factory _UpdateStadiumDataResponseModel(
+      {required final int id,
+      @JsonKey(name: 'sport_id') required final int sportId,
+      required final String name,
+      required final String location,
+      required final String description,
+      @JsonKey(name: 'Length') required final String length,
+      @JsonKey(name: 'Width') required final String width,
+      @JsonKey(name: 'owner_number') required final int ownerNumber,
+      final List<dynamic>? photos,
+      @JsonKey(name: 'user_id') required final int userId,
+      @JsonKey(name: 'created_at') required final String createdAt,
+      @JsonKey(name: 'updated_at') required final String updatedAt,
+      @JsonKey(name: 'start_time') required final String startTime,
+      @JsonKey(name: 'end_time') required final String endTime,
+      required final double price,
+      required final double deposit,
+      required final double latitude,
+      required final double longitude,
+      required final int duration}) = _$UpdateStadiumDataResponseModelImpl;
+
+  factory _UpdateStadiumDataResponseModel.fromJson(Map<String, dynamic> json) =
+      _$UpdateStadiumDataResponseModelImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  @JsonKey(name: 'sport_id')
+  int get sportId;
+  @override
+  String get name;
+  @override
+  String get location;
+  @override
+  String get description;
+  @override
+  @JsonKey(name: 'Length')
+  String get length;
+  @override
+  @JsonKey(name: 'Width')
+  String get width;
+  @override
+  @JsonKey(name: 'owner_number')
+  int get ownerNumber;
+  @override
+  List<dynamic>? get photos;
+  @override
+  @JsonKey(name: 'user_id')
+  int get userId;
+  @override
+  @JsonKey(name: 'created_at')
+  String get createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  String get updatedAt;
+  @override
+  @JsonKey(name: 'start_time')
+  String get startTime;
+  @override
+  @JsonKey(name: 'end_time')
+  String get endTime;
+  @override
+  double get price;
+  @override
+  double get deposit;
+  @override
+  double get latitude;
+  @override
+  double get longitude;
+  @override
+  int get duration;
+
+  /// Create a copy of UpdateStadiumDataResponseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UpdateStadiumDataResponseModelImplCopyWith<
+          _$UpdateStadiumDataResponseModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

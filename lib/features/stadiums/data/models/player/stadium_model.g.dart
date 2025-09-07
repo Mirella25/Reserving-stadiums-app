@@ -14,8 +14,12 @@ _$StadiumModelImpl _$$StadiumModelImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       location: json['location'] as String,
       description: json['description'] as String,
-      photos:
-          (json['photos'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      stadiumPrice: json['price'] as num,
+      stadiumDeposit: json['deposit'] as num,
+      photos: (json['photos'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
       length: json['Length'] as String,
       width: json['Width'] as String,
       ownerNumber: (json['owner_number'] as num).toInt(),
@@ -31,6 +35,8 @@ Map<String, dynamic> _$$StadiumModelImplToJson(_$StadiumModelImpl instance) =>
       'name': instance.name,
       'location': instance.location,
       'description': instance.description,
+      'price': instance.stadiumPrice,
+      'deposit': instance.stadiumDeposit,
       'photos': instance.photos,
       'Length': instance.length,
       'Width': instance.width,

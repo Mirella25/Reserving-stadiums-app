@@ -87,4 +87,5 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       method: 'POST',
     );
   }
+
 }

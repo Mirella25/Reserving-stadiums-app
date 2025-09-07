@@ -5,29 +5,44 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
+import 'package:reserving_stadiums_app/core/localization/cubit_localization.dart';
 import 'package:reserving_stadiums_app/features/home/presentation/widgets/stadium_owner/custom_grid_card.dart';
+import 'package:reserving_stadiums_app/features/leagues/presentation/bloc/stadium_owner/leagues/leagues_bloc.dart';
+import 'package:reserving_stadiums_app/features/leagues/presentation/pages/stadium_owner/view_leagues.dart';
 import 'package:reserving_stadiums_app/features/sport/domain/usecases/get_sports_usecase.dart';
 import 'package:reserving_stadiums_app/features/sport/presentation/bloc/sport_bloc.dart';
 import 'package:reserving_stadiums_app/features/stadiums/domain/usecases/stadium_owner/create_stadium_usecase.dart';
 import 'package:reserving_stadiums_app/features/stadiums/domain/usecases/stadium_owner/delete_stadium_request_usecase.dart';
 import 'package:reserving_stadiums_app/features/stadiums/presentation/bloc/stadium_owner/add_stadium/stadium_bloc.dart';
 import 'package:reserving_stadiums_app/features/stadiums/presentation/bloc/stadium_owner/view_stadium_requests/stadium_requests_bloc.dart';
+import 'package:reserving_stadiums_app/features/stadiums/presentation/bloc/stadium_owner/view_stadiums/view_stadiums_bloc.dart';
 import 'package:reserving_stadiums_app/features/stadiums/presentation/pages/stadium_owner/add_stadium_page.dart';
 import 'package:reserving_stadiums_app/features/stadiums/presentation/pages/stadium_owner/view_stadium_requests_page.dart';
 import 'package:reserving_stadiums_app/features/stadiums/presentation/pages/stadium_owner/view_stadiums_page.dart';
+import 'package:shimmer/shimmer.dart';
 
 class StadiumOwnerHomePage extends StatelessWidget {
   const StadiumOwnerHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Localizations.localeOf(context).languageCode;
+    final isArabic = currentLang == 'ar';
     final items = [
       {
         'icon': Icons.stadium,
         'label': 'My Stadiums',
         'onTap': () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ViewStadiumsPage(),
+            builder: (context) => MultiBlocProvider(
+              providers: [
+                BlocProvider<ViewStadiumsBloc>(
+                  create: (_) =>
+                  getIt<ViewStadiumsBloc>()..add(LoadStadiumsEvent()),
+                ),
+              ],
+              child: const ViewStadiumsPage(),
+            ),
           ));
         }
       },
@@ -37,9 +52,19 @@ class StadiumOwnerHomePage extends StatelessWidget {
         'onTap': () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => BlocProvider<StadiumRequestsBloc>(
-                create: (_) => getIt<StadiumRequestsBloc>()
-                  ..add(LoadStadiumRequestsEvent()),
+              builder: (context) => MultiBlocProvider(
+                providers: [
+                  BlocProvider<StadiumRequestsBloc>(
+                    create: (_) => getIt<StadiumRequestsBloc>()
+                      ..add(LoadStadiumRequestsEvent()),
+                  ),
+                  BlocProvider(
+                    create: (context) => StadiumBloc(
+                      getIt<CreateStadiumUsecase>(),
+                      getIt<DeleteStadiumRequestUsecase>(),
+                    ),
+                  ),
+                ],
                 child: const ViewStadiumRequestsPage(),
               ),
             ),
@@ -52,12 +77,37 @@ class StadiumOwnerHomePage extends StatelessWidget {
         'label': 'Schedule & Availability',
         'onTap': () {}
       },
-      {'icon': Icons.build_circle, 'label': 'Facilities', 'onTap': () {}},
+      {
+        'icon': Icons.emoji_events,
+        'label': 'Leagues',
+        'onTap': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => BlocProvider<LeaguesBloc>(
+                create: (ctx) => getIt<LeaguesBloc>()..add(LoadLeaguesEvent()),
+                child: const LeaguesPage(),
+              ),
+            ),
+          );
+        }
+      },
     ];
 
     return Scaffold(
         appBar: AppBar(
-          leading: null,
+          leading: IconButton(
+            onPressed: () {
+              context
+                  .read<LanguageCubit>()
+                  .changeLanguage(isArabic ? 'en' : 'ar');
+            },
+            icon: Icon(
+              Icons.language,
+              color: AppColors.primaryColor,
+              size: 24.sp,
+            ),
+          ),
           centerTitle: true,
           toolbarHeight: 90,
           title: AnimatedTextKit(

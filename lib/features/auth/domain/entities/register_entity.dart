@@ -1,8 +1,9 @@
-// lib/features/auth/domain/entities/register_entity.dart
-
 class RegisterEntity {
   final String role;
+  final String? onboardingUrl;
 
-
-  RegisterEntity( {required this.role});
+  RegisterEntity({
+    required this.role,
+    this.onboardingUrl,
+  });
 }

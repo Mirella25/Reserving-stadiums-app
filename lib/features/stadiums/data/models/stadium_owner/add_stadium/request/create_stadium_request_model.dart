@@ -17,11 +17,11 @@ class CreateStadiumRequestModel with _$CreateStadiumRequestModel {
     @JsonKey(name: 'owner_number') required int ownerNumber,
     @JsonKey(name: 'start_time') required String startTime,
     @JsonKey(name: 'end_time') required String endTime,
-    required String price,
-    required String deposit,
+    required double price,
+    required double deposit,
     required int duration,
-    required String latitude,
-    required String longitude,
+    required double latitude,
+    required double longitude,
   }) = _CreateStadiumRequestModel;
   factory CreateStadiumRequestModel.fromJson(Map<String, dynamic> json) =>
       _$CreateStadiumRequestModelFromJson(json);

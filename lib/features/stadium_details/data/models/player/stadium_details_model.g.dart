@@ -20,6 +20,8 @@ _$StadiumDetailsModelImpl _$$StadiumDetailsModelImplFromJson(
       length: json['Length'] as String,
       width: json['Width'] as String,
       ownerNumber: (json['owner_number'] as num).toInt(),
+      price: json['price'] as num,
+      deposit: json['deposit'] as num,
       latitude: _toDouble(json['latitude']),
       longitude: _toDouble(json['longitude']),
     );
@@ -37,6 +39,8 @@ Map<String, dynamic> _$$StadiumDetailsModelImplToJson(
       'Length': instance.length,
       'Width': instance.width,
       'owner_number': instance.ownerNumber,
+      'price': instance.price,
+      'deposit': instance.deposit,
       'latitude': instance.latitude,
       'longitude': instance.longitude,
     };

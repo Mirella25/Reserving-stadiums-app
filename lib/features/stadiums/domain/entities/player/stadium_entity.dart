@@ -5,6 +5,8 @@ class StadiumEntity {
   final int userId;
   final int sportId;
   final String name;
+  final num stadiumPrice;   // ⬅️ جديد
+  final num stadiumDeposit; // ⬅️ جديد
   final String location;
   final String description;
   final List<String> photos;
@@ -28,6 +30,8 @@ class StadiumEntity {
     required this.ownerNumber,
     required this.latitude,
     required this.longitude,
-    this.sport, // 👈 Nullable
+    this.sport,
+    required this.stadiumDeposit,
+    required this.stadiumPrice
   });
 }

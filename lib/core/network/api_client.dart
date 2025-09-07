@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import '../result/result.dart';
 
@@ -10,13 +12,40 @@ class DioClient {
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 20),
       receiveTimeout: const Duration(seconds: 20),
-      headers: {
-        'Accept': 'application/json',
-      },
-     
+      headers: {'Accept': 'application/json'},
       validateStatus: (code) => code != null && code < 400,
     ),
   );
+
+  // ---------- logging helpers (بدون قصّ) ----------
+  void _logLong(String text, {int chunk = 800}) {
+    if (!kDebugMode) return;
+    final re = RegExp('.{1,$chunk}', dotAll: true);
+    for (final m in re.allMatches(text)) {
+      print(m.group(0)); // print يتفادى قصّ debugPrint
+    }
+  }
+
+  void _logJson(Object? data) {
+    if (!kDebugMode) return;
+    try {
+      _logLong(const JsonEncoder.withIndent('  ').convert(data));
+    } catch (_) {
+      _logLong(data.toString());
+    }
+  }
+
+  void _log(Object? msg) {
+    if (kDebugMode) print(msg);
+  }
+
+  void _logTxIdFromBody(dynamic body) {
+    try {
+      final m = body as Map;
+      final tx = (m['data']?['payment']?['transaction_id'])?.toString();
+      if (tx != null) _log('TX: $tx');
+    } catch (_) {}
+  }
 
   Future<Result<T>> callApi<T>({
     required String endpoint,
@@ -32,8 +61,25 @@ class DioClient {
         _dio.options.headers['Authorization'] = 'Bearer $token';
       }
 
-      late Response response;
+      // ---------- request log ----------
+      final sw = Stopwatch()..start();
+      if (kDebugMode) {
+        final hdrs = Map<String, dynamic>.from(_dio.options.headers);
+        if (hdrs['Authorization'] != null) hdrs['Authorization'] = 'Bearer ***';
+        _log('--> $method $endpoint');
+        if (query != null) {
+          _log('QUERY:');
+          _logJson(query);
+        }
+        if (data != null) {
+          _log('BODY :');
+          _logJson(data);
+        }
+        _log('HDRS :');
+        _logJson(hdrs);
+      }
 
+      late Response response;
       switch (method.toUpperCase()) {
         case 'GET':
           response = await _dio.get(endpoint, queryParameters: query);
@@ -50,21 +96,29 @@ class DioClient {
         default:
           return Error<T>(e: 'Unsupported HTTP method: $method');
       }
+      sw.stop();
+
+      // ---------- response log (كامل) ----------
+      if (kDebugMode) {
+        _log('<-- ${response.statusCode} $method $endpoint (${sw.elapsedMilliseconds} ms)');
+        _log('RESP:');
+        _logJson(response.data);
+
+        // اطبع الـ transaction_id تحديداً لضربة الدفع
+        if (endpoint.contains('/Booking/pay')) {
+          _logTxIdFromBody(response.data);
+        }
+      }
 
       final dynamic body = response.data;
-
       if (body is! Map<String, dynamic>) {
-        // إذا الـ API رجعت List أو شيء غير Map، خلّي الـ fromJson يتعامل مع JsonMap
-        // بس بما إن مشروعك كلّه بيرجع Map فيه status/data، فاعتبرها خطأ مفهوم.
         return Error<T>(e: 'Unexpected response type: ${body.runtimeType}');
       }
 
       final json = body as Map<String, dynamic>;
-
-      // معظم الـ APIs عندك فيها status: true/false
       final hasStatus = json.containsKey('status');
+
       if (!hasStatus || json['status'] == true) {
-        // ✅ مرّر كامل الـ JSON للبارسر (وهو يفك data حسب الحاجة)
         final parsed = fromJson(json);
         return Success<T>(data: parsed);
       } else {
@@ -72,15 +126,21 @@ class DioClient {
         return Error<T>(e: msg);
       }
     } on DioException catch (e) {
-      // عطِ رسالة أوضح مع الكود
+      if (kDebugMode) {
+        _log('xx ERR ${e.type} ${e.response?.statusCode ?? ''} $method $endpoint');
+        final rd = e.response?.data;
+        if (rd != null) {
+          _log('ERRB:');
+          _logJson(rd);
+        }
+      }
+
       final code = e.response?.statusCode;
       final messageFromServer = e.response?.data is Map<String, dynamic>
           ? (e.response?.data['message']?.toString())
           : null;
 
-      if (code == 401) {
-        return Error<T>(e: messageFromServer ?? 'Unauthorized (401)');
-      }
+      if (code == 401) return Error<T>(e: messageFromServer ?? 'Unauthorized (401)');
       if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.connectionError ||
           e.type == DioExceptionType.unknown) {
@@ -88,6 +148,7 @@ class DioClient {
       }
       return Error<T>(e: messageFromServer ?? e.message ?? 'Request failed');
     } catch (e) {
+      if (kDebugMode) _log('xx CATCH $method $endpoint -> $e');
       return Error<T>(e: e.toString());
     }
   }

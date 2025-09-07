@@ -5,6 +5,7 @@ import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/features/home/presentation/pages/stadium_owner/stadium_owner_home_page.dart';
 import 'package:reserving_stadiums_app/features/home/presentation/pages/stadium_owner/revenue_page.dart';
 import 'package:reserving_stadiums_app/features/home/presentation/pages/stadium_owner/settings_page.dart';
+import 'package:reserving_stadiums_app/features/payment/presentation/pages/payment_page.dart';
 
 class StadiumOwnerShell extends StatefulWidget {
   const StadiumOwnerShell({super.key});
@@ -17,7 +18,7 @@ class _StadiumOwnerShellState extends State<StadiumOwnerShell> {
   int index = 1;
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
   final screens = <Widget>[
-    const RevenuePage(),
+    PaymentPage(),
     const StadiumOwnerHomePage(),
     const SettingsPage()
   ];
@@ -26,7 +27,7 @@ class _StadiumOwnerShellState extends State<StadiumOwnerShell> {
     final items = <CurvedNavigationBarItem>[
       CurvedNavigationBarItem(
         child: Icon(
-          Icons.bar_chart,
+          Icons.payment,
           color: Colors.grey[700],
           size: 30,
         ),

@@ -11,6 +11,8 @@ class StadiumDetailsEntity {
   final int ownerNumber;
   final double latitude;
   final double longitude;
+  final num price;    // ⬅️ جديد
+  final num deposit;  // ⬅️ جديد
 
   const StadiumDetailsEntity({
     required this.id,
@@ -25,5 +27,7 @@ class StadiumDetailsEntity {
     required this.ownerNumber,
     required this.latitude,
     required this.longitude,
+    required this.price,
+    required this.deposit
   });
 }

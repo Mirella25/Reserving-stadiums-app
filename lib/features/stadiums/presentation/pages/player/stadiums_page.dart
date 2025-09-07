@@ -159,9 +159,10 @@ class _StadiumsPageState extends State<StadiumsPage> {
                     return GridView.builder(
                       itemCount: 6,
                       padding: EdgeInsets.symmetric(horizontal: 6.w),
+                      // StadiumsPage -> GridView.builder
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.67,
+                        childAspectRatio: 0.78, // ← كان أقل، زدناه للطول
                         crossAxisSpacing: 12,
                         mainAxisSpacing: 12,
                       ),
@@ -175,22 +176,24 @@ class _StadiumsPageState extends State<StadiumsPage> {
                       );
                     }
 
+                    // داخل StadiumsPage - بحالتي التحميل والمحمّل
                     return GridView.builder(
                       itemCount: stadiums.length,
-                      padding: EdgeInsets.symmetric(horizontal: 6.w),
+                      padding: EdgeInsets.fromLTRB(10.w, 6.h, 10.w, 10.h),
+                      // بصفحة StadiumsPage
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.67,
+                        childAspectRatio: 0.65, // كان 0.67 -> مساحة عامودية أكبر
                         crossAxisSpacing: 12,
                         mainAxisSpacing: 12,
                       ),
+
                       itemBuilder: (context, index) {
                         final stadium = stadiums[index];
-                        return StadiumCard(stadium: stadium)
-                            .animate()
-                            .fadeIn(delay: (index * 100).ms);
+                        return StadiumCard(stadium: stadium).animate().fadeIn(delay: (index * 90).ms);
                       },
                     );
+
                   } else if (state is StadiumsError) {
                     return Center(child: Text(state.message));
                   }

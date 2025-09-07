@@ -8,4 +8,13 @@ abstract class StadiumRepository {
       {required StadiumEntity stadiumEntity, List<File>? photosFiles});
   Future<Result<List<StadiumEntity>>> getStadiumRequests();
   Future<Result<void>> deleteStadiumRequest(int id);
+  Future<Result<List<StadiumEntity>>> getAllStadiums();
+  Future<Result<StadiumEntity>> getStadiumDetails(int id);
+  Future<Result<void>> deleteStadium(int id);
+  Future<Result<StadiumEntity>> updateStadium(
+      {required StadiumEntity stadiumEntity,
+      List<File>? photosFiles,
+      required int id});
+  Future<Result<StadiumEntity>> getStadiumRequestDetails(int id);
+  Future<Result<String>> generateStadiumSlots(int id);
 }

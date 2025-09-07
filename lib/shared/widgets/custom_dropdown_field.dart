@@ -6,13 +6,15 @@ class CustomDropdownField extends StatelessWidget {
   final String? Function(dynamic) onChanged;
   final IconData icon;
   final String? Function(dynamic)? validator;
+  final dynamic? value;
   const CustomDropdownField(
       {super.key,
-      required this.hintText,
-      required this.itemList,
-      required this.onChanged,
-      required this.icon,
-      this.validator});
+        required this.hintText,
+        required this.itemList,
+        required this.onChanged,
+        required this.icon,
+        this.validator,
+        this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class CustomDropdownField extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: DropdownButtonFormField<dynamic>(
               validator: validator,
+              value: value,
               iconEnabledColor: Colors.grey,
               hint: Text(
                 hintText,
@@ -44,11 +47,11 @@ class CustomDropdownField extends StatelessWidget {
               decoration: const InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide:
-                      BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
+                  BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
                 ),
                 focusedBorder: UnderlineInputBorder(
                   borderSide:
-                      BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
+                  BorderSide(color: Color.fromARGB(255, 209, 208, 208)),
                 ),
               ),
             ),

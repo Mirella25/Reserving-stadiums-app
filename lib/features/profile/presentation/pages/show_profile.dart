@@ -7,6 +7,7 @@ import 'package:reserving_stadiums_app/features/profile/domain/entities/profile_
 import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
 
 import '../../data/models/request/profile_update_request.dart';
+import '../widgets/safe_avatar.dart';
 // import '../../domain/usecases/profile_update_input.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -61,21 +62,24 @@ class _ProfilePageState extends State<ProfilePage> {
           }
           final p = state.profileDetails;
           if (p == null) return const SizedBox.shrink();
-
+          final initials = [
+            (p.firstName ?? '').trim(),
+            (p.lastName ?? '').trim(),
+          ].where((s) => s.isNotEmpty).map((s) => s[0].toUpperCase()).join();
+          final avatar = SafeAvatar(
+            relativeOrFullUrl: p.avatar,             // ممكن تكون null أو "avatars/.."
+            storageBaseUrl: widget.storageBaseUrl,   // مثلاً http://localhost:8000 أو من AppConstants
+            radius: 50.r,
+            fallbackText: initials.isEmpty ? '🙂' : initials,
+          );
           return SingleChildScrollView(
             padding: EdgeInsets.all(16.r),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircleAvatar(
-                  radius: 50.r,
-                  backgroundImage: _avatarProvider(widget.storageBaseUrl, p.avatar),
-                  onBackgroundImageError: (_, __) {},
-                  child: (p.avatar == null || p.avatar!.trim().isEmpty)
-                      ? Icon(Icons.person, size: 50.r, color: Colors.grey)
-                      : null,
-                ),
-                SizedBox(height: 12.h),
+// استعمله بدلاً من CircleAvatar:
+              avatar,
+              SizedBox(height: 12.h),
                 Text(
                   '${_v(p.firstName)} ${_v(p.lastName)}',
                   style: TextStyle(

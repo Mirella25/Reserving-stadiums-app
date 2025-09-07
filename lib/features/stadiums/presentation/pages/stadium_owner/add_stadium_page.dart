@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:reserving_stadiums_app/core/constants/app_colors.dart';
 import 'package:reserving_stadiums_app/core/dependency_injection/injections.dart';
 import 'package:reserving_stadiums_app/core/utils/validators.dart';
@@ -24,7 +23,7 @@ import 'package:reserving_stadiums_app/shared/widgets/snackbar.dart';
 
 import '../../../../home/presentation/widgets/stadium_owner/stadium_owner_shell.dart';
 
-import '../../widgets/stadium_owner/add_stadium_loading.dart';
+import '../../widgets/stadium_owner/form_stadium_loading.dart';
 import '../../widgets/stadium_owner/choose_sport_dropdown_field.dart';
 
 class AddStadiumPage extends StatefulWidget {
@@ -147,14 +146,10 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
             }
           }, builder: (context, sportState) {
             if (sportState is SportLoading) {
-              return const AddStadiumLoading();
+              return const StadiumLoading(
+                title: "Add stadium",
+              );
             }
-
-            // if (sportState is SportError) {
-            //   Navigator.of(context).pop();
-            //   CustomSnackbar.show(context,
-            //       message: sportState.message, isError: true);
-            // }
 
             if (sportState is SportLoaded) {
               final sports = sportState.sports;
@@ -250,13 +245,6 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                                 validator:
                                                     Validators.required(),
                                               ),
-                                              // CustomTextField(
-                                              //   icon: Icons.location_on,
-                                              //   hintText: "Location",
-                                              //   controller: _locationCtrl,
-                                              //   validator:
-                                              //       Validators.required(),
-                                              // ),
                                               Row(children: [
                                                 const Expanded(
                                                   flex: 1,
@@ -284,11 +272,11 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                                                 builder: (_) =>
                                                                     const MapPickerPage(
                                                                   latitude:
-                                                                      33.5138, // افتراضي أو استخدم قيمة حالية
+                                                                      33.5138,
                                                                   longitude:
                                                                       36.2765,
                                                                   title:
-                                                                      'اختر موقع الملعب',
+                                                                      'Stadium Location',
                                                                 ),
                                                               ),
                                                             );
@@ -378,7 +366,10 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                                   return DropdownMenuItem<
                                                       SportEntity>(
                                                     value: sport,
-                                                    child: Text(sport.name),
+                                                    child: Text(sport.name,
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                'Montserrat')),
                                                   );
                                                 }).toList(),
                                               ),
@@ -560,7 +551,7 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                               ),
                                               CustomTextField(
                                                 icon: Icons.timelapse,
-                                                hintText: "Duration",
+                                                hintText: "Duration(seconds)",
                                                 controller: _durationCtrl,
                                                 validator:
                                                     Validators.required(),
@@ -574,60 +565,6 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                                 validator:
                                                     Validators.required(),
                                               ),
-                                              // Padding(
-                                              //   padding: EdgeInsetsGeometry.all(
-                                              //       18.w),
-                                              //   child: GestureDetector(
-                                              //     onTap: () async {
-                                              //       final selected =
-                                              //           await Navigator.push<
-                                              //               Map<String,
-                                              //                   dynamic>>(
-                                              //         context,
-                                              //         MaterialPageRoute(
-                                              //           builder: (_) =>
-                                              //               const MapPickerPage(
-                                              //             latitude:
-                                              //                 33.5138, // افتراضي أو استخدم قيمة حالية
-                                              //             longitude: 36.2765,
-                                              //             title:
-                                              //                 'اختر موقع الملعب',
-                                              //           ),
-                                              //         ),
-                                              //       );
-
-                                              //       if (selected != null) {
-                                              //         setState(() {
-                                              //           _selectedLat = selected[
-                                              //               'latitude'];
-                                              //           _selectedLng = selected[
-                                              //               'longitude'];
-                                              //           address =
-                                              //               selected['address'];
-                                              //         });
-                                              //         // لو بدك تسجّل بالـ console:
-                                              //         print(
-                                              //             'المستخدم اختار: $_selectedLat, $_selectedLng,$address');
-                                              //       }
-                                              //     },
-                                              //     child: const Row(
-                                              //       children: [
-                                              //         Icon(
-                                              //           Icons.map,
-                                              //           color: Colors.red,
-                                              //         ),
-                                              //         SizedBox(
-                                              //           width: 5,
-                                              //         ),
-                                              //         Text(
-                                              //           "Pick stadium location",
-                                              //           style: TextStyle(
-                                              //               color: Colors.red),
-                                              //         )
-                                              //       ],
-                                              //     ),
-                                              //   ),
-                                              // ),
                                               Padding(
                                                 padding: EdgeInsets.all(8.w),
                                                 child: Wrap(
@@ -729,6 +666,26 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                     ),
                                   ),
                                   Positioned(
+                                    left: 16.w,
+                                    right: 16.w,
+                                    bottom: 60.h,
+                                    child: IgnorePointer(
+                                      child: Container(
+                                        height: 40.h,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Colors.transparent,
+                                              Colors.grey[200]!,
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
                                     left: 0,
                                     right: 0,
                                     bottom: 0,
@@ -760,13 +717,21 @@ class _CreateStadiumPageState extends State<AddStadiumPage> {
                                               ownerNumber: int.tryParse(
                                                       _ownerCtrl.text) ??
                                                   0,
-                                              latitude: _selectedLat!
-                                                  .toStringAsFixed(6),
-                                              longitude: _selectedLng!
-                                                  .toStringAsFixed(6),
+                                              latitude: double.tryParse(
+                                                      _selectedLat
+                                                          .toString()) ??
+                                                  0,
+                                              longitude: double.tryParse(
+                                                      _selectedLng
+                                                          .toString()) ??
+                                                  0,
                                               photos: [],
-                                              deposit: _depositCtrl.text,
-                                              price: _priceCtrl.text,
+                                              deposit: double.tryParse(
+                                                      _depositCtrl.text) ??
+                                                  0,
+                                              price: double.tryParse(
+                                                      _priceCtrl.text) ??
+                                                  0,
                                               duration: int.tryParse(
                                                       _durationCtrl.text) ??
                                                   0,

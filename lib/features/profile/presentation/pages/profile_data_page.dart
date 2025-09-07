@@ -431,13 +431,10 @@ class _CreateProfilePageState extends State<CreateProfileDataPage> {
                                               .validate()) {
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
-                                                builder: (_) => BlocProvider(
-                                                  create: (context) => ProfileBloc(
-                                                    repository: getIt<ProfileRepository>(),
-                                                    getDetailsUsecase: getIt<GetProfileDetailsUsecase>(),
-                                                  ),
+                                                builder: (_) => BlocProvider.value(
+                                                  value: context.read<ProfileBloc>(), // نفس الانستانس الحالي
+                                                  child: CreateProfilePhotoPage(profileEntity: entity,),
                                                 ),
-
                                               ),
                                             );
                                           }

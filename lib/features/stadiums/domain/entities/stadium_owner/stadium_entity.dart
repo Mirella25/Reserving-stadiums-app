@@ -6,7 +6,7 @@ class StadiumEntity {
   final String length;
   final String width;
   final int ownerNumber;
-  final List<String>? photos;
+  final List<dynamic>? photos;
   final int? id;
   final int? userId;
   final DateTime? createdAt;
@@ -15,11 +15,11 @@ class StadiumEntity {
   final String? adminNotes;
   final String startTime;
   final String endTime;
-  final String price;
-  final String deposit;
+  final double price;
+  final double deposit;
   final int duration;
-  final String longitude;
-  final String latitude;
+  final double longitude;
+  final double latitude;
 
   StadiumEntity({
     required this.sportId,
